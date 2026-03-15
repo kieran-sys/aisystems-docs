@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Plan v2 — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Epilogue:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#06080a;--bg2:#0c0f12;--bg3:#111518;--border:rgba(255,255,255,0.06);--brt:rgba(255,255,255,0.11);
+    --white:#e8e4dc;--dim:#5a5955;--dim2:#2e3030;
+    --teal:#15c4b0;--tbg:rgba(21,196,176,0.08);--tb:rgba(21,196,176,0.2);
+    --gold:#e0b84a;--gbg:rgba(224,184,74,0.08);--gb:rgba(224,184,74,0.2);
+    --red:#c94535;--rbg:rgba(201,69,53,0.08);--rb:rgba(201,69,53,0.2);
+    --green:#3db876;--amber:#e8952a;
+    --s1:#3db876;--s2:#e0b84a;--s3:#c94535;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--white);font-family:'Epilogue',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+  /* COVER */
+  .cover{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 72px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+  .cover-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 80% 20%,rgba(21,196,176,0.06) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(224,184,74,0.04) 0%,transparent 55%);pointer-events:none;}
+  .cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;}
+  .cover-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:24px;position:relative;display:flex;align-items:center;gap:12px;}
+  .cover-tag::before{content:'';width:28px;height:1px;background:var(--teal);}
+  .cover h1{font-size:clamp(52px,8vw,110px);font-weight:900;line-height:.92;letter-spacing:-.03em;position:relative;max-width:860px;}
+  .cover h1 em{font-style:italic;color:var(--gold);}
+  .cover-sub{margin-top:28px;font-size:15px;font-weight:300;color:var(--dim);max-width:580px;line-height:1.75;position:relative;}
+  .cover-sub strong{color:var(--white);font-weight:600;}
+  .stage-legend{display:flex;gap:6px;flex-wrap:wrap;margin-top:36px;position:relative;}
+  .sl{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
+  .sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .sl.s1{color:var(--s1);border-color:rgba(61,184,118,0.3);background:rgba(61,184,118,0.07);}
+  .sl.s2{color:var(--s2);border-color:rgba(224,184,74,0.3);background:rgba(224,184,74,0.07);}
+  .sl.s3{color:var(--s3);border-color:rgba(201,69,53,0.3);background:rgba(201,69,53,0.07);}
+  .sl.s1 .sl-dot{background:var(--s1);}.sl.s2 .sl-dot{background:var(--s2);}.sl.s3 .sl-dot{background:var(--s3);}
+
+  /* LAYOUT */
+  .page{max-width:1240px;margin:0 auto;padding:0 64px;}
+
+  /* TOC */
+  .toc{background:var(--bg2);border-bottom:1px solid var(--border);padding:32px 64px;}
+  .toc-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+  .toc-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px;}
+  .toc-link{display:flex;gap:12px;align-items:center;padding:10px 14px;text-decoration:none;color:var(--dim);background:var(--bg3);font-size:12px;transition:all .2s;border:1px solid transparent;}
+  .toc-link:hover{color:var(--white);border-color:var(--brt);background:rgba(255,255,255,.02);}
+  .toc-link span{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--dim2);min-width:20px;}
+
+  /* SEC HEADER */
+  .sec-hdr{padding:64px 0 36px;border-bottom:1px solid var(--border);margin-bottom:40px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .sec-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px;}
+  .sec-tag.t{color:var(--teal);}.sec-tag.g{color:var(--gold);}.sec-tag.r{color:var(--red);}.sec-tag.w{color:var(--dim);}
+  .sec-title{font-size:clamp(30px,4vw,54px);font-weight:900;line-height:.95;letter-spacing:-.03em;}
+  .sec-title em{font-style:italic;}.sec-title .t{color:var(--teal);}.sec-title .g{color:var(--gold);}.sec-title .r{color:var(--red);}
+
+  /* CALLOUT */
+  .callout{padding:18px 22px;border:1px solid var(--border);border-left:3px solid;margin-bottom:28px;background:var(--bg2);}
+  .callout.t{border-left-color:var(--teal);}.callout.g{border-left-color:var(--gold);}.callout.r{border-left-color:var(--red);}.callout.amber{border-left-color:var(--amber);}.callout.green{border-left-color:var(--green);}
+  .callout-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;}
+  .callout.t .callout-title{color:var(--teal);}.callout.g .callout-title{color:var(--gold);}.callout.r .callout-title{color:var(--red);}.callout.amber .callout-title{color:var(--amber);}.callout.green .callout-title{color:var(--green);}
+  .callout p{font-size:13px;color:var(--dim);line-height:1.65;}.callout p strong{color:var(--white);}
+
+  /* REALITY */
+  .rg{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:28px;}
+  .rcard{padding:20px 22px;background:var(--bg2);border:1px solid var(--border);}
+  .rcard.can{border-left:3px solid var(--green);}.rcard.cant{border-left:3px solid var(--red);}
+  .rcard-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;}
+  .rcard.can .rcard-title{color:var(--green);}.rcard.cant .rcard-title{color:var(--red);}
+  .rlist{list-style:none;}.rlist li{font-size:12px;color:var(--dim);padding:5px 0 5px 16px;border-bottom:1px solid rgba(255,255,255,.04);position:relative;line-height:1.5;}
+  .rcard.can .rlist li::before{content:'✓';position:absolute;left:0;color:var(--green);font-size:9px;top:6px;}
+  .rcard.cant .rlist li::before{content:'✕';position:absolute;left:0;color:var(--red);font-size:9px;top:6px;}
+  .rlist li strong{color:var(--white);font-weight:600;}
+
+  /* STAGING */
+  .stagegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:28px;}
+  .scard{padding:22px 20px;border:1px solid;position:relative;overflow:hidden;}
+  .scard.s1{background:rgba(61,184,118,0.04);border-color:rgba(61,184,118,0.2);}
+  .scard.s2{background:rgba(224,184,74,0.04);border-color:rgba(224,184,74,0.2);}
+  .scard.s3{background:rgba(201,69,53,0.04);border-color:rgba(201,69,53,0.2);}
+  .scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .scard.s1::before{background:var(--s1);}.scard.s2::before{background:var(--s2);}.scard.s3::before{background:var(--s3);}
+  .sc-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;}
+  .scard.s1 .sc-label{color:var(--s1);}.scard.s2 .sc-label{color:var(--s2);}.scard.s3 .sc-label{color:var(--s3);}
+  .sc-name{font-size:19px;font-weight:800;letter-spacing:-.02em;color:var(--white);margin-bottom:5px;}
+  .sc-when{font-size:12px;font-weight:600;margin-bottom:12px;}
+  .scard.s1 .sc-when{color:var(--s1);}.scard.s2 .sc-when{color:var(--s2);}.scard.s3 .sc-when{color:var(--s3);}
+  .sc-desc{font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:12px;}
+  .sc-cash{padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);}
+  .sc-cash-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+  .sc-cash-val{font-size:17px;font-weight:800;letter-spacing:-.02em;}
+  .scard.s1 .sc-cash-val{color:var(--s1);}.scard.s2 .sc-cash-val{color:var(--s2);}.scard.s3 .sc-cash-val{color:var(--s3);}
+
+  /* TOOLCHAIN */
+  .tcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px;margin-bottom:36px;}
+  .tci{background:var(--bg2);border:1px solid var(--border);padding:14px 16px;}
+  .tci-tool{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--gold);margin-bottom:4px;letter-spacing:.05em;}
+  .tci-role{font-size:12px;color:var(--dim);line-height:1.5;}
+
+  /* PIPELINE */
+  .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-bottom:36px;}
+  .ps{background:var(--bg2);border:1px solid var(--border);padding:16px 14px;position:relative;}
+  .ps::after{content:'→';position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--dim2);font-size:12px;z-index:2;}
+  .ps:last-child::after{display:none;}
+  .ps-n{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gold);margin-bottom:6px;opacity:.6;letter-spacing:.1em;}
+  .ps-title{font-size:12px;font-weight:700;color:var(--white);margin-bottom:4px;line-height:1.3;}
+  .ps-tool{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:4px;letter-spacing:.03em;}
+  .ps-desc{font-size:11px;color:var(--dim);line-height:1.5;}
+
+  /* MODULE TABLE */
+  .mod-table{margin-bottom:48px;}
+  .mrow{display:grid;grid-template-columns:26px 1fr 82px 100px 82px 100px 88px;gap:0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+  .mrow:hover{background:rgba(255,255,255,.015);}
+  .mrow.hdr{background:var(--bg3);cursor:default;border-bottom:1px solid var(--brt);}
+  .mrow.hdr:hover{background:var(--bg3);}
+  .mc{padding:11px 11px;font-size:12px;color:var(--white);display:flex;align-items:center;border-right:1px solid var(--border);}
+  .mc:last-child{border-right:none;}
+  .mc.hc{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);padding:8px 11px;}
+  .mc-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim2);}
+  .mc-name{font-weight:700;letter-spacing:-.01em;line-height:1.3;flex-direction:column;align-items:flex-start;gap:2px;}
+  .mc-sub{font-size:10px;color:var(--dim);font-weight:400;letter-spacing:0;}
+  .mc-toggle{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--dim);background:none;border:none;cursor:pointer;padding:0;letter-spacing:.06em;text-transform:uppercase;transition:color .2s;}
+  .mc-toggle:hover{color:var(--gold);}
+  .mc-time{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;}
+  .fast{color:var(--green);}.med{color:var(--gold);}.slow{color:var(--amber);}.hard{color:var(--red);}
+  .mc-cash{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;}
+  .cfree{color:var(--green);}.clow{color:var(--teal);}.cmid{color:var(--gold);}.chigh{color:var(--amber);}.ctop{color:var(--red);}
+  .mc-hrs{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);}
+  .mc-run{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);}
+  .stg{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;white-space:nowrap;}
+  .stg-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+  .stg.s1{background:rgba(61,184,118,0.1);color:var(--s1);border:1px solid rgba(61,184,118,0.2);}
+  .stg.s2{background:rgba(224,184,74,0.1);color:var(--s2);border:1px solid rgba(224,184,74,0.2);}
+  .stg.s3{background:rgba(201,69,53,0.1);color:var(--s3);border:1px solid rgba(201,69,53,0.2);}
+  .stg.s1 .stg-dot{background:var(--s1);}.stg.s2 .stg-dot{background:var(--s2);}.stg.s3 .stg-dot{background:var(--s3);}
+
+  /* EXPAND */
+  .mexp{display:none;border-bottom:1px solid var(--border);background:var(--bg2);}
+  .mexp.open{display:grid;grid-template-columns:26px 1fr;}
+  .exp-gut{border-right:1px solid var(--border);background:var(--bg3);}
+  .exp-body{padding:16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;}
+  .ex-title{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:7px;}
+  .ex-title.t{color:var(--teal);}.ex-title.g{color:var(--gold);}.ex-title.r{color:var(--red);}
+  .exlist{list-style:none;}
+  .exlist li{font-size:11px;color:var(--dim);padding:4px 0 4px 12px;border-bottom:1px solid rgba(255,255,255,.03);position:relative;line-height:1.5;}
+  .exlist li::before{content:'→';position:absolute;left:0;font-size:9px;top:5px;color:var(--dim2);}
+  .exlist li strong{color:var(--white);font-weight:600;}
+  .exnote{grid-column:1/-1;padding:9px 12px;border:1px solid var(--border);border-left:2px solid;font-size:11px;color:var(--dim);line-height:1.6;background:rgba(255,255,255,.01);}
+  .exnote strong{color:var(--white);font-weight:700;}
+  .exnote.t{border-left-color:var(--teal);}.exnote.g{border-left-color:var(--gold);}.exnote.r{border-left-color:var(--red);}.exnote.amber{border-left-color:var(--amber);}.exnote.green{border-left-color:var(--green);}
+
+  /* TOTALS */
+  .totgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:28px;}
+  .tot{background:var(--bg2);border:1px solid var(--border);padding:20px 20px;position:relative;overflow:hidden;}
+  .tot::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+  .tot.t::before{background:var(--teal);}.tot.g::before{background:var(--gold);}.tot.r::before{background:var(--red);}
+  .tot-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:9px;}
+  .tot.t .tot-tag{color:var(--teal);}.tot.g .tot-tag{color:var(--gold);}.tot.r .tot-tag{color:var(--red);}
+  .tot-name{font-size:15px;font-weight:800;letter-spacing:-.02em;margin-bottom:16px;color:var(--white);}
+  .tot-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;}
+  .tot-label{color:var(--dim);}
+  .tot-val{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--white);}
+  .tot.t .tot-val.ac{color:var(--teal);}.tot.g .tot-val.ac{color:var(--gold);}.tot.r .tot-val.ac{color:var(--red);}
+  .tot-big{margin-top:12px;}
+  .tot-big-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:3px;}
+  .tot-big-val{font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1;}
+  .tot.t .tot-big-val{color:var(--teal);}.tot.g .tot-big-val{color:var(--gold);}.tot.r .tot-big-val{color:var(--red);}
+
+  /* RUNNING */
+  .rcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:2px;margin-bottom:28px;}
+  .rci{background:var(--bg2);border:1px solid var(--border);padding:12px 14px;}
+  .rci-tool{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:3px;letter-spacing:.05em;}
+  .rci-cost{font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px;letter-spacing:-.01em;}
+  .rci-note{font-size:11px;color:var(--dim);line-height:1.4;}
+
+  .divider{height:1px;background:linear-gradient(90deg,var(--brt),transparent);margin:56px 0;}
+  footer{border-top:1px solid var(--border);padding:26px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--bg2);margin-top:64px;}
+  .footer-brand{font-size:14px;font-weight:800;font-style:italic;letter-spacing:-.02em;color:var(--gold);}
+  .footer-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;}
+  .scroll-top{position:fixed;bottom:20px;right:20px;width:34px;height:34px;background:var(--bg3);border:1px solid var(--brt);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:13px;z-index:100;transition:all .2s;}
+  .scroll-top:hover{background:var(--gbg);border-color:var(--gold);}
+
+  @media(max-width:900px){
+    .mrow{grid-template-columns:22px 1fr 76px 88px 76px;}
+    .mrow>.mc:nth-child(6),.mrow>.mc:nth-child(7){display:none;}
+    .stagegrid,.totgrid{grid-template-columns:1fr;}
+    .pipeline{grid-template-columns:1fr 1fr;}
+    .ps::after{display:none;}
+    .rg{grid-template-columns:1fr;}
+    .tcgrid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:600px){
+    .cover,.toc,.page,footer{padding-left:20px;padding-right:20px;}
+    .mrow{grid-template-columns:20px 1fr 76px 82px;}
+    .mrow>.mc:nth-child(5){display:none;}
+    .pipeline{grid-template-columns:1fr;}
+    .tcgrid{grid-template-columns:1fr;}
+    .rcgrid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<section class="cover" id="top">
+  <div class="cover-glow"></div><div class="cover-grid"></div>
+  <div class="cover-tag">Internal Reference · AI Systems Co. · 2025</div>
+  <h1>Build Times.<br>Real Costs.<br><em>No Fluff.</em></h1>
+  <p class="cover-sub">Every module across all three verticals — with <strong>honest cash costs</strong> (not inflated developer rates), time investment, monthly running, and a staging plan so nothing gets built before the money exists to fund it.</p>
+  <div class="stage-legend">
+    <div class="sl s1"><div class="sl-dot"></div>Stage 1 — Build Now (near-zero cash)</div>
+    <div class="sl s2"><div class="sl-dot"></div>Stage 2 — Build Once Earning</div>
+    <div class="sl s3"><div class="sl-dot"></div>Stage 3 — Build When Established</div>
+  </div>
+</section>
+
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <div class="toc-items">
+    <a href="#costs" class="toc-link"><span>01</span>What Things Actually Cost</a>
+    <a href="#staging" class="toc-link"><span>02</span>The Staging Strategy</a>
+    <a href="#toolchain" class="toc-link"><span>03</span>The AI Build Toolchain</a>
+    <a href="#pipeline" class="toc-link"><span>04</span>How Every Module Gets Built</a>
+    <a href="#dental" class="toc-link"><span>05</span>DentalOS — All 10 Modules</a>
+    <a href="#factory" class="toc-link"><span>06</span>FactoryOS — All 10 Modules</a>
+    <a href="#health" class="toc-link"><span>07</span>HealthOS — All 10 Modules</a>
+    <a href="#totals" class="toc-link"><span>08</span>Startup Cost Summary</a>
+    <a href="#running" class="toc-link"><span>09</span>Monthly Running Costs</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<section id="costs">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 01</div><div class="sec-title">What Things <em>Actually</em> Cost</div></div></div>
+  <div class="callout green"><div class="callout-title">The Honest Truth</div><p>The previous version had setup costs of £1,500–£5,000 for simple modules. That was wrong — it assumed you were paying a developer. <strong>You're not. Claude is your developer.</strong> The real cash cost of building most modules is £100–500 in API calls, existing subscriptions, and VA time. The investment is your time — not your cash.</p></div>
+  <div class="rg">
+    <div class="rcard can"><div class="rcard-title">✓ What You're Actually Spending Cash On</div><ul class="rlist">
+      <li><strong>Claude API during the build</strong> — £20–80 per module</li>
+      <li><strong>Twilio setup + test messages</strong> — £20–50 one-time</li>
+      <li><strong>Apify scraper credits</strong> — £40–80/mo for intel modules</li>
+      <li><strong>VA deployment time</strong> — £80–150 per module</li>
+      <li><strong>Domain names</strong> — £10–15/year per vertical brand</li>
+      <li><strong>GHL, Make.com, Vercel</strong> — shared across all modules, not per module</li>
+      <li><strong>Compliance review (clinical/regulated only)</strong> — £500–800 once</li>
+      <li><strong>Industrial specialist (FactoryOS sensors only)</strong> — £8–20k. The only big external cost.</li>
+    </ul></div>
+    <div class="rcard cant"><div class="rcard-title">✕ What You Are NOT Paying For</div><ul class="rlist">
+      <li><strong>Developer fees</strong> — Claude writes all code. £0.</li>
+      <li><strong>Designer fees</strong> — Claude builds the UI. £0.</li>
+      <li><strong>DevOps / deployment fees</strong> — Vercel + VA following instructions. £0.</li>
+      <li><strong>Database admin</strong> — Supabase/Neon managed. Claude configures. £0.</li>
+      <li><strong>Agency fees</strong> — no agencies. You and AI do the work. £0.</li>
+      <li><strong>Project management tools</strong> — Claude + free Notion. £0.</li>
+      <li><strong>Hardware (mostly)</strong> — almost everything is browser and cloud. Exception: FactoryOS sensor layer.</li>
+    </ul></div>
+  </div>
+  <div class="callout amber"><div class="callout-title">The Real Investment</div><p>Stage 1 modules cost <strong>your time</strong>, not your cash. Each simple module takes 20–60 hours of working sessions with Claude over 1–3 weeks. The question is not "can we afford to build this" — it is "do we have the focused hours right now."</p></div>
+</section>
+
+<section id="staging">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 02</div><div class="sec-title">The <em>Staging</em> Strategy</div></div></div>
+  <div class="callout g"><div class="callout-title">Why Staging Matters</div><p>You don't need to build everything before you can sell. <strong>Build the one module that creates the most obvious ROI for your first client. Sign that client. Use their revenue to fund the next module.</strong> Every vertical has a Stage 1 MVP under £500 in real cash, live within 3 weeks. Everything else follows from there.</p></div>
+  <div class="stagegrid">
+    <div class="scard s1"><div class="sc-label">Stage 1</div><div class="sc-name">Build Now</div><div class="sc-when">£0–£500 cash · weeks 1–8</div><div class="sc-desc">Modules that run on tools you already pay for, use free tier APIs, and a VA can deploy. Near-zero cash. Pure time investment. These are your revenue-generating MVPs.</div><div class="sc-cash"><div class="sc-cash-label">Real cash per module</div><div class="sc-cash-val">£50–£500</div></div></div>
+    <div class="scard s2"><div class="sc-label">Stage 2</div><div class="sc-name">Build Once Earning</div><div class="sc-when">£500–£5k cash · months 2–5</div><div class="sc-desc">More integration complexity, paid API dependencies, or a compliance review. Funded by Stage 1 client revenue. These expand the product and enable upsells.</div><div class="sc-cash"><div class="sc-cash-label">Real cash per module</div><div class="sc-cash-val">£500–£5k</div></div></div>
+    <div class="scard s3"><div class="sc-label">Stage 3</div><div class="sc-name">Build When Established</div><div class="sc-when">£5k–£25k cash · months 6–18</div><div class="sc-desc">External specialists, hardware, or large datasets required. FactoryOS sensor integration and computer vision QC live here. Funded by established recurring revenue.</div><div class="sc-cash"><div class="sc-cash-label">Real cash per module</div><div class="sc-cash-val">£5k–£25k</div></div></div>
+  </div>
+  <div class="callout t"><div class="callout-title">The Funding Loop</div><p><strong>Stage 1 built (~£300 cash) → First client signed (£400–800/mo) → 2 months revenue → Stage 2 funded → Upsell + new clients → Stage 3 funded from recurring revenue.</strong> You never need external investment for Dental or Health. FactoryOS Stage 3 is the only module that needs bridging — Si's first consulting audit fees cover it.</p></div>
+</section>
+
+<section id="toolchain">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 03</div><div class="sec-title">The AI <em>Build</em> Toolchain</div></div></div>
+  <div class="tcgrid">
+    <div class="tci"><div class="tci-tool">Claude (Anthropic)</div><div class="tci-role">Writes all code. Dashboards, APIs, databases, integrations, automation logic. Your primary developer. 80% of build work happens here.</div></div>
+    <div class="tci"><div class="tci-tool">Perplexity AI</div><div class="tci-role">Research. API docs, integration guides, pricing, competitor analysis. Use at the start of every module build to understand what you're building into.</div></div>
+    <div class="tci"><div class="tci-tool">n8n (self-hosted)</div><div class="tci-role">Visual workflow automation. Connects apps, schedules tasks, triggers AI. ~£10/mo VPS. Free software. No code to operate once built.</div></div>
+    <div class="tci"><div class="tci-tool">Make.com</div><div class="tci-role">Cloud automation. Easier for non-technical team. Client-facing comms — SMS sequences, email triggers, CRM updates. £29–£99/mo.</div></div>
+    <div class="tci"><div class="tci-tool">Vercel</div><div class="tci-role">Deploys all apps and dashboards. One-click from GitHub. Free tier covers early stage. VA follows Claude's instructions. No server knowledge needed.</div></div>
+    <div class="tci"><div class="tci-tool">Supabase / Neon</div><div class="tci-role">Database and auth. Stores all client data. Free tiers cover early stage. Claude configures everything — you just manage the dashboard.</div></div>
+    <div class="tci"><div class="tci-tool">GoHighLevel (GHL)</div><div class="tci-role">CRM, email, SMS, funnels. Client-facing comms layer for Dental and Health. One agency account (£297/mo) = unlimited client sub-accounts.</div></div>
+    <div class="tci"><div class="tci-tool">Apify</div><div class="tci-role">Web scraping. Powers competitor intelligence — pulls pricing, reviews, market data automatically. No coding needed to run scrapers once built.</div></div>
+    <div class="tci"><div class="tci-tool">Twilio</div><div class="tci-role">SMS and WhatsApp API. ~1p per SMS. Pay-as-you-go. No monthly fee to start. Claude integrates it.</div></div>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 04</div><div class="sec-title">How Every Module <em>Gets Built</em></div></div></div>
+  <div class="pipeline">
+    <div class="ps"><div class="ps-n">01</div><div class="ps-title">Define & Research</div><div class="ps-tool">Perplexity + Claude</div><div class="ps-desc">Describe what the module does. Research APIs and integrations. Claude helps structure a spec before any code is written.</div></div>
+    <div class="ps"><div class="ps-n">02</div><div class="ps-title">Build with Claude</div><div class="ps-tool">Claude</div><div class="ps-desc">Give Claude the spec. It writes the full app — frontend, backend, database, APIs. Iterate until working. Days, not months.</div></div>
+    <div class="ps"><div class="ps-n">03</div><div class="ps-title">Automate</div><div class="ps-tool">n8n / Make.com</div><div class="ps-desc">Build the automation layer — triggers, schedules, messages, syncs. Claude writes the logic; n8n/Make runs it. No code needed.</div></div>
+    <div class="ps"><div class="ps-n">04</div><div class="ps-title">Deploy</div><div class="ps-tool">Vercel + GitHub</div><div class="ps-desc">Claude generates step-by-step instructions. VA follows them — push to GitHub, connect Vercel, set env vars. Live in under an hour.</div></div>
+    <div class="ps"><div class="ps-n">05</div><div class="ps-title">Monitor</div><div class="ps-tool">Vercel + Supabase</div><div class="ps-desc">Vercel watches uptime. Paste any errors into Claude for instant fixes. Most modules need under 2 hours/month once live.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ DENTALOS ═══ -->
+<section id="dental">
+  <div class="sec-hdr"><div><div class="sec-tag t">Section 05 · Kie & Leah</div><div class="sec-title"><span class="t">Dental</span>OS — All 10 Modules</div></div></div>
+  <div class="callout t"><div class="callout-title">DentalOS Build Reality</div><p>Most modules connect tools you already pay for (GHL, Twilio, Google Ads, PMS) and build intelligence on top. <strong>Stage 1 dental modules have near-zero cash cost.</strong> Build the first 3, sign 5 paying clients, use that revenue to fund everything else. Simple.</p></div>
+  <div class="mod-table">
+    <div class="mrow hdr"><div class="mc hc">#</div><div class="mc hc">Module</div><div class="mc hc">Build Time</div><div class="mc hc">Cash Cost</div><div class="mc hc">Your Time</div><div class="mc hc">Running/mo</div><div class="mc hc">Stage</div></div>
+
+    <div class="mrow" onclick="tog('d1')"><div class="mc mc-num">01</div><div class="mc mc-name">Patient Reactivation Engine<div class="mc-sub">SMS/email/WhatsApp to lapsed patients &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£150</div><div class="mc mc-hrs">30–50 hrs</div><div class="mc mc-run">£80–120/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="d1"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API build — <strong>~£30</strong></li><li>Twilio setup + test messages — <strong>~£20</strong></li><li>GHL (already paying) — <strong>£0</strong></li><li>Make.com (already paying) — <strong>£0</strong></li><li>Vercel free tier — <strong>£0</strong></li><li>VA deployment — <strong>~£80</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Claude builds patient segmentation from PMS data export</li><li>Make.com triggers SMS/email sequences by last visit date</li><li>GHL delivers messages and tracks replies</li><li>Simple dashboard shows reactivation rates and revenue recovered</li></ul></div>
+      <div><div class="ex-title">Maintenance</div><ul class="exlist"><li>Runs automatically — check error logs monthly</li><li>Update message copy quarterly</li><li>Under 1 hr/month once live</li></ul></div>
+      <div class="exnote green"><strong>Build this first.</strong> Lowest cash. Fastest to ship. Most measurable ROI. A practice recovering £20k of lapsed patients in Month 1 won't churn. This is your proof of concept.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d2')"><div class="mc mc-num">02</div><div class="mc mc-name">Competitor Intelligence Platform<div class="mc-sub">Local market monitoring — pricing, reviews, new offers &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£180</div><div class="mc mc-hrs">25–40 hrs</div><div class="mc mc-run">£60–100/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="d2"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Apify scraper credits — <strong>~£40/mo</strong> (in running cost)</li><li>Claude API build — <strong>~£25</strong></li><li>Vercel free tier — <strong>£0</strong></li><li>VA deployment — <strong>~£80</strong></li><li>One-time setup total — <strong>~£105</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Apify scrapes competitor Google My Business, review scores, website pricing weekly</li><li>Claude generates competitive positioning summary</li><li>Weekly report emailed — no client login required</li></ul></div>
+      <div class="exnote green"><strong>Instant visible value.</strong> Every practice owner wants to know what competitors are doing. Deliverable from Week 1. Great demo module for new prospects.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d3')"><div class="mc mc-num">03</div><div class="mc mc-name">AI Appointment Optimiser<div class="mc-sub">No-show prediction, gap-filling, smart reminders &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–4 wks</div><div class="mc mc-cash cfree">~£200</div><div class="mc mc-hrs">35–55 hrs</div><div class="mc mc-run">£80–140/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="d3"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£35</strong></li><li>Twilio messages — <strong>~£30</strong></li><li>GHL (already paying) — <strong>£0</strong></li><li>VA deployment — <strong>~£100</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>No-show risk scored per patient from historical attendance data</li><li>High-risk appointments get extra reminder touchpoints automatically</li><li>Cancellations trigger gap-fill campaign to waitlist within minutes</li></ul></div>
+      <div class="exnote t"><strong>Stage 1 MVP complete at module 3.</strong> Total cash for all three: under £500. Get these live, sign clients, then build everything else funded by their subscriptions.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d4')"><div class="mc mc-num">04</div><div class="mc mc-name">Treatment Plan Conversion AI<div class="mc-sub">Case acceptance tracking, follow-up sequences, pricing insights &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">3–4 wks</div><div class="mc mc-cash clow">~£350</div><div class="mc mc-hrs">40–60 hrs</div><div class="mc mc-run">£70–120/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="d4"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API build + ongoing — <strong>~£50</strong></li><li>GHL sequences (already paying) — <strong>£0</strong></li><li>VA deployment — <strong>~£100</strong></li><li>Neon DB if needed — <strong>£20/mo</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Treatment plan data pulled from PMS via export</li><li>Conversion rate dashboard — accepted vs declined by treatment/dentist/period</li><li>Make.com triggers follow-up sequences for outstanding plans</li><li>AI identifies decline patterns, flags pricing/messaging recommendations</li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d5')"><div class="mc mc-num">05</div><div class="mc mc-name">Marketing Attribution Intelligence<div class="mc-sub">Patient acquisition tracking, ROI by channel, ad budget optimisation &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash clow">£400–800</div><div class="mc mc-hrs">50–80 hrs</div><div class="mc mc-run">£120–200/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="d5"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Google Ads + Meta APIs — <strong>free to connect</strong></li><li>GA4 — <strong>free</strong></li><li>Neon DB — <strong>£20/mo</strong></li><li>VA deployment — <strong>£150</strong></li><li>Extra iteration sessions — <strong>~£100</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Integration layer connecting Google Ads API, Meta Ads API, GA4, GHL</li><li>Patient tracked from ad click → booking → treatment acceptance → revenue</li><li>Dashboard shows true cost per new patient by channel</li></ul></div>
+      <div class="exnote amber"><strong>Medium complexity — 4 APIs.</strong> Expect 3–4 Claude debug sessions. Worth it: directly saves clients £500–2k/month in wasted ad spend.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d6')"><div class="mc mc-num">06</div><div class="mc mc-name">AI Clinical Documentation Assistant<div class="mc-sub">Voice-to-note, compliant records, 40% dentist time saving &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash cmid">£600–1.2k</div><div class="mc mc-hrs">50–70 hrs</div><div class="mc mc-run">£80–160/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="d6"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API build — <strong>~£60</strong></li><li>Whisper API transcription — <strong>~£30/mo</strong> (£0.006/min — nearly nothing)</li><li>VA deployment — <strong>£120</strong></li><li><strong>Compliance consultant review — £500–800 (one-time, necessary)</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Whisper API transcribes dentist voice in real time</li><li>Claude structures transcript into GDC-compliant note format</li><li>Web app — dentist records voice, gets note in seconds</li></ul></div>
+      <div class="exnote amber"><strong>Compliance review IS the main cost.</strong> One session with a dental compliance consultant (£500–800) gives sign-off before going live. Non-negotiable for clinical records. Everything else is cheap.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d7')"><div class="mc mc-num">07</div><div class="mc mc-name">Patient Demand Forecasting<div class="mc-sub">Seasonal demand prediction, staffing and campaign timing &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">3–5 wks</div><div class="mc mc-cash clow">~£350</div><div class="mc mc-hrs">40–60 hrs</div><div class="mc mc-run">£70–130/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="d7"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£50</strong></li><li>Google Search Trends API — <strong>free</strong></li><li>Neon DB — <strong>£20/mo</strong></li><li>VA deployment — <strong>£100</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>12+ months PMS appointment history stored in Neon</li><li>Google search trend data for dental searches in practice postcode</li><li>Claude builds forecasting model — 30/60/90 day predictions</li><li>Needs established practices with history — less useful for brand new sites</li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d8')"><div class="mc mc-num">08</div><div class="mc mc-name">AI Revenue Cycle Manager<div class="mc-sub">Insurance claims, billing automation, payment reconciliation &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time slow">6–8 wks</div><div class="mc mc-cash cmid">£1k–2.5k</div><div class="mc mc-hrs">80–120 hrs</div><div class="mc mc-run">£150–300/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="d8"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£80</strong></li><li>PMS API access — some providers charge £200–500/yr</li><li>Healthcode/payment processor — <strong>£200–500 setup</strong></li><li>VA deployment extra complexity — <strong>£200–300</strong></li><li>Financial data compliance review — <strong>£300–500</strong></li></ul></div>
+      <div class="exnote amber"><strong>Don't build this early.</strong> Most complex dental module. Touches money and insurance. Build when 20+ clients established and you have time to do it properly.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d9')"><div class="mc mc-num">09</div><div class="mc mc-name">Group Practice Benchmarking<div class="mc-sub">DSO intelligence — cross-site performance, best practice surfacing &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time slow">6–8 wks</div><div class="mc mc-cash cmid">£1.5k–3k</div><div class="mc mc-hrs">80–120 hrs</div><div class="mc mc-run">£200–400/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="d9"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£100</strong></li><li>Neon DB multi-tenant — <strong>~£50/mo</strong></li><li>VA multi-site onboarding — <strong>£300–500</strong></li><li>Multi-tenant architecture sessions — <strong>~£200 Claude API</strong></li></ul></div>
+      <div class="exnote t"><strong>Build at Month 6–8 when you have 20+ single-site clients.</strong> Their data IS the product. The DSO benchmarking platform is only valuable once you have enough practices generating real data to benchmark against.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('d10')"><div class="mc mc-num">10</div><div class="mc mc-name">DentalOS — Unified Platform<div class="mc-sub">All modules in one client-facing OS &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time hard">5–6 months total</div><div class="mc mc-cash cmid">£5k–10k total</div><div class="mc mc-hrs">Cumulative</div><div class="mc mc-run">£600–1.2k/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="d10"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title t">Build Order</div><ul class="exlist"><li><strong>Week 1–3:</strong> Reactivation + Competitor Intel (~£330 cash)</li><li><strong>Week 3–6:</strong> Appointment Optimiser (Stage 1 complete, ~£500 total)</li><li><strong>Month 2–3:</strong> Treatment Plan + Marketing Attribution (client revenue funds these)</li><li><strong>Month 3–4:</strong> Clinical Docs + Demand Forecasting</li><li><strong>Month 5–6:</strong> Revenue Cycle + Benchmarking</li><li><strong>Month 6+:</strong> Unify into one dashboard — Claude stitches it together</li></ul></div>
+      <div class="exnote t"><strong>£5–10k total cash across 6 months — never upfront.</strong> Stage 1 is ~£500. Everything after that is funded by client subscriptions. Entirely achievable with no startup funding.</div>
+    </div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ FACTORYOS ═══ -->
+<section id="factory">
+  <div class="sec-hdr"><div><div class="sec-tag g">Section 06 · Si</div><div class="sec-title"><span class="g">Factory</span>OS — All 10 Modules</div></div></div>
+  <div class="callout g"><div class="callout-title">FactoryOS Build Reality</div><p>Most FactoryOS modules work from ERP data exports — no live sensor integration needed to start. <strong>Si can take a manufacturer's spreadsheet, feed it to Claude, and have a working demand forecast during the audit day itself.</strong> The expensive sensor modules are Stage 3, funded by consulting audit revenue. Start with data-only modules. They cost almost nothing.</p></div>
+  <div class="mod-table">
+    <div class="mrow hdr"><div class="mc hc">#</div><div class="mc hc">Module</div><div class="mc hc">Build Time</div><div class="mc hc">Cash Cost</div><div class="mc hc">Your Time</div><div class="mc hc">Running/mo</div><div class="mc hc">Stage</div></div>
+
+    <div class="mrow" onclick="tog('f1')"><div class="mc mc-num">01</div><div class="mc mc-name">Demand Forecasting Engine<div class="mc-sub">30/60/90-day forecasts from ERP data — zero sensor dependency &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£200</div><div class="mc mc-hrs">30–50 hrs</div><div class="mc mc-run">£80–150/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="f1"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£50</strong></li><li>Neon DB for historical data — <strong>£20/mo</strong></li><li>VA deployment — <strong>~£100</strong></li><li>Python runtime on Vercel — <strong>free tier</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Client provides order history CSV from ERP — no integration needed</li><li>Claude builds forecasting model (Prophet/ARIMA) from CSV</li><li>30/60/90-day demand forecast dashboard on Vercel</li><li>Weekly forecast report auto-emailed to production planning team</li></ul></div>
+      <div class="exnote green"><strong>Start here.</strong> Si walks in with a spreadsheet and produces a live forecast during the audit. That one output justifies the audit fee and sells the platform. Zero cash beyond Claude.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f2')"><div class="mc mc-num">02</div><div class="mc mc-name">AI Inventory Optimiser<div class="mc-sub">SKU-level stock optimisation, reorder automation &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–4 wks</div><div class="mc mc-cash cfree">~£250</div><div class="mc mc-hrs">35–55 hrs</div><div class="mc mc-run">£80–150/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="f2"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£50</strong></li><li>Neon DB — <strong>£20/mo</strong></li><li>n8n self-hosted — <strong>£10/mo VPS</strong></li><li>VA deployment — <strong>~£100</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>ERP inventory export: stock levels, reorder points, lead times, demand history</li><li>Claude builds optimisation model — ideal stock per SKU using demand forecasts</li><li>Dashboard shows overstocked vs understocked SKUs with actions</li><li>Automated reorder alerts via n8n</li></ul></div>
+      <div class="exnote g"><strong>Pair with Demand Forecasting.</strong> These two = FactoryOS Stage 1 MVP. Total cash: ~£450. Both work from spreadsheet exports. Si can demo both from a single client CSV file.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f3')"><div class="mc mc-num">03</div><div class="mc mc-name">AI Procurement Intelligence<div class="mc-sub">Supplier monitoring, auto-POs, market pricing &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash cfree">~£400</div><div class="mc mc-hrs">50–70 hrs</div><div class="mc mc-run">£120–200/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="f3"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Apify supplier pricing scraping — <strong>~£50/mo</strong></li><li>Companies House API — <strong>free</strong></li><li>n8n auto-PO workflow — <strong>£10/mo</strong></li><li>VA deployment — <strong>£120</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>ERP purchase order history baselines current spend patterns</li><li>Apify scrapes supplier pricing and alternatives weekly</li><li>n8n triggers reorder alerts + draft PO generation</li><li>Procurement dashboard: spend vs market rate per commodity</li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f4')"><div class="mc mc-num">04</div><div class="mc mc-name">Supplier Intelligence Platform<div class="mc-sub">Risk scoring, delivery performance, financial health &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">3–5 wks</div><div class="mc mc-cash clow">~£350</div><div class="mc mc-hrs">40–60 hrs</div><div class="mc mc-run">£100–180/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="f4"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£50</strong></li><li>Companies House API — <strong>free</strong></li><li>Apify news monitoring — <strong>~£40/mo</strong></li><li>Skip Creditsafe initially — use Companies House free data</li><li>VA deployment — <strong>£100</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f5')"><div class="mc mc-num">05</div><div class="mc mc-name">AI Energy Optimiser<div class="mc-sub">Consumption monitoring, load shifting, sustainability reports &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash clow">~£400</div><div class="mc mc-hrs">45–65 hrs</div><div class="mc mc-run">£100–180/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="f5"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Energy supplier half-hourly data API — <strong>free from most UK suppliers</strong></li><li>n8n — <strong>£10/mo</strong></li><li>VA deployment — <strong>£120</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f6')"><div class="mc mc-num">06</div><div class="mc mc-name">Workforce Intelligence Platform<div class="mc-sub">Shift optimisation, skills matrix, absenteeism prediction &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash clow">~£380</div><div class="mc mc-hrs">45–65 hrs</div><div class="mc mc-run">£90–160/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="f6"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Supabase free tier — <strong>£0</strong></li><li>VA deployment + data migration — <strong>£150</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f7')"><div class="mc mc-num">07</div><div class="mc mc-name">AI Production Scheduler<div class="mc-sub">Dynamic sequencing, OEE optimisation, scenario modelling &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time slow">6–8 wks</div><div class="mc mc-cash cmid">£800–1.5k</div><div class="mc mc-hrs">70–100 hrs</div><div class="mc mc-run">£180–300/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="f7"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£120</strong></li><li>Neon DB — <strong>£20/mo</strong></li><li>ERP API access (varies by vendor) — <strong>£0–500/yr</strong></li><li>VA deployment — <strong>£200</strong></li></ul></div>
+      <div class="exnote amber"><strong>Start with CSV export</strong> if live ERP API is complex. Manual daily upload still delivers 80% of the value while you sort the integration. Upgrade once the client is paying monthly.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f8')"><div class="mc mc-num">08</div><div class="mc mc-name">AI Predictive Maintenance<div class="mc-sub">Machine sensor analysis, failure prediction, auto-maintenance scheduling &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time hard">10–14 wks</div><div class="mc mc-cash chigh">£8k–20k</div><div class="mc mc-hrs">100–150 hrs</div><div class="mc mc-run">£300–600/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="f8"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Claude API + ML model — <strong>~£200</strong></li><li><strong>Industrial automation specialist (PLC/OPC-UA) — £5k–£15k. The real cost.</strong></li><li>IoT gateway hardware (if needed) — <strong>£500–2k</strong></li><li>InfluxDB cloud time-series DB — <strong>£80/mo</strong></li><li>VA deployment — <strong>£200</strong></li></ul></div>
+      <div class="exnote amber"><strong>The one module that genuinely needs external cash.</strong> Fund it from Si's first 2–3 audit revenues (£5–15k each). This module alone justifies £8–25k/month contracts — the specialist cost is a rounding error against that.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f9')"><div class="mc mc-num">09</div><div class="mc mc-name">Computer Vision Quality Control<div class="mc-sub">Real-time defect detection, camera inspection, quality reporting &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time hard">14–20 wks</div><div class="mc mc-cash chigh">£15k–35k</div><div class="mc mc-hrs">150–200 hrs</div><div class="mc mc-run">£400–800/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="f9"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Cash Breakdown</div><ul class="exlist"><li>Camera hardware per line — <strong>£2k–10k</strong></li><li>Machine vision specialist — <strong>£3k–8k</strong></li><li>Image labelling (500–2k defect photos) — <strong>£1k–3k</strong></li><li>Claude + GPU cloud model training — <strong>£500–1.5k</strong></li><li>Edge compute device per line — <strong>£300–800</strong></li></ul></div>
+      <div class="exnote amber"><strong>Price the client before you build.</strong> Get a signed contract and 50% deposit before spending on hardware. One client funds the entire build. This is pure consulting — never a standard SaaS product.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('f10')"><div class="mc mc-num">10</div><div class="mc mc-name">FactoryOS — Unified Operations AI<div class="mc-sub">All modules, one dashboard, autonomous agents, executive intelligence &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time hard">6–12 months</div><div class="mc mc-cash chigh">£25k–60k total</div><div class="mc mc-hrs">Cumulative</div><div class="mc mc-run">£1k–3k/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="f10"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title g">Build Order</div><ul class="exlist"><li><strong>Weeks 1–6:</strong> Demand Forecasting + Inventory (~£450 cash)</li><li><strong>Month 2–3:</strong> Procurement + Supplier Intelligence</li><li><strong>Month 3–4:</strong> Energy + Workforce + Production Scheduler</li><li><strong>Month 5–8:</strong> Predictive Maintenance (funded by audit revenue)</li><li><strong>Month 8–12:</strong> Computer Vision QC (funded per client contract)</li></ul></div>
+      <div class="exnote g"><strong>Stage 1 costs ~£450 cash.</strong> Si's first audit fee (£2.5–5k) funds all Stage 2 modules. First retainer client (£8–20k/mo) funds Stage 3. Entirely self-funding at every step.</div>
+    </div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ HEALTHOS ═══ -->
+<section id="health">
+  <div class="sec-hdr"><div><div class="sec-tag r">Section 07 · Mum's Industry</div><div class="sec-title"><span class="r">Health</span>OS — All 10 Modules</div></div></div>
+  <div class="callout r"><div class="callout-title">HealthOS Build Reality</div><p>HealthOS has the most buildable Stage 1 modules of all three verticals. Workforce compliance, agency management, and skills gaps are <strong>database + automation problems</strong> — exactly what Claude handles best. <strong>Total cash for Stage 1 HealthOS MVP: under £400.</strong></p></div>
+  <div class="mod-table">
+    <div class="mrow hdr"><div class="mc hc">#</div><div class="mc hc">Module</div><div class="mc hc">Build Time</div><div class="mc hc">Cash Cost</div><div class="mc hc">Your Time</div><div class="mc hc">Running/mo</div><div class="mc hc">Stage</div></div>
+
+    <div class="mrow" onclick="tog('h1')"><div class="mc mc-num">01</div><div class="mc mc-name">AI Workforce Compliance Manager<div class="mc-sub">Certifications, DBS, training records, auto-expiry alerts &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£180</div><div class="mc mc-hrs">25–40 hrs</div><div class="mc mc-run">£50–90/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="h1"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£30</strong></li><li>Supabase free tier — <strong>£0</strong></li><li>Make.com expiry alerts (already paying) — <strong>£0</strong></li><li>Twilio SMS alerts — <strong>~£20/mo</strong></li><li>VA deployment + data migration — <strong>~£120</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Staff compliance database in Supabase — certs, DBS, mandatory training</li><li>Automated expiry alerts at 90/60/30 days via Make.com + Twilio</li><li>Compliance dashboard — whole org at a glance</li><li>One-click audit evidence pack export for CQC inspections</li></ul></div>
+      <div class="exnote green"><strong>Start here for HealthOS.</strong> Every healthcare operator has this exact problem. System runs itself once set up. Saves 3–5 hrs HR admin/week. Justifies the subscription from Day 1.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h2')"><div class="mc mc-num">02</div><div class="mc mc-name">Agency Staff Intelligence Platform<div class="mc-sub">Agency procurement, performance scoring, rate benchmarking &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£220</div><div class="mc mc-hrs">28–45 hrs</div><div class="mc mc-run">£70–120/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="h2"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£40</strong></li><li>Apify rate card scraping — <strong>~£40/mo</strong></li><li>Supabase free tier — <strong>£0</strong></li><li>VA deployment — <strong>~£100</strong></li></ul></div>
+      <div class="exnote green"><strong>Stage 1 HealthOS MVP = Compliance Manager + Agency Intelligence.</strong> Total cash: ~£400. Both work from existing spreadsheet/invoice data. Mum can demo these to her first contact tomorrow with zero build spend if needed.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h3')"><div class="mc mc-num">03</div><div class="mc mc-name">Skills Gap Intelligence Platform<div class="mc-sub">Capability mapping, development plans, training triggers &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£200</div><div class="mc mc-hrs">25–40 hrs</div><div class="mc mc-run">£50–90/mo</div><div class="mc"><span class="stg s1"><span class="stg-dot"></span>Now</span></div></div>
+    <div class="mexp" id="h3"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£40</strong></li><li>Supabase free tier — <strong>£0</strong></li><li>VA deployment — <strong>£100</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Role competency frameworks in Supabase — Claude structures from job descriptions</li><li>Staff self-assessment via simple web forms Claude builds</li><li>Gap analysis dashboard at individual and org level</li><li>Claude auto-generates personalised development plans</li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h4')"><div class="mc mc-num">04</div><div class="mc mc-name">Regulatory Compliance AI<div class="mc-sub">CQC/MHRA monitoring, gap analysis, auto audit evidence &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">3–5 wks</div><div class="mc mc-cash cmid">£600–1.2k</div><div class="mc mc-hrs">40–60 hrs</div><div class="mc mc-run">£100–180/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h4"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Pinecone vector DB — <strong>£70/mo</strong></li><li>VA deployment — <strong>£120</strong></li><li><strong>Compliance consultant review — £400–800 (one-time)</strong></li></ul></div>
+      <div class="exnote r"><strong>High perceived value.</strong> Operators are terrified of CQC inspections. A live compliance dashboard justifies the fee alone. The compliance review is the main cost — entirely worth it.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h5')"><div class="mc mc-num">05</div><div class="mc mc-name">AI Shift Scheduling Optimiser<div class="mc-sub">Demand-driven scheduling, WTR compliance, absence management &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash clow">~£450</div><div class="mc mc-hrs">50–70 hrs</div><div class="mc mc-run">£120–200/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h5"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£70</strong></li><li>Supabase free tier — <strong>£0</strong></li><li>Twilio schedule notifications — <strong>~£30/mo</strong></li><li>VA deployment — <strong>£150</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h6')"><div class="mc mc-num">06</div><div class="mc mc-name">Supply Chain Risk Intelligence<div class="mc-sub">Supplier monitoring, disruption prediction, contingency triggers &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–5 wks</div><div class="mc mc-cash clow">~£380</div><div class="mc mc-hrs">45–65 hrs</div><div class="mc mc-run">£110–190/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h6"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£50</strong></li><li>Companies House API — <strong>free</strong></li><li>Apify news monitoring — <strong>~£40/mo</strong></li><li>VA deployment — <strong>£120</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h7')"><div class="mc mc-num">07</div><div class="mc mc-name">Procurement Optimisation AI<div class="mc-sub">Medical supply benchmarking, reorder automation, cost reduction &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–5 wks</div><div class="mc mc-cash clow">~£380</div><div class="mc mc-hrs">45–60 hrs</div><div class="mc mc-run">£100–180/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h7"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£60</strong></li><li>Apify NHS Supply Chain pricing scrape — <strong>~£40/mo</strong></li><li>n8n reorder alerts — <strong>£10/mo</strong></li><li>VA deployment — <strong>£120</strong></li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h8')"><div class="mc mc-num">08</div><div class="mc mc-name">AI Route & Delivery Optimisation<div class="mc-sub">Medical supply routing, fuel savings, on-time delivery improvement &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time med">4–6 wks</div><div class="mc mc-cash clow">~£500</div><div class="mc mc-hrs">50–70 hrs</div><div class="mc mc-run">£120–220/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h8"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£70</strong></li><li>Google Maps Routes API — <strong>~£50–100/mo</strong> (£0.008 per route)</li><li>VA deployment — <strong>£150</strong></li></ul></div>
+      <div><div class="ex-title">How It's Built</div><ul class="exlist"><li>Delivery orders from order management system</li><li>Google Maps Routes API optimises routes — Claude builds the wrapper</li><li>Driver app (progressive web app) works on any smartphone</li><li>Real-time exception monitoring via Make.com</li></ul></div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h9')"><div class="mc mc-num">09</div><div class="mc mc-name">Operational Performance Dashboard<div class="mc-sub">Real-time KPIs, cross-function visibility, automated board reports &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time fast">2–3 wks</div><div class="mc mc-cash cfree">~£180</div><div class="mc mc-hrs">25–35 hrs</div><div class="mc mc-run">£60–100/mo</div><div class="mc"><span class="stg s2"><span class="stg-dot"></span>Earning</span></div></div>
+    <div class="mexp" id="h9"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Cash Breakdown</div><ul class="exlist"><li>Claude API — <strong>~£40</strong></li><li>Neon DB data aggregation — <strong>£20/mo</strong></li><li>VA deployment — <strong>~£80</strong></li></ul></div>
+      <div class="exnote r"><strong>Cheapest, highest-impact add at Month 3–4.</strong> Aggregates data from all active modules. Transforms perception from "several tools" to "one operating system." Massively increases retention and perceived value for minimal cost.</div>
+    </div></div>
+
+    <div class="mrow" onclick="tog('h10')"><div class="mc mc-num">10</div><div class="mc mc-name">HealthOS — Unified Operations AI<div class="mc-sub">All modules in one healthcare logistics OS &nbsp;<button class="mc-toggle">+ details</button></div></div><div class="mc mc-time slow">5–6 months total</div><div class="mc mc-cash cmid">£4k–8k total</div><div class="mc mc-hrs">Cumulative</div><div class="mc mc-run">£700–1.4k/mo</div><div class="mc"><span class="stg s3"><span class="stg-dot"></span>Established</span></div></div>
+    <div class="mexp" id="h10"><div class="exp-gut"></div><div class="exp-body">
+      <div><div class="ex-title r">Build Order</div><ul class="exlist"><li><strong>Week 1–3:</strong> Workforce Compliance + Agency Intel + Skills Gap (~£400 cash)</li><li><strong>Month 2:</strong> Regulatory Compliance AI (£500–800 compliance review)</li><li><strong>Month 2–3:</strong> Shift Scheduling + Supply Chain Risk</li><li><strong>Month 3–4:</strong> Procurement + Route Optimisation</li><li><strong>Month 4–5:</strong> Operational Dashboard (ties everything together)</li></ul></div>
+      <div class="exnote r"><strong>£4–8k total cash across 5 months — never upfront.</strong> Stage 1 is ~£400. Everything after is funded by client revenue. No external investment required at any point.</div>
+    </div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ TOTALS ═══ -->
+<section id="totals">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 08</div><div class="sec-title">Startup Cost <em>Summary</em></div></div></div>
+  <div class="callout green"><div class="callout-title">The Real Picture</div><p>Across all three verticals, <strong>you can build a sellable Stage 1 MVP for under £1,750 total in real cash.</strong> No developer fees. No designer fees. No agency. Just Claude, your time, and a few hundred pounds. The expensive modules only exist in FactoryOS and they're funded by consulting revenue before you build them.</p></div>
+  <div class="totgrid">
+    <div class="tot t"><div class="tot-tag">🦷 DentalOS · Kie & Leah</div><div class="tot-name">Real Cash Costs</div>
+      <div class="tot-row"><span class="tot-label">Stage 1 MVP (3 modules)</span><span class="tot-val ac">~£500</span></div>
+      <div class="tot-row"><span class="tot-label">Stage 2 (months 2–4)</span><span class="tot-val ac">£1.5k–£3k</span></div>
+      <div class="tot-row"><span class="tot-label">Stage 3 (months 5–8)</span><span class="tot-val ac">£3k–£5k</span></div>
+      <div class="tot-row"><span class="tot-label">Tool subs Year 1 (GHL, Make, Vercel)</span><span class="tot-val">£3.5k–£5k</span></div>
+      <div class="tot-row"><span class="tot-label">Compliance review (clinical docs)</span><span class="tot-val">£500–£800</span></div>
+      <div class="tot-big"><div class="tot-big-label">Total to full DentalOS</div><div class="tot-big-val">£9k–£14k</div></div>
+      <div class="tot-row" style="margin-top:10px"><span class="tot-label" style="color:var(--teal)">To get first paying client</span><span class="tot-val ac">~£500</span></div>
+    </div>
+    <div class="tot g"><div class="tot-tag">🏭 FactoryOS · Si</div><div class="tot-name">Real Cash Costs</div>
+      <div class="tot-row"><span class="tot-label">Stage 1 MVP (3 ERP modules)</span><span class="tot-val ac">~£850</span></div>
+      <div class="tot-row"><span class="tot-label">Stage 2 (months 2–4)</span><span class="tot-val ac">£1.5k–£3k</span></div>
+      <div class="tot-row"><span class="tot-label">Predictive maintenance specialist</span><span class="tot-val ac">£5k–£15k</span></div>
+      <div class="tot-row"><span class="tot-label">Computer vision QC</span><span class="tot-val ac">£0 from you (client-funded)</span></div>
+      <div class="tot-row"><span class="tot-label">Tool subs Year 1</span><span class="tot-val">£4k–£7k</span></div>
+      <div class="tot-big"><div class="tot-big-label">Total to full FactoryOS</div><div class="tot-big-val">£12k–£26k</div></div>
+      <div class="tot-row" style="margin-top:10px"><span class="tot-label" style="color:var(--gold)">To get first audit client</span><span class="tot-val ac">~£850</span></div>
+    </div>
+    <div class="tot r"><div class="tot-tag">🏥 HealthOS · Mum's industry</div><div class="tot-name">Real Cash Costs</div>
+      <div class="tot-row"><span class="tot-label">Stage 1 MVP (3 modules)</span><span class="tot-val ac">~£400</span></div>
+      <div class="tot-row"><span class="tot-label">Stage 2 (months 2–4)</span><span class="tot-val ac">£1.5k–£3k</span></div>
+      <div class="tot-row"><span class="tot-label">Stage 3 (months 4–6)</span><span class="tot-val ac">£1k–£2k</span></div>
+      <div class="tot-row"><span class="tot-label">Tool subs Year 1</span><span class="tot-val">£3.5k–£5k</span></div>
+      <div class="tot-row"><span class="tot-label">Compliance consultant (CQC layer)</span><span class="tot-val">£400–£800</span></div>
+      <div class="tot-big"><div class="tot-big-label">Total to full HealthOS</div><div class="tot-big-val">£7k–£11k</div></div>
+      <div class="tot-row" style="margin-top:10px"><span class="tot-label" style="color:var(--red)">To get first paying client</span><span class="tot-val ac">~£400</span></div>
+    </div>
+  </div>
+  <div class="callout amber"><div class="callout-title">All Three Verticals — Stage 1 Only</div><p>DentalOS ~£500 + FactoryOS ~£850 + HealthOS ~£400 = <strong>~£1,750 total real cash to launch all three simultaneously.</strong> That's less than one month's subscription revenue from three dental clients. Everything after Stage 1 is funded by what those clients pay you.</p></div>
+</section>
+
+<!-- ═══ RUNNING COSTS ═══ -->
+<section id="running">
+  <div class="sec-hdr"><div><div class="sec-tag w">Section 09</div><div class="sec-title">Monthly <em>Running</em> Costs</div></div></div>
+  <div class="callout t"><div class="callout-title">Running Cost Reality</div><p>At 0–10 clients per vertical, combined infrastructure costs across all three verticals is roughly <strong>£800–£1,500/month.</strong> At 10 clients per vertical (30 total), you're generating £15–25k MRR. Infrastructure stays below 8% of revenue. It never becomes a problem.</p></div>
+  <div class="rcgrid">
+    <div class="rci"><div class="rci-tool">GoHighLevel</div><div class="rci-cost">£297/mo</div><div class="rci-note">Agency plan. Unlimited client sub-accounts. Fixed regardless of how many clients you have.</div></div>
+    <div class="rci"><div class="rci-tool">Claude API</div><div class="rci-cost">£100–600/mo</div><div class="rci-note">Scales with usage. 30 active clients ≈ £200–350/mo. Cheapest developer you'll ever have.</div></div>
+    <div class="rci"><div class="rci-tool">Make.com</div><div class="rci-cost">£29–99/mo</div><div class="rci-note">Core plan covers most automation. Scale at £99/mo for high volume.</div></div>
+    <div class="rci"><div class="rci-tool">n8n</div><div class="rci-cost">£8–20/mo</div><div class="rci-note">VPS hosting only. Software is free and open source.</div></div>
+    <div class="rci"><div class="rci-tool">Vercel</div><div class="rci-cost">£0–20/mo</div><div class="rci-note">Free tier covers early stage. Pro at £20/mo when needed.</div></div>
+    <div class="rci"><div class="rci-tool">Supabase</div><div class="rci-cost">£0–25/mo</div><div class="rci-note">Free tier is generous. Pro at £25/mo covers most use cases long-term.</div></div>
+    <div class="rci"><div class="rci-tool">Neon DB</div><div class="rci-cost">£0–19/mo</div><div class="rci-note">Serverless Postgres. Free tier covers early stage.</div></div>
+    <div class="rci"><div class="rci-tool">Twilio</div><div class="rci-cost">£30–200/mo</div><div class="rci-note">~1p per SMS. Very predictable. 10k messages = ~£100.</div></div>
+    <div class="rci"><div class="rci-tool">Apify</div><div class="rci-cost">£49–149/mo</div><div class="rci-note">Starter at £49/mo covers ~20 clients' scraping needs.</div></div>
+    <div class="rci"><div class="rci-tool">Pinecone</div><div class="rci-cost">£0–70/mo</div><div class="rci-note">Free tier covers early stage. Only needed for HealthOS regulatory RAG.</div></div>
+    <div class="rci"><div class="rci-tool">OpenAI Whisper</div><div class="rci-cost">£20–80/mo</div><div class="rci-note">Voice transcription for dental docs. £0.006/min — barely registers on the bill.</div></div>
+    <div class="rci"><div class="rci-tool">Google APIs</div><div class="rci-cost">£20–100/mo</div><div class="rci-note">Maps routing, Ads API, Search Trends. Free tiers cover most of early stage.</div></div>
+  </div>
+  <div class="totgrid">
+    <div class="tot t"><div class="tot-tag">DentalOS Running</div><div class="tot-name">Monthly Infrastructure</div>
+      <div class="tot-row"><span class="tot-label">0–5 clients</span><span class="tot-val ac">£350–550/mo</span></div>
+      <div class="tot-row"><span class="tot-label">5–20 clients</span><span class="tot-val ac">£550–900/mo</span></div>
+      <div class="tot-row"><span class="tot-label">20–50 clients</span><span class="tot-val ac">£900–1,500/mo</span></div>
+      <div class="tot-row"><span class="tot-label" style="color:var(--green)">Revenue at 20 clients (avg £700)</span><span class="tot-val" style="color:var(--green)">£14,000/mo</span></div>
+      <div class="tot-row"><span class="tot-label">Infra as % of revenue</span><span class="tot-val" style="color:var(--green)">~6%</span></div>
+    </div>
+    <div class="tot g"><div class="tot-tag">FactoryOS Running</div><div class="tot-name">Monthly Infrastructure</div>
+      <div class="tot-row"><span class="tot-label">0–3 clients</span><span class="tot-val ac">£400–700/mo</span></div>
+      <div class="tot-row"><span class="tot-label">3–10 clients</span><span class="tot-val ac">£700–1,500/mo</span></div>
+      <div class="tot-row"><span class="tot-label">10–20 clients</span><span class="tot-val ac">£1,500–3,000/mo</span></div>
+      <div class="tot-row"><span class="tot-label" style="color:var(--green)">Revenue at 10 clients (avg £10k)</span><span class="tot-val" style="color:var(--green)">£100,000/mo</span></div>
+      <div class="tot-row"><span class="tot-label">Infra as % of revenue</span><span class="tot-val" style="color:var(--green)">~1.5%</span></div>
+    </div>
+    <div class="tot r"><div class="tot-tag">HealthOS Running</div><div class="tot-name">Monthly Infrastructure</div>
+      <div class="tot-row"><span class="tot-label">0–5 clients</span><span class="tot-val ac">£350–550/mo</span></div>
+      <div class="tot-row"><span class="tot-label">5–20 clients</span><span class="tot-val ac">£550–900/mo</span></div>
+      <div class="tot-row"><span class="tot-label">20–50 clients</span><span class="tot-val ac">£900–1,600/mo</span></div>
+      <div class="tot-row"><span class="tot-label" style="color:var(--green)">Revenue at 20 clients (avg £800)</span><span class="tot-val" style="color:var(--green)">£16,000/mo</span></div>
+      <div class="tot-row"><span class="tot-label">Infra as % of revenue</span><span class="tot-val" style="color:var(--green)">~5.5%</span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<footer>
+  <div class="footer-brand">Build Plan v2 · AI Systems Co. · 2025</div>
+  <div class="footer-note">Honest costs · 30 modules · Click rows to expand</div>
+  <div class="footer-note">Stage 1 across all 3 verticals = ~£1,750 total cash</div>
+</footer>
+<a href="#top" class="scroll-top">↑</a>
+<script>
+  function tog(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.classList.toggle('open');
+    var row=el.previousElementSibling;
+    if(!row)return;
+    var btn=row.querySelector('.mc-toggle');
+    if(btn)btn.textContent=el.classList.contains('open')?'− hide':'+ details';
+  }
+  document.querySelectorAll('.mc-toggle').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var row=btn.closest('.mrow');
+      if(!row)return;
+      var fn=row.getAttribute('onclick');
+      if(fn){var m=fn.match(/'([^']+)'/);if(m)tog(m[1]);}
+    });
+  });
+</script>
+</body>
+</html>

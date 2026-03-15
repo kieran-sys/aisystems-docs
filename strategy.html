@@ -1,0 +1,2879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Systems Company — Global Strategy Report 2025–2030</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #09090f;
+    --bg2: #0f0f1a;
+    --bg3: #141422;
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.15);
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text: #e8e6df;
+    --text-dim: #8a8880;
+    --text-bright: #f5f2eb;
+    --red: #d94f3d;
+    --teal: #3db8a8;
+    --blue: #4a7fd4;
+    --purple: #8b5cf6;
+    --green: #4caf72;
+    --accent2: #e05c3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 80px 60px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(74,127,212,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .cover-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cover-tag::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 100px);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--text-bright);
+    max-width: 900px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .cover h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .cover-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 28px;
+    letter-spacing: 0.05em;
+    max-width: 620px;
+    line-height: 1.8;
+  }
+
+  .cover-stats {
+    display: flex;
+    gap: 48px;
+    margin-top: 56px;
+    flex-wrap: wrap;
+  }
+
+  .cover-stat {
+    border-left: 2px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .cover-stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1.1;
+  }
+
+  .cover-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .cover-bottom {
+    position: absolute;
+    bottom: 32px;
+    right: 60px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 60px;
+  }
+
+  .toc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    background: var(--bg3);
+  }
+
+  .toc-item:hover {
+    border-color: var(--border-bright);
+    background: rgba(201,168,76,0.04);
+    color: var(--gold-light);
+  }
+
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.6;
+    min-width: 28px;
+    margin-top: 2px;
+  }
+
+  .toc-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── LAYOUT ── */
+  .report-body {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  /* ── PART HEADER ── */
+  .part-header {
+    padding: 80px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+  }
+
+  .part-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-bottom: -10px;
+  }
+
+  .part-title-block {}
+
+  .part-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .part-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.1;
+  }
+
+  .part-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 72px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── INDUSTRY CARD ── */
+  .industry-grid {
+    display: grid;
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .industry-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .industry-card:hover {
+    border-color: var(--border-bright);
+  }
+
+  .industry-card.rank-1 { border-left: 3px solid var(--gold); }
+  .industry-card.rank-2 { border-left: 3px solid #a8a8a8; }
+  .industry-card.rank-3 { border-left: 3px solid #cd7f32; }
+  .industry-card.rank-4,
+  .industry-card.rank-5 { border-left: 3px solid var(--teal); }
+  .industry-card.rank-6,
+  .industry-card.rank-7 { border-left: 3px solid var(--blue); }
+  .industry-card.rank-8,
+  .industry-card.rank-9,
+  .industry-card.rank-10 { border-left: 3px solid var(--text-dim); }
+
+  .industry-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .industry-rank {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .industry-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-top: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .industry-score {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+  }
+
+  .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .score-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .score-denom {
+    font-size: 18px;
+    color: var(--text-dim);
+  }
+
+  .industry-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .meta-item {}
+
+  .meta-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .meta-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-bright);
+  }
+
+  .meta-val.good { color: var(--green); }
+  .meta-val.warn { color: var(--gold); }
+  .meta-val.hot { color: var(--red); }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    min-width: 140px;
+    letter-spacing: 0.05em;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .bar-fill.teal { background: var(--teal); }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.red { background: var(--red); }
+  .bar-fill.green { background: var(--green); }
+
+  .bar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    min-width: 24px;
+    text-align: right;
+  }
+
+  .industry-insight {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+
+  .industry-insight strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .speed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .speed-badge.explosive { background: rgba(217,79,61,0.15); color: var(--red); border: 1px solid rgba(217,79,61,0.3); }
+  .speed-badge.rapid { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+  .speed-badge.fast { background: rgba(61,184,168,0.1); color: var(--teal); border: 1px solid rgba(61,184,168,0.2); }
+  .speed-badge.moderate { background: rgba(74,127,212,0.1); color: var(--blue); border: 1px solid rgba(74,127,212,0.2); }
+
+  /* ── SYSTEMS LIST ── */
+  .systems-industry {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .systems-industry-header {
+    padding: 20px 28px;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .systems-industry-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-bright);
+  }
+
+  .systems-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  .systems-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 0;
+  }
+
+  .system-item {
+    padding: 20px 28px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .system-item:hover {
+    background: rgba(201,168,76,0.03);
+  }
+
+  .system-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 6px;
+  }
+
+  .system-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .system-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── PRODUCT/CONSULTING TABLE ── */
+  .model-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    display: table;
+  }
+
+  .model-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-bright);
+    background: var(--bg3);
+  }
+
+  .model-table td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .model-table tr:hover td {
+    background: rgba(255,255,255,0.015);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .badge.saas { background: rgba(61,184,168,0.12); color: var(--teal); border: 1px solid rgba(61,184,168,0.2); }
+  .badge.consulting { background: rgba(139,92,246,0.12); color: var(--purple); border: 1px solid rgba(139,92,246,0.2); }
+  .badge.hybrid { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+  .badge.high { background: rgba(76,175,114,0.12); color: var(--green); }
+  .badge.medium { background: rgba(201,168,76,0.12); color: var(--gold); }
+  .badge.low { background: rgba(217,79,61,0.1); color: var(--red); }
+
+  /* ── COPILOT CARD ── */
+  .copilot-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+
+  .copilot-header {
+    background: linear-gradient(135deg, var(--bg3) 0%, rgba(201,168,76,0.05) 100%);
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .copilot-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .copilot-name em { color: var(--gold); font-style: italic; }
+
+  .copilot-tagline {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .copilot-bv {
+    text-align: right;
+  }
+
+  .copilot-bv-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .copilot-bv-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .copilot-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0;
+  }
+
+  .copilot-col {
+    padding: 24px 28px;
+    border-right: 1px solid var(--border);
+  }
+
+  .copilot-col:last-child {
+    border-right: none;
+  }
+
+  .copilot-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .copilot-col ul {
+    list-style: none;
+  }
+
+  .copilot-col ul li {
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .copilot-col ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 10px;
+  }
+
+  /* ── TECH STACK ── */
+  .stack-layer {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    margin-bottom: 2px;
+    padding: 20px 28px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .stack-layer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 2px;
+  }
+
+  .stack-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tool-tag {
+    padding: 5px 12px;
+    border: 1px solid var(--border-bright);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    letter-spacing: 0.03em;
+    transition: all 0.15s;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .tool-tag:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .tool-tag.primary {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.3);
+    color: var(--gold-light);
+  }
+
+  /* ── REVENUE MODEL ── */
+  .revenue-tier {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .rev-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rev-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .rev-card.tier-1::before { background: var(--teal); }
+  .rev-card.tier-2::before { background: var(--gold); }
+  .rev-card.tier-3::before { background: var(--purple); }
+
+  .rev-tier-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+
+  .rev-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .rev-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .rev-card.tier-1 .rev-price { color: var(--teal); }
+  .rev-card.tier-2 .rev-price { color: var(--gold); }
+  .rev-card.tier-3 .rev-price { color: var(--purple); }
+
+  .rev-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .rev-features {
+    list-style: none;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .rev-features li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .rev-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 10px;
+  }
+
+  /* ── GAP CARDS ── */
+  .gap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+    margin-bottom: 40px;
+  }
+
+  .gap-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 24px 24px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .gap-card:hover {
+    border-color: rgba(201,168,76,0.3);
+  }
+
+  .gap-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.07);
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    line-height: 1;
+  }
+
+  .gap-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .gap-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    padding-right: 40px;
+  }
+
+  .gap-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  .gap-market {
+    margin-top: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── GTM TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -36px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--gold);
+    background: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .timeline-dot::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .timeline-phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .timeline-phase-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .timeline-phase-body {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+  }
+
+  .timeline-steps {
+    list-style: none;
+  }
+
+  .timeline-steps li {
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    gap: 12px;
+    line-height: 1.5;
+  }
+
+  .timeline-steps li::before {
+    content: attr(data-n);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    opacity: 0.5;
+    min-width: 20px;
+    margin-top: 2px;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 20px 28px;
+    margin: 40px 0;
+    background: rgba(201,168,76,0.04);
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-bright);
+    line-height: 1.5;
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ── SUMMARY TABLE ── */
+  .summary-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 40px;
+  }
+
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+
+  .summary-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-bright);
+    background: var(--bg3);
+    white-space: nowrap;
+  }
+
+  .summary-table td {
+    padding: 12px 14px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+
+  .summary-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .rank-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--gold);
+    opacity: 0.4;
+  }
+
+  .industry-name-cell {
+    font-weight: 700;
+    color: var(--text-bright);
+    font-size: 14px;
+  }
+
+  /* ── DIVIDER ── */
+  .part-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+    margin: 80px 0;
+  }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--bg2);
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .callout.gold { border-left-color: var(--gold); }
+  .callout.red { border-left-color: var(--red); }
+  .callout.purple { border-left-color: var(--purple); }
+
+  .callout-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--teal);
+  }
+
+  .callout.gold .callout-title { color: var(--gold); }
+  .callout.red .callout-title { color: var(--red); }
+  .callout.purple .callout-title { color: var(--purple); }
+
+  .callout p {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.65;
+  }
+
+  .callout strong { color: var(--text-bright); }
+
+  /* ── PROSE ── */
+  .prose {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    max-width: 780px;
+    margin-bottom: 32px;
+  }
+
+  .prose strong { color: var(--text); font-weight: 600; }
+  .prose em { color: var(--gold-light); font-style: italic; }
+
+  /* scroll indicator */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    background: var(--bg2);
+    border: 1px solid var(--border-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 100;
+    color: var(--gold);
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .scroll-top:hover {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+  }
+
+  /* ── MOBILE — comprehensive ── */
+  @media (max-width: 768px) {
+
+    /* Global spacing */
+    .cover { padding: 56px 20px 40px; min-height: auto; }
+    .toc { padding: 32px 20px; }
+    .report-body { padding: 0 20px; }
+    .report-footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* Cover */
+    .cover h1 { font-size: 40px; line-height: 1.05; }
+    .cover-tag { font-size: 10px; margin-bottom: 20px; }
+    .cover-sub { font-size: 12px; margin-top: 20px; }
+    .cover-stats { gap: 20px; margin-top: 36px; flex-wrap: wrap; }
+    .cover-stat { flex: 1 1 calc(50% - 10px); min-width: 130px; }
+    .cover-stat-val { font-size: 24px; }
+    .cover-stat-label { font-size: 9px; }
+    .cover-bottom { position: static; margin-top: 32px; font-size: 9px; }
+
+    /* TOC */
+    .toc-grid { grid-template-columns: 1fr; gap: 1px; }
+    .toc-item { padding: 12px 14px; }
+    .toc-title { font-size: 12px; }
+
+    /* Part headers */
+    .part-header { padding: 48px 0 32px; flex-direction: column; gap: 0; margin-bottom: 36px; }
+    .part-number { font-size: 56px; line-height: 1; margin-bottom: 0; }
+    .part-title { font-size: 26px; line-height: 1.15; }
+    .part-tag { font-size: 9px; }
+
+    /* Section */
+    .section { margin-bottom: 48px; }
+    .section-title { font-size: 16px; margin-bottom: 18px; }
+
+    /* Prose */
+    .prose { font-size: 13px; }
+
+    /* Summary table — scrollable */
+    .summary-table-wrap { -webkit-overflow-scrolling: touch; }
+    .summary-table { min-width: 640px; }
+    .summary-table th, .summary-table td { padding: 10px 10px; font-size: 11px; }
+    .rank-num { font-size: 18px; }
+    .industry-name-cell { font-size: 12px; }
+
+    /* Model tables — all scrollable */
+    .model-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 520px; }
+
+    /* Wrap all tables in a scroll container */
+    table.model-table { width: 100%; }
+
+    /* Industry cards */
+    .industry-card { padding: 20px 18px; }
+    .industry-name { font-size: 18px; }
+    .industry-header { flex-wrap: nowrap; }
+    .score-val { font-size: 32px; }
+    .industry-meta { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .meta-val { font-size: 12px; }
+    .bar-label { min-width: 110px; font-size: 9px; }
+    .industry-insight { font-size: 12px; }
+
+    /* Systems */
+    .systems-list { grid-template-columns: 1fr; }
+    .systems-industry-header { padding: 16px 18px; }
+    .systems-industry-name { font-size: 15px; }
+    .system-item { padding: 16px 18px; }
+    .system-name { font-size: 13px; }
+    .system-desc { font-size: 11px; }
+
+    /* Revenue tiers */
+    .revenue-tier { grid-template-columns: 1fr; }
+    .rev-price { font-size: 28px; }
+
+    /* Copilot cards */
+    .copilot-header { padding: 20px 20px; flex-direction: column; }
+    .copilot-name { font-size: 22px; }
+    .copilot-bv { text-align: left; }
+    .copilot-body { grid-template-columns: 1fr; }
+    .copilot-col { padding: 18px 20px; border-right: none; border-bottom: 1px solid var(--border); }
+    .copilot-col:last-child { border-bottom: none; }
+
+    /* Stack */
+    .stack-layer { grid-template-columns: 1fr; padding: 16px 18px; gap: 12px; }
+    .tool-tag { font-size: 10px; padding: 4px 10px; }
+
+    /* Gap cards */
+    .gap-grid { grid-template-columns: 1fr; }
+    .gap-card { padding: 20px 18px; }
+    .gap-name { font-size: 14px; padding-right: 32px; }
+    .gap-num { font-size: 48px; }
+    .gap-desc { font-size: 11px; }
+
+    /* Timeline */
+    .timeline { padding-left: 28px; }
+    .timeline-dot { left: -24px; width: 14px; height: 14px; }
+    .timeline-dot::after { width: 5px; height: 5px; }
+    .timeline-phase-title { font-size: 16px; }
+    .timeline-phase-body { padding: 16px 18px; }
+    .timeline-steps li { font-size: 12px; }
+
+    /* Pull quote */
+    .pull-quote { padding: 16px 18px; margin: 28px 0; }
+    .pull-quote p { font-size: 16px; }
+
+    /* Part divider */
+    .part-divider { margin: 48px 0; }
+
+    /* Callout */
+    .callout { padding: 16px 18px; }
+    .callout p { font-size: 12px; }
+
+    /* Scroll-to-top */
+    .scroll-top { bottom: 16px; right: 16px; width: 36px; height: 36px; font-size: 14px; }
+
+    /* Speed badges inline wrap */
+    .speed-badge { font-size: 9px; padding: 3px 8px; }
+    .badge { font-size: 8px; }
+  }
+
+  /* Very small phones */
+  @media (max-width: 380px) {
+    .cover h1 { font-size: 32px; }
+    .cover-stat { flex: 1 1 100%; }
+    .industry-meta { grid-template-columns: 1fr; }
+    .part-title { font-size: 22px; }
+    .copilot-name { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover" id="top">
+  <div class="cover-grid"></div>
+  <div class="cover-tag">Strategic Intelligence Report · 2025–2030</div>
+  <h1>The Global<br><em>AI Systems</em><br>Playbook</h1>
+  <p class="cover-sub">
+    A venture-grade strategy for building defensible, outcome-driven AI operating systems across the world's highest-value industries. Not tools. Not wrappers. Infrastructure.
+  </p>
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <div class="cover-stat-val">$4.1T</div>
+      <div class="cover-stat-label">Total addressable market across 10 industries</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">10</div>
+      <div class="cover-stat-label">Highest-opportunity industries ranked</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">8</div>
+      <div class="cover-stat-label">Strategic sections with full analysis</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">100+</div>
+      <div class="cover-stat-label">AI system concepts identified</div>
+    </div>
+  </div>
+  <div class="cover-bottom">Confidential Strategy Document · AI Systems Co.</div>
+</section>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <div class="toc-grid">
+    <a href="#part1" class="toc-item"><span class="toc-num">01</span><span class="toc-title">Industry Opportunity Analysis</span></a>
+    <a href="#part2" class="toc-item"><span class="toc-num">02</span><span class="toc-title">Vertical AI System Opportunities</span></a>
+    <a href="#part3" class="toc-item"><span class="toc-num">03</span><span class="toc-title">Product vs Consulting Model</span></a>
+    <a href="#part4" class="toc-item"><span class="toc-num">04</span><span class="toc-title">AI Agent Copilot Systems</span></a>
+    <a href="#part5" class="toc-item"><span class="toc-num">05</span><span class="toc-title">Technology Stack Architecture</span></a>
+    <a href="#part6" class="toc-item"><span class="toc-num">06</span><span class="toc-title">Business Model Design</span></a>
+    <a href="#part7" class="toc-item"><span class="toc-num">07</span><span class="toc-title">The Biggest Market Gaps</span></a>
+    <a href="#part8" class="toc-item"><span class="toc-num">08</span><span class="toc-title">Go-To-Market Strategy</span></a>
+  </div>
+</nav>
+
+<div class="report-body">
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 1 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part1">
+  <div class="part-header">
+    <div class="part-number">01</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part One</div>
+      <div class="part-title">Industry <em>Opportunity</em><br>Analysis</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="prose">
+      The following 10 industries were selected based on a composite scoring model spanning market size, inefficiency depth, labour constraints, AI readiness, data density, willingness to pay, adoption velocity, and competitive fragmentation. Each represents a genuine <strong>infrastructure-level AI opportunity</strong> — not a feature, not a chatbot, but the potential for an entire operating system to be built and owned.
+    </div>
+
+    <!-- Summary Scoreboard -->
+    <div class="section-title">Rankings Overview</div>
+    <div class="summary-table-wrap">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Industry</th>
+            <th>Market Size</th>
+            <th>AI Adoption</th>
+            <th>AI Score</th>
+            <th>Speed</th>
+            <th>Labour Shortage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="rank-num">1</span></td><td class="industry-name-cell">Healthcare & Dentistry</td><td>$8.3T global</td><td>14%</td><td><strong style="color:var(--gold)">9.8/10</strong></td><td><span class="speed-badge explosive">Explosive</span></td><td><span class="badge high">Critical</span></td></tr>
+          <tr><td><span class="rank-num">2</span></td><td class="industry-name-cell">Legal Services</td><td>$1.1T global</td><td>9%</td><td><strong style="color:var(--gold)">9.4/10</strong></td><td><span class="speed-badge explosive">Explosive</span></td><td><span class="badge high">High</span></td></tr>
+          <tr><td><span class="rank-num">3</span></td><td class="industry-name-cell">Manufacturing</td><td>$16T global</td><td>22%</td><td><strong style="color:var(--gold-light)">9.1/10</strong></td><td><span class="speed-badge rapid">Rapid</span></td><td><span class="badge high">Critical</span></td></tr>
+          <tr><td><span class="rank-num">4</span></td><td class="industry-name-cell">Construction</td><td>$13T global</td><td>8%</td><td><strong style="color:var(--gold-light)">8.9/10</strong></td><td><span class="speed-badge rapid">Rapid</span></td><td><span class="badge high">Critical</span></td></tr>
+          <tr><td><span class="rank-num">5</span></td><td class="industry-name-cell">Logistics & Supply Chain</td><td>$9.8T global</td><td>28%</td><td><strong style="color:var(--gold-light)">8.7/10</strong></td><td><span class="speed-badge rapid">Rapid</span></td><td><span class="badge medium">Medium</span></td></tr>
+          <tr><td><span class="rank-num">6</span></td><td class="industry-name-cell">Real Estate</td><td>$3.7T services</td><td>11%</td><td><strong style="color:var(--text)">8.4/10</strong></td><td><span class="speed-badge fast">Fast</span></td><td><span class="badge medium">Medium</span></td></tr>
+          <tr><td><span class="rank-num">7</span></td><td class="industry-name-cell">Financial Services (SME)</td><td>$22T global</td><td>31%</td><td><strong style="color:var(--text)">8.2/10</strong></td><td><span class="speed-badge rapid">Rapid</span></td><td><span class="badge medium">Medium</span></td></tr>
+          <tr><td><span class="rank-num">8</span></td><td class="industry-name-cell">Agriculture & Food</td><td>$5.1T global</td><td>7%</td><td><strong style="color:var(--text)">7.9/10</strong></td><td><span class="speed-badge fast">Fast</span></td><td><span class="badge high">Critical</span></td></tr>
+          <tr><td><span class="rank-num">9</span></td><td class="industry-name-cell">Education & Training</td><td>$6.3T global</td><td>12%</td><td><strong style="color:var(--text)">7.6/10</strong></td><td><span class="speed-badge fast">Fast</span></td><td><span class="badge medium">Medium</span></td></tr>
+          <tr><td><span class="rank-num">10</span></td><td class="industry-name-cell">Hospitality & Events</td><td>$4.7T global</td><td>6%</td><td><strong style="color:var(--text)">7.2/10</strong></td><td><span class="speed-badge moderate">Moderate</span></td><td><span class="badge high">High</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Individual Cards -->
+    <div class="section-title">Deep Industry Analysis</div>
+    <div class="industry-grid">
+
+      <!-- #1 Healthcare -->
+      <div class="industry-card rank-1">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #01 · Healthcare & Dentistry</div>
+            <div class="industry-name">Healthcare & Dentistry</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">9.8<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$8.3T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">14% (rising fast)</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Shortage</div><div class="meta-val hot">Critical — 10M+ gap by 2030</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">Very High</div></div>
+          <div class="meta-item"><div class="meta-key">Data Availability</div><div class="meta-val good">Extremely Rich</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val hot">Explosive</div></div>
+        </div>
+        <div class="bar-row"><span class="bar-label">Market Size</span><div class="bar-track"><div class="bar-fill" style="width:83%"></div></div><span class="bar-num">8.3</span></div>
+        <div class="bar-row"><span class="bar-label">Inefficiency</span><div class="bar-track"><div class="bar-fill teal" style="width:95%"></div></div><span class="bar-num">9.5</span></div>
+        <div class="bar-row"><span class="bar-label">Willingness to Pay</span><div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div><span class="bar-num">9.0</span></div>
+        <div class="bar-row"><span class="bar-label">Fragmentation</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><span class="bar-num">9.5</span></div>
+        <p class="industry-insight">Healthcare is the single most inefficient major industry on earth. <strong>Administrative waste accounts for $265B annually in the US alone.</strong> Dentistry specifically is dominated by independent practices with zero tech stack — the average dental practice uses 6–12 disconnected software tools. No unified OS exists. Patient communication, treatment planning, insurance, marketing, and revenue cycles are entirely siloed. The AI opportunity is to unify, automate, and optimise the entire practice operation from a single platform. Dental is the ideal entry wedge — 180,000+ practices in the UK and US alone, all paying £300–£3,000/month for fragmented tools.</p>
+      </div>
+
+      <!-- #2 Legal -->
+      <div class="industry-card rank-2">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #02 · Legal Services</div>
+            <div class="industry-name">Legal Services</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">9.4<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$1.1T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">9%</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Cost</div><div class="meta-val hot">£80k–£300k/yr partners</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">Extremely High</div></div>
+          <div class="meta-item"><div class="meta-key">Data Availability</div><div class="meta-val good">Very Rich (documents)</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val hot">Explosive</div></div>
+        </div>
+        <div class="bar-row"><span class="bar-label">Market Size</span><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><span class="bar-num">6.5</span></div>
+        <div class="bar-row"><span class="bar-label">Inefficiency</span><div class="bar-track"><div class="bar-fill teal" style="width:97%"></div></div><span class="bar-num">9.7</span></div>
+        <div class="bar-row"><span class="bar-label">Willingness to Pay</span><div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div><span class="bar-num">10</span></div>
+        <div class="bar-row"><span class="bar-label">AI Readiness</span><div class="bar-track"><div class="bar-fill blue" style="width:78%"></div></div><span class="bar-num">7.8</span></div>
+        <p class="industry-insight">Legal is fundamentally a <strong>document processing and reasoning industry</strong>. The average solicitor spends 48% of billable time on tasks AI can handle in seconds — contract review, research, drafting, due diligence, compliance checking. Law firms charge £300–£800/hr for work that AI systems can automate at 95% accuracy. The AI opportunity is enormous: an AI legal operating system could eliminate 60–70% of junior associate costs while dramatically increasing throughput. Small and mid-size law firms are the ideal target — under-served by BigLaw tech yet desperate for efficiency.</p>
+      </div>
+
+      <!-- #3 Manufacturing -->
+      <div class="industry-card rank-3">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #03 · Manufacturing</div>
+            <div class="industry-name">Manufacturing</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">9.1<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$16T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">22% (accelerating)</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Shortage</div><div class="meta-val hot">2.1M unfilled US roles</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">High (ROI-driven)</div></div>
+          <div class="meta-item"><div class="meta-key">Data Availability</div><div class="meta-val good">Sensor/IoT rich</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val warn">Rapid</div></div>
+        </div>
+        <div class="bar-row"><span class="bar-label">Market Size</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-num">10</span></div>
+        <div class="bar-row"><span class="bar-label">Inefficiency</span><div class="bar-track"><div class="bar-fill teal" style="width:85%"></div></div><span class="bar-num">8.5</span></div>
+        <div class="bar-row"><span class="bar-label">Data Density</span><div class="bar-track"><div class="bar-fill blue" style="width:92%"></div></div><span class="bar-num">9.2</span></div>
+        <div class="bar-row"><span class="bar-label">AI Readiness</span><div class="bar-track"><div class="bar-fill green" style="width:75%"></div></div><span class="bar-num">7.5</span></div>
+        <p class="industry-insight">Manufacturing sits at the intersection of the <strong>largest addressable market</strong> and some of the richest operational data on earth. Machine sensors, production lines, supply chains, and procurement systems generate millions of data points daily — almost all of it currently unanalysed at the intelligence layer. AI systems for predictive maintenance, quality control, demand forecasting, and supply chain optimisation each individually represent billion-dollar categories. Mid-market manufacturers (£5M–£500M revenue) are the sweet spot — too large for zero-tech, too small for enterprise ERP customisation.</p>
+      </div>
+
+      <!-- #4 Construction -->
+      <div class="industry-card rank-4">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #04 · Construction</div>
+            <div class="industry-name">Construction</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">8.9<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$13T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val hot">8% (very low)</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Shortage</div><div class="meta-val hot">400k+ UK gap alone</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">High (margin pressure)</div></div>
+          <div class="meta-item"><div class="meta-key">Fragmentation</div><div class="meta-val hot">Extreme</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val warn">Rapid</div></div>
+        </div>
+        <div class="bar-row"><span class="bar-label">Market Size</span><div class="bar-track"><div class="bar-fill" style="width:97%"></div></div><span class="bar-num">9.7</span></div>
+        <div class="bar-row"><span class="bar-label">Inefficiency</span><div class="bar-track"><div class="bar-fill teal" style="width:92%"></div></div><span class="bar-num">9.2</span></div>
+        <div class="bar-row"><span class="bar-label">Labour Shortage</span><div class="bar-track"><div class="bar-fill red" style="width:95%"></div></div><span class="bar-num">9.5</span></div>
+        <div class="bar-row"><span class="bar-label">Current AI Adoption</span><div class="bar-track"><div class="bar-fill blue" style="width:20%"></div></div><span class="bar-num">2.0</span></div>
+        <p class="industry-insight">Construction is the <strong>most AI-naive large industry on earth</strong>. Project overruns, subcontractor management, materials procurement, and compliance tracking are all done manually or on spreadsheets. The average major construction project runs 20% over budget and 18 months late. An AI system that could predict overruns, automate procurement, manage subcontractor workflows, and track compliance in real time would be worth millions to every large contractor. The fragmentation is extreme — no dominant software player owns the operational layer.</p>
+      </div>
+
+      <!-- #5 Logistics -->
+      <div class="industry-card rank-4">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #05 · Logistics & Supply Chain</div>
+            <div class="industry-name">Logistics & Supply Chain</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">8.7<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$9.8T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">28%</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Shortage</div><div class="meta-val warn">Driver/warehouse gap</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">Very High</div></div>
+          <div class="meta-item"><div class="meta-key">Data Availability</div><div class="meta-val good">Extremely Rich</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val warn">Rapid</div></div>
+        </div>
+        <div class="bar-row"><span class="bar-label">Market Size</span><div class="bar-track"><div class="bar-fill" style="width:93%"></div></div><span class="bar-num">9.3</span></div>
+        <div class="bar-row"><span class="bar-label">Data Density</span><div class="bar-track"><div class="bar-fill blue" style="width:96%"></div></div><span class="bar-num">9.6</span></div>
+        <div class="bar-row"><span class="bar-label">AI Readiness</span><div class="bar-track"><div class="bar-fill green" style="width:72%"></div></div><span class="bar-num">7.2</span></div>
+        <div class="bar-row"><span class="bar-label">Fragmentation (SME)</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><span class="bar-num">8.5</span></div>
+        <p class="industry-insight">Logistics has the richest operational data stream of any industry — GPS, IoT, order management, customs, carrier data, demand signals — but <strong>most logistics operators use fewer than 10% of this data intelligently.</strong> The mid-market (regional 3PLs, freight forwarders, last-mile operators) is massively under-served. AI route optimisation, demand forecasting, carrier intelligence, and automated compliance are each multi-billion opportunities. The key is building vertical-specific systems for niche logistics operators who can't afford enterprise solutions.</p>
+      </div>
+
+      <!-- #6 Real Estate -->
+      <div class="industry-card rank-6">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #06 · Real Estate</div>
+            <div class="industry-name">Real Estate</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">8.4<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$3.7T services</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val hot">11%</div></div>
+          <div class="meta-item"><div class="meta-key">Transaction Volume</div><div class="meta-val good">£1.2T UK/US annually</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">High (commission-driven)</div></div>
+          <div class="meta-item"><div class="meta-key">Speed of Disruption</div><div class="meta-val">Fast</div></div>
+        </div>
+        <p class="industry-insight">Real estate agents, property managers, and developers are drowning in manual processes — lead qualification, property valuations, tenant screening, maintenance scheduling, compliance documentation. <strong>AI can automate 70% of an estate agent's daily workflows.</strong> The opportunity is an AI property operations platform that manages the entire pipeline: marketing, lead scoring, automated viewings, offer management, conveyancing coordination, and ongoing tenant management. Fragmented market with 20,000+ independent agencies in the UK alone.</p>
+      </div>
+
+      <!-- #7 Financial Services SME -->
+      <div class="industry-card rank-6">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #07 · Financial Services (SME)</div>
+            <div class="industry-name">Financial Services (SME)</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">8.2<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$22T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">31% (large players)</div></div>
+          <div class="meta-item"><div class="meta-key">SME Gap</div><div class="meta-val hot">90% unserved by AI</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val good">Very High</div></div>
+          <div class="meta-item"><div class="meta-key">Speed</div><div class="meta-val warn">Rapid</div></div>
+        </div>
+        <p class="industry-insight">While Goldman Sachs and Barclays have AI R&D teams, the 5.5 million SMEs in the UK and the tens of millions globally have zero access to institutional-quality financial intelligence. <strong>An AI CFO platform for SMEs</strong> — one that monitors cash flow, automates bookkeeping, predicts financial risks, handles compliance, and advises on cost reduction — is a $50B+ opportunity. The accounting and bookkeeping layer is the easiest wedge into this space.</p>
+      </div>
+
+      <!-- #8 Agriculture -->
+      <div class="industry-card rank-8">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #08 · Agriculture & Food</div>
+            <div class="industry-name">Agriculture & Food</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">7.9<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$5.1T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val hot">7%</div></div>
+          <div class="meta-item"><div class="meta-key">Inefficiency</div><div class="meta-val hot">30–40% food waste</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val warn">Medium-High</div></div>
+        </div>
+        <p class="industry-insight">Agriculture loses $1.3T annually to food waste, yield inefficiency, and supply chain failures. Computer vision for crop health, AI irrigation management, yield prediction models, and automated supply chain optimisation are all underbuilt. Climate change is accelerating urgency. Agri-AI is early but the infrastructure-level opportunity is enormous — particularly for mid-scale commercial farms and food processors who have data but no intelligence layer.</p>
+      </div>
+
+      <!-- #9 Education -->
+      <div class="industry-card rank-8">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #09 · Education & Training</div>
+            <div class="industry-name">Education & Training</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">7.6<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$6.3T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val warn">12%</div></div>
+          <div class="meta-item"><div class="meta-key">Disruption Pressure</div><div class="meta-val hot">Existential</div></div>
+          <div class="meta-item"><div class="meta-key">WTP (Corporate)</div><div class="meta-val good">Very High</div></div>
+        </div>
+        <p class="industry-insight">Corporate learning and development is the high-value wedge in education. Enterprises spend $350B+ annually on training that is largely ineffective, generic, and impossible to measure. <strong>AI personalised learning systems</strong> that adapt to individual learners, track skill gaps in real time, and generate on-demand training content represent a massive disruption opportunity. The B2B corporate training segment is the most defensible entry point.</p>
+      </div>
+
+      <!-- #10 Hospitality -->
+      <div class="industry-card rank-10">
+        <div class="industry-header">
+          <div>
+            <div class="industry-rank">Rank #10 · Hospitality & Events</div>
+            <div class="industry-name">Hospitality & Events</div>
+          </div>
+          <div class="industry-score">
+            <div class="score-label">AI Score</div>
+            <div class="score-val">7.2<span class="score-denom">/10</span></div>
+          </div>
+        </div>
+        <div class="industry-meta">
+          <div class="meta-item"><div class="meta-key">Market Size</div><div class="meta-val">$4.7T global</div></div>
+          <div class="meta-item"><div class="meta-key">AI Adoption</div><div class="meta-val hot">6%</div></div>
+          <div class="meta-item"><div class="meta-key">Labour Shortage</div><div class="meta-val hot">Severe globally</div></div>
+          <div class="meta-item"><div class="meta-key">WTP</div><div class="meta-val warn">Medium</div></div>
+        </div>
+        <p class="industry-insight">Hotels, restaurants, and event venues operate on thin margins with extreme labour dependency. AI revenue management, automated guest communication, dynamic pricing, inventory forecasting, and staffing optimisation can each deliver 15–30% efficiency gains. The opportunity is an integrated AI hospitality operating system targeting mid-market hotel groups and multi-site restaurant operators.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 2 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part2">
+  <div class="part-header">
+    <div class="part-number">02</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Two</div>
+      <div class="part-title">Vertical AI<br><em>System</em> Opportunities</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    For each of the top 10 industries, 10 distinct AI systems are identified below. These are not features — each is a standalone product or platform capable of generating £100k–£10M+ ARR. They are designed to function as components of a larger vertical OS or as standalone SaaS products.
+  </div>
+
+  <!-- Healthcare & Dentistry -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🦷 Healthcare & Dentistry</div>
+      <div class="systems-count">10 AI Systems · Highest Priority</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">DentalOS — Unified Practice Intelligence</div><div class="system-desc">Full AI operating system for dental practices. Integrates appointment flow, patient communication, marketing, revenue tracking, and clinical performance into a single dashboard with AI-driven alerts and recommendations.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">AI Patient Reactivation Engine</div><div class="system-desc">Analyses lapsed patient data, auto-generates personalised outreach sequences across SMS, email, and WhatsApp. Prioritises patients by treatment value and reactivation probability. Recovers £20k–£100k/yr per practice.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">Treatment Plan Conversion AI</div><div class="system-desc">Monitors which treatment plans are accepted vs declined, identifies patterns in conversion rates, auto-suggests pricing adjustments, finance options, and follow-up sequences to improve case acceptance rates.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">AI Revenue Cycle Manager</div><div class="system-desc">Automates insurance pre-authorisation, claim submission, rejection handling, and payment reconciliation. Eliminates billing delays and reduces administrative headcount by 60%.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">Competitor Intelligence Platform</div><div class="system-desc">Continuously monitors competitor pricing, reviews, new patient offers, and service expansions across a practice's local market. Provides real-time competitive positioning reports and counter-strategy recommendations.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">AI Appointment Optimiser</div><div class="system-desc">Predicts no-show probability per patient, auto-fills cancellation slots, optimises chair utilisation, and dynamically adjusts reminder cadences based on patient behavioural profiles.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Marketing Attribution Intelligence</div><div class="system-desc">Tracks every patient acquisition from first touch to treatment acceptance. Identifies which marketing channels generate the highest revenue per patient, automatically reallocates ad budget to highest-ROI channels.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">AI Clinical Documentation Assistant</div><div class="system-desc">Voice-to-note AI that captures clinical observations during appointments, auto-generates compliant clinical notes, flags documentation gaps, and reduces dentist admin time by 40%.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Patient Demand Forecasting Engine</div><div class="system-desc">Analyses appointment patterns, seasonality, local demographics, and Google search trends to predict patient demand. Enables proactive staffing, supply ordering, and marketing campaign timing.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">Group Practice Benchmarking Platform</div><div class="system-desc">For DSOs and multi-site groups — benchmarks performance across all practices, identifies underperformers, surfaces best practices, and gives the group operator a real-time strategic intelligence dashboard.</div></div>
+    </div>
+  </div>
+
+  <!-- Legal -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">⚖️ Legal Services</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Contract Review Engine</div><div class="system-desc">Analyses contracts in seconds, flags non-standard clauses, identifies risks, benchmarks against standard market terms, and generates redline suggestions. Replaces 40+ hours of junior associate review per deal.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Legal Research Intelligence</div><div class="system-desc">AI-powered case law research across jurisdictions. Finds relevant precedents, summarises key holdings, identifies argument patterns, and generates research memos in minutes rather than days.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">Due Diligence Automation Platform</div><div class="system-desc">Processes hundreds of documents in M&A, real estate, or corporate transactions. Extracts key data points, flags issues, and produces structured due diligence reports at 10x the speed of manual review.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Compliance Monitoring AI</div><div class="system-desc">Continuously monitors regulatory changes across relevant jurisdictions, maps updates to client obligations, and auto-generates compliance alerts and required documentation updates.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">AI Billing & Matter Intelligence</div><div class="system-desc">Analyses time entries, predicts matter budgets, flags write-off risks, optimises billing narratives for client acceptance, and provides profitability analytics per matter, client, and fee-earner.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Client Intake Automation</div><div class="system-desc">AI intake system that qualifies new enquiries, conducts conflict checks, collects KYC documentation, assesses matter viability, and routes to appropriate fee-earners — eliminating 80% of admin intake time.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Litigation Outcome Predictor</div><div class="system-desc">Analyses historical case data, judge patterns, and similar case outcomes to predict litigation success probability and optimal settlement ranges. Transforms case strategy and client expectation management.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Document Drafting AI</div><div class="system-desc">Generates first-draft legal documents (NDAs, employment contracts, commercial agreements, board resolutions) from structured inputs, calibrated to firm's house style and client requirements.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">AI Knowledge Management System</div><div class="system-desc">Indexes the firm's entire document library, precedent bank, and know-how. Surfaces relevant precedents, clauses, and expertise instantly when fee-earners begin new matters.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">Client Relationship Intelligence</div><div class="system-desc">Tracks client engagement, cross-selling opportunities, relationship health indicators, and churn risk signals. Auto-prompts relationship partners with actions to deepen client relationships.</div></div>
+    </div>
+  </div>
+
+  <!-- Manufacturing -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🏭 Manufacturing</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Predictive Maintenance Platform</div><div class="system-desc">Analyses machine sensor data in real time to predict equipment failures before they occur. Reduces unplanned downtime by 50–70%, saving manufacturers £500k–£5M annually per facility.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">AI Production Scheduler</div><div class="system-desc">Optimises production runs dynamically based on demand forecasts, machine availability, material stock, and workforce capacity. Increases OEE (Overall Equipment Effectiveness) by 15–25%.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">AI Procurement Intelligence</div><div class="system-desc">Monitors supplier performance, market pricing, and supply chain risks. Automates purchase orders, negotiates standard terms, identifies alternative suppliers, and optimises purchasing cycles.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Computer Vision Quality Control</div><div class="system-desc">Real-time visual inspection of production output using computer vision models. Detects defects at a rate and consistency far beyond human inspectors. Reduces defect escape rate by 80–95%.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">AI Inventory Optimiser</div><div class="system-desc">Dynamically calculates optimal stock levels across all SKUs, eliminates overstock and stockout scenarios, and automates reorder triggers based on demand forecasts and lead times.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Demand Forecasting Engine</div><div class="system-desc">Combines historical sales data, external signals (economic indicators, competitor data, seasonality) to generate accurate 30/60/90-day demand forecasts, enabling proactive production planning.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">AI Energy Optimiser</div><div class="system-desc">Monitors energy consumption across all factory systems, identifies inefficiencies, dynamically shifts high-consumption processes to off-peak periods, and generates sustainability reporting.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Workforce Intelligence Platform</div><div class="system-desc">Optimises shift scheduling, tracks skills gaps, identifies training needs, monitors workforce productivity, and predicts absenteeism to ensure optimal staffing at all times.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Supplier Intelligence Platform</div><div class="system-desc">Risk-scores every supplier in real time. Monitors financial health, delivery performance, geopolitical risk, and quality metrics. Flags supply chain vulnerabilities before they cause disruptions.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">FactoryOS — Unified Operations AI</div><div class="system-desc">Full operational AI platform combining all the above systems into a unified factory intelligence layer. Real-time dashboards, AI alerts, autonomous optimisation agents, and executive decision intelligence.</div></div>
+    </div>
+  </div>
+
+  <!-- Construction -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🏗️ Construction</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Project Cost Predictor</div><div class="system-desc">Analyses project scope, historical cost data, material prices, and contractor rates to generate accurate cost forecasts at tender stage. Reduces budget overruns by identifying risk items before work begins.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Subcontractor Intelligence Platform</div><div class="system-desc">Manages subcontractor procurement, performance tracking, payment scheduling, compliance documentation, and risk scoring. Eliminates manual subcontractor management headaches for main contractors.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">AI Programme Scheduler</div><div class="system-desc">Creates and dynamically updates project programmes using AI. Predicts delays based on weather, resource availability, and dependency risks. Automatically proposes programme recovery strategies.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Compliance & Safety AI Monitor</div><div class="system-desc">Continuously monitors site compliance using computer vision (CCTV), documentation AI, and regulatory intelligence. Flags safety incidents, missing certifications, and non-compliant works in real time.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">Materials Procurement Optimiser</div><div class="system-desc">Integrates with programme data to predict material requirements, monitor supplier pricing, optimise procurement timing, and reduce material waste and over-ordering.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">AI Quantity Surveyor Assistant</div><div class="system-desc">Automates bill of quantities generation from drawings and specifications, tracks cost variations, and maintains live cost reports — reducing QS time on routine tasks by 60%.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Tender Intelligence Platform</div><div class="system-desc">Analyses tender documents, benchmarks against won/lost bid data, identifies win probability, suggests bid pricing strategies, and auto-populates standard tender sections.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Defect & Snagging AI System</div><div class="system-desc">Computer vision-based defect detection and snagging management. Automatically logs defects from site photos, assigns remediation, tracks resolution, and generates client-ready quality reports.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Client & Stakeholder Reporting AI</div><div class="system-desc">Auto-generates weekly/monthly project reports for clients, combining programme data, cost data, quality KPIs, and progress photography into branded, professional documents without manual input.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">ConstructionOS</div><div class="system-desc">Full construction project operating system integrating cost, programme, compliance, procurement, and communications into one AI-powered control layer for contractors and project managers.</div></div>
+    </div>
+  </div>
+
+  <!-- Logistics -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🚚 Logistics & Supply Chain</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Route Optimisation Engine</div><div class="system-desc">Dynamically optimises delivery routes in real time using traffic, weather, vehicle capacity, and customer time-window data. Reduces fuel costs by 15–25% and increases deliveries per vehicle per day.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Carrier Intelligence Platform</div><div class="system-desc">Benchmarks carrier performance on cost, reliability, and transit times. Automates carrier selection and rate negotiation. Identifies hidden cost leakage across carrier portfolios.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">Demand-Driven Inventory AI</div><div class="system-desc">Multi-location inventory optimisation that reduces safety stock requirements by 30–50% while maintaining or improving service levels, using AI demand signals rather than static reorder points.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Customs & Compliance Automation</div><div class="system-desc">Automates customs documentation, HS code classification, duty calculation, and compliance checks for cross-border shipments. Eliminates customs delays and reduces compliance errors by 90%.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">Warehouse Operations AI</div><div class="system-desc">Optimises pick paths, slotting, labour allocation, and inbound/outbound scheduling in warehouse operations. Increases warehouse throughput by 20–40% without capital expenditure.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Supply Chain Risk Intelligence</div><div class="system-desc">Monitors suppliers, ports, geopolitical events, and weather systems globally to predict supply chain disruptions 2–8 weeks in advance and trigger contingency procurement or routing.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Customer Experience Automation</div><div class="system-desc">AI-powered proactive shipment notifications, automated exception management, and intelligent customer communication that resolves 80% of delivery queries without human intervention.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Freight Rate Intelligence</div><div class="system-desc">Aggregates spot and contract freight rate data across all modes and lanes. Predicts rate movements, identifies arbitrage opportunities, and optimises freight procurement strategies.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Returns Management AI</div><div class="system-desc">Automates returns processing decisions (refund, resell, scrap), optimises reverse logistics, and identifies return pattern insights to reduce return rates at source.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">LogisticsOS</div><div class="system-desc">Unified logistics intelligence platform combining routing, carrier management, customs, warehouse, and risk monitoring into a single AI control layer for 3PLs and logistics operators.</div></div>
+    </div>
+  </div>
+
+  <!-- Real Estate, Finance, Agri, Education, Hospitality condensed -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🏠 Real Estate</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Lead Qualification & Scoring</div><div class="system-desc">Scores and qualifies every inbound lead based on buying intent, financial capacity indicators, and behavioural data. Routes hot leads to agents instantly while nurturing cold leads automatically.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Automated Valuation Intelligence</div><div class="system-desc">AI-powered property valuation combining comparable data, market trends, property features, and local intelligence to produce accurate valuations in minutes for agents and mortgage brokers.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">AI Tenant Screening System</div><div class="system-desc">Automated credit, reference, and employment verification with AI risk scoring. Processes applications 10x faster than manual checks and reduces bad tenant selection by 60%.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Property Marketing Automation</div><div class="system-desc">Auto-generates property listings, social media content, and targeted ad campaigns from property data and photos. Optimises marketing budgets automatically per property type and location.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">AI Maintenance Manager</div><div class="system-desc">For property managers — AI triage of maintenance requests, contractor dispatch, cost benchmarking, preventative maintenance scheduling, and landlord reporting automation.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Market Intelligence Platform</div><div class="system-desc">Real-time property market intelligence covering pricing trends, supply/demand shifts, rental yield analysis, and investment opportunity identification for agents and investors.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">AI Transaction Coordinator</div><div class="system-desc">Manages post-offer transaction pipelines — tracks conveyancing milestones, chases solicitors, coordinates surveys and mortgage approvals, and keeps all parties informed automatically.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Compliance Documentation AI</div><div class="system-desc">Automates generation and tracking of all regulatory compliance documents — EPCs, gas safety, electrical certificates, HMO licences — with expiry alerts and auto-renewal management.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Commercial Property Intelligence</div><div class="system-desc">For commercial agents and investors — lease expiry monitoring, market rent analysis, comparable transaction intelligence, and portfolio performance dashboards.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">PropertyOS</div><div class="system-desc">Full AI operating system for estate agencies. Integrates lead management, marketing, valuations, compliance, and transaction management in one platform with AI-driven performance coaching for agents.</div></div>
+    </div>
+  </div>
+
+  <!-- Finance -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">💰 Financial Services (SME)</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI CFO Platform</div><div class="system-desc">Automated financial reporting, cash flow forecasting, KPI monitoring, and strategic financial advice for SMEs that can't afford a full-time CFO. Delivers CFO-level insight at £300/month.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Automated Bookkeeping Engine</div><div class="system-desc">AI-powered transaction categorisation, reconciliation, and month-end close automation. Connects to bank feeds and payment platforms. Reduces bookkeeping time by 80%.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">AI Tax Optimisation Assistant</div><div class="system-desc">Continuously monitors transactions for tax optimisation opportunities, flags allowable deductions, models different tax scenarios, and generates compliant tax submissions.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Credit & Lending Intelligence</div><div class="system-desc">For lenders — AI credit scoring that incorporates real-time business performance data beyond traditional credit bureau files. Enables faster, more accurate lending decisions for SMEs.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">Fraud Detection AI</div><div class="system-desc">Real-time transaction monitoring and anomaly detection for SME banking and payment platforms. Detects fraud patterns that rule-based systems miss, reducing fraud losses by 60–80%.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">AI Debt Recovery System</div><div class="system-desc">Automated debtor management with AI-personalised communication sequences, payment plan negotiation, and escalation logic. Recovers 30–50% more overdue invoices without additional staff.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Regulatory Compliance AI</div><div class="system-desc">For financial services firms — continuously monitors FCA/regulatory rule changes, maps requirements to business processes, and generates compliance gap reports and remediation plans.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">FP&A Automation Platform</div><div class="system-desc">Automates financial planning and analysis workflows — budget modelling, scenario planning, variance analysis, and board pack generation. Replaces 60% of manual FP&A analyst tasks.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Investment Intelligence AI</div><div class="system-desc">For IFAs and wealth managers — AI portfolio analysis, client risk profiling, market intelligence aggregation, and automated investment recommendation generation with compliance documentation.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">FinanceOS for SMEs</div><div class="system-desc">Full-stack financial intelligence platform for SMEs. Combines accounting, forecasting, tax, compliance, and funding intelligence into one AI-powered financial operating system.</div></div>
+    </div>
+  </div>
+
+  <!-- Agriculture -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🌾 Agriculture & Food</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Crop Health Monitor</div><div class="system-desc">Computer vision analysis of drone/satellite imagery to detect crop disease, pest pressure, and nutrient deficiencies at field level. Enables targeted interventions reducing chemical use by 30–50%.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Precision Irrigation AI</div><div class="system-desc">Integrates soil sensors, weather forecasts, and crop water demand models to optimise irrigation scheduling. Reduces water consumption by 20–40% while maintaining or improving yields.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">Yield Prediction Engine</div><div class="system-desc">Combines satellite imagery, weather data, soil data, and historical yield records to generate accurate crop yield predictions 60–90 days before harvest. Enables optimal market timing and logistics planning.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Food Safety Intelligence</div><div class="system-desc">AI monitoring of food production environments for contamination risks, temperature deviations, and compliance failures. Generates automated HACCP documentation and traceability records.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">Supply Chain Waste Reducer</div><div class="system-desc">For food processors and retailers — AI demand forecasting, shelf-life optimisation, and markdown pricing intelligence that reduces food waste by 20–40% across the supply chain.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Soil Intelligence Platform</div><div class="system-desc">Analyses soil sampling data with AI to generate variable rate application maps for fertiliser, lime, and amendments. Optimises input costs while maintaining soil health and yield potential.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Livestock Health AI</div><div class="system-desc">Computer vision and sensor monitoring of livestock health indicators — early disease detection, weight gain tracking, and behavioural anomaly identification. Reduces mortality and veterinary costs.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Commodity Market Intelligence</div><div class="system-desc">AI aggregation of commodity price data, weather forecasts, crop reports, and geopolitical signals to help farmers and processors time buying and selling decisions optimally.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Agri Compliance & Subsidy AI</div><div class="system-desc">Navigates the complex landscape of agricultural subsidies, environmental schemes, and compliance requirements. Automatically identifies eligible schemes, generates applications, and tracks compliance requirements.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">AgriOS</div><div class="system-desc">Unified farm management AI platform combining crop intelligence, soil data, equipment telematics, financial management, and market intelligence for commercial farming operations.</div></div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🎓 Education & Corporate Training</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Personalised Learning Engine</div><div class="system-desc">Adapts learning content, pace, and modality to individual learner profiles, performance data, and learning objectives. Improves learning outcomes by 40–60% vs static e-learning.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Skills Gap Intelligence Platform</div><div class="system-desc">For corporates — maps current workforce skills against required capabilities, identifies individual and organisational gaps, and auto-generates personalised development plans for every employee.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">AI Content Generation Studio</div><div class="system-desc">Automatically generates on-demand training content from subject matter expert inputs — courses, assessments, video scripts, workbooks — at a fraction of traditional L&D production costs.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Training ROI Measurement AI</div><div class="system-desc">Connects training activity to business performance metrics, enabling L&D teams to demonstrate measurable ROI from training investments for the first time.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">AI Assessment & Certification Engine</div><div class="system-desc">Generates adaptive assessments, detects academic integrity issues, provides instant personalised feedback, and manages certification workflows for training programmes and qualifications.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Corporate Onboarding Automation</div><div class="system-desc">AI-powered onboarding journeys that personalise content per role and department, track completion, answer new starter questions, and reduce time-to-productivity by 30–50%.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Compliance Training Intelligence</div><div class="system-desc">Automates mandatory compliance training assignment, completion tracking, regulatory update alerting, and evidence generation for audits. Eliminates compliance training management overhead.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">AI Coaching Platform</div><div class="system-desc">Delivers AI-powered coaching at scale for leadership development, skill building, and performance improvement. Personalised coaching conversations available 24/7 for all employees.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">Tutoring Intelligence System</div><div class="system-desc">AI tutoring for schools and professional education — adaptive, Socratic-method-based tutoring that provides one-to-one quality learning at scale for students and professional learners.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">LearningOS</div><div class="system-desc">Enterprise learning intelligence platform combining skills mapping, personalised learning, content creation, compliance training, and ROI measurement for HR and L&D departments.</div></div>
+    </div>
+  </div>
+
+  <!-- Hospitality -->
+  <div class="systems-industry">
+    <div class="systems-industry-header">
+      <div class="systems-industry-name">🏨 Hospitality & Events</div>
+      <div class="systems-count">10 AI Systems</div>
+    </div>
+    <div class="systems-list">
+      <div class="system-item"><div class="system-num">01</div><div class="system-name">AI Revenue Management System</div><div class="system-desc">Dynamic pricing for hotel rooms, restaurant covers, and event spaces based on demand, competitor rates, local events, and booking patterns. Increases revenue per available unit by 15–30%.</div></div>
+      <div class="system-item"><div class="system-num">02</div><div class="system-name">Guest Experience AI</div><div class="system-desc">Personalised pre-arrival, in-stay, and post-stay communication. AI concierge for service requests, complaint resolution, and upsell recommendations — all automated, all personalised.</div></div>
+      <div class="system-item"><div class="system-num">03</div><div class="system-name">Staff Scheduling Optimiser</div><div class="system-desc">Predicts customer demand by hour and day, generates optimised staff schedules, manages shift swaps, and ensures compliance with working time regulations — cutting labour costs by 10–20%.</div></div>
+      <div class="system-item"><div class="system-num">04</div><div class="system-name">Food & Beverage Intelligence</div><div class="system-desc">Menu optimisation using sales data, margin analysis, and demand forecasting. Automates purchasing, reduces food waste, and identifies high-margin upsell opportunities.</div></div>
+      <div class="system-item"><div class="system-num">05</div><div class="system-name">AI Reputation Management</div><div class="system-desc">Monitors all review platforms in real time, auto-generates brand-appropriate responses, identifies reputation trends, and surfaces operational insights from guest feedback patterns.</div></div>
+      <div class="system-item"><div class="system-num">06</div><div class="system-name">Event Revenue Optimiser</div><div class="system-desc">For event venues — AI-powered enquiry qualification, proposal generation, event space pricing optimisation, and post-event revenue analysis to maximise event department profitability.</div></div>
+      <div class="system-item"><div class="system-num">07</div><div class="system-name">Maintenance Prediction System</div><div class="system-desc">Predicts maintenance requirements across hotel facilities — HVAC, elevators, plumbing — before failures occur. Reduces emergency maintenance costs and guest disruption incidents.</div></div>
+      <div class="system-item"><div class="system-num">08</div><div class="system-name">Distribution Channel AI</div><div class="system-desc">Optimises room inventory distribution across OTAs, direct channels, and GDS in real time. Maximises direct bookings (lower commission) while filling capacity through optimal channel mix.</div></div>
+      <div class="system-item"><div class="system-num">09</div><div class="system-name">AI Purchasing Intelligence</div><div class="system-desc">For hotel groups — centralised purchasing intelligence that benchmarks supplier pricing, aggregates buying power, automates reordering, and identifies cost-saving opportunities across properties.</div></div>
+      <div class="system-item"><div class="system-num">10</div><div class="system-name">HospitalityOS</div><div class="system-desc">Full operational AI platform for hotel groups and multi-site operators. Integrates revenue management, guest experience, staffing, F&B, maintenance, and purchasing into a unified intelligence layer.</div></div>
+    </div>
+  </div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 3 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part3">
+  <div class="part-header">
+    <div class="part-number">03</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Three</div>
+      <div class="part-title">Product vs<br><em>Consulting</em> Model</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    Not all AI systems should be productised. The correct model depends on complexity of integration, variability of client environments, size of deal, and defensibility strategy. Below is the framework for deciding which systems belong in which bucket.
+  </div>
+
+  <div class="pull-quote">
+    <p>"The highest-margin AI companies sell outcomes, not software. The highest-defensibility AI companies embed themselves so deeply into operations that switching cost becomes structural."</p>
+    <cite>AI Systems Strategy Framework · 2025</cite>
+  </div>
+
+  <div class="section-title">Productised SaaS Systems (Scalable, recurring, high-margin)</div>
+  <p class="prose">Systems best suited to SaaS share these traits: <strong>well-defined inputs and outputs</strong>, limited customisation per client, horizontal applicability within a vertical, and a workflow that is consistent across the industry.</p>
+
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr>
+        <th>System</th>
+        <th>Model</th>
+        <th>Price Range</th>
+        <th>Scalability</th>
+        <th>Margin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Patient Reactivation Engine (Dental)</td><td><span class="badge saas">SaaS</span></td><td>£500–£1,500/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">85%+</span></td></tr>
+      <tr><td>AI Route Optimiser (Logistics)</td><td><span class="badge saas">SaaS</span></td><td>£300–£2,000/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">80%+</span></td></tr>
+      <tr><td>AI Contract Review (Legal)</td><td><span class="badge saas">SaaS</span></td><td>£500–£3,000/mo</td><td><span class="badge high">High</span></td><td><span class="badge high">82%+</span></td></tr>
+      <tr><td>Compliance Training Intelligence</td><td><span class="badge saas">SaaS</span></td><td>£200–£1,500/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">80%+</span></td></tr>
+      <tr><td>AI Revenue Management (Hospitality)</td><td><span class="badge saas">SaaS</span></td><td>£500–£2,500/mo</td><td><span class="badge high">High</span></td><td><span class="badge high">78%+</span></td></tr>
+      <tr><td>Competitor Intelligence Platform</td><td><span class="badge saas">SaaS</span></td><td>£300–£1,200/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">85%+</span></td></tr>
+      <tr><td>AI Reputation Management</td><td><span class="badge saas">SaaS</span></td><td>£200–£800/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">88%+</span></td></tr>
+      <tr><td>AI Automated Bookkeeping</td><td><span class="badge saas">SaaS</span></td><td>£100–£500/mo</td><td><span class="badge high">Extreme</span></td><td><span class="badge high">82%+</span></td></tr>
+      <tr><td>AI Tenant Screening</td><td><span class="badge saas">SaaS</span></td><td>£100–£400/mo</td><td><span class="badge high">Very High</span></td><td><span class="badge high">80%+</span></td></tr>
+      <tr><td>Demand Forecasting Engine (Mfg)</td><td><span class="badge saas">SaaS</span></td><td>£800–£3,000/mo</td><td><span class="badge high">High</span></td><td><span class="badge high">75%+</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="section-title">Bespoke Consulting Systems (High-value, project-based + retainer)</div>
+  <p class="prose">Systems best suited to consulting engagements are those with <strong>deep integration requirements</strong>, proprietary data complexity, or high stakes where clients demand human accountability alongside AI.</p>
+
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr>
+        <th>System</th>
+        <th>Model</th>
+        <th>Project Value</th>
+        <th>Ongoing Retainer</th>
+        <th>Complexity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>FactoryOS — Full Deployment</td><td><span class="badge consulting">Consulting</span></td><td>£80k–£500k</td><td>£5k–£15k/mo</td><td><span class="badge low">High</span></td></tr>
+      <tr><td>Predictive Maintenance Platform</td><td><span class="badge consulting">Consulting</span></td><td>£50k–£250k</td><td>£3k–£10k/mo</td><td><span class="badge low">High</span></td></tr>
+      <tr><td>Computer Vision QC System</td><td><span class="badge consulting">Consulting</span></td><td>£60k–£400k</td><td>£4k–£12k/mo</td><td><span class="badge low">Very High</span></td></tr>
+      <tr><td>Legal Due Diligence Automation</td><td><span class="badge consulting">Consulting</span></td><td>£40k–£200k</td><td>£3k–£8k/mo</td><td><span class="badge medium">Medium</span></td></tr>
+      <tr><td>Enterprise Learning OS</td><td><span class="badge consulting">Consulting</span></td><td>£50k–£300k</td><td>£5k–£20k/mo</td><td><span class="badge low">High</span></td></tr>
+      <tr><td>ConstructionOS Full Deployment</td><td><span class="badge consulting">Consulting</span></td><td>£80k–£600k</td><td>£6k–£20k/mo</td><td><span class="badge low">Very High</span></td></tr>
+      <tr><td>Supply Chain Risk Intelligence</td><td><span class="badge consulting">Consulting</span></td><td>£60k–£350k</td><td>£5k–£15k/mo</td><td><span class="badge low">High</span></td></tr>
+      <tr><td>AI Litigation Outcome Predictor</td><td><span class="badge consulting">Consulting</span></td><td>£30k–£150k</td><td>£3k–£8k/mo</td><td><span class="badge medium">Medium</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="section-title">Hybrid Systems (Start consulting, productise over time)</div>
+  <p class="prose">The most strategically important category. Hybrid systems are deployed as consulting engagements to gather proprietary data and client insight, then systematised into scalable SaaS products. This is the <strong>highest-leverage model</strong> — consulting funds product development while generating the proprietary data moat.</p>
+
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr>
+        <th>System</th>
+        <th>Model</th>
+        <th>Consulting Entry Price</th>
+        <th>SaaS Target Price</th>
+        <th>Productisation Timeline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>DentalOS</td><td><span class="badge hybrid">Hybrid</span></td><td>£15k–£50k setup</td><td>£800–£2,500/mo</td><td>12–18 months</td></tr>
+      <tr><td>AI CFO Platform (SME)</td><td><span class="badge hybrid">Hybrid</span></td><td>£5k–£20k setup</td><td>£300–£1,200/mo</td><td>6–12 months</td></tr>
+      <tr><td>PropertyOS</td><td><span class="badge hybrid">Hybrid</span></td><td>£10k–£30k setup</td><td>£500–£1,500/mo</td><td>9–15 months</td></tr>
+      <tr><td>AI Group Practice Benchmarking</td><td><span class="badge hybrid">Hybrid</span></td><td>£20k–£80k setup</td><td>£2k–£8k/mo</td><td>12–24 months</td></tr>
+      <tr><td>Workforce Intelligence (Mfg)</td><td><span class="badge hybrid">Hybrid</span></td><td>£20k–£60k setup</td><td>£1k–£4k/mo</td><td>12–18 months</td></tr>
+      <tr><td>AgriOS</td><td><span class="badge hybrid">Hybrid</span></td><td>£10k–£40k setup</td><td>£500–£2k/mo</td><td>18–24 months</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout gold">
+    <div class="callout-title">Strategic Recommendation</div>
+    <p>The optimal company structure is <strong>consulting-led, product-driven</strong>. Begin with high-value bespoke consulting engagements in your chosen vertical. Use those engagements to build proprietary data, refine the system, and prove ROI. Then productise the standardised components into a recurring SaaS layer. Within 24 months, the consulting practice funds itself while the SaaS product scales toward the <em>real exit multiple</em>.</p>
+  </div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 4 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part4">
+  <div class="part-header">
+    <div class="part-number">04</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Four</div>
+      <div class="part-title">AI Agent<br><em>Copilot</em> Systems</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    AI agents represent the next evolution beyond AI tools. Rather than advising, agents <strong>act</strong> — executing tasks, making decisions, and orchestrating workflows autonomously. Below are five fully designed AI Copilot systems with agent architectures, each designed to become the central operational intelligence for its industry.
+  </div>
+
+  <!-- Dental Copilot -->
+  <div class="copilot-card">
+    <div class="copilot-header">
+      <div>
+        <div class="copilot-name"><em>Dental</em> Copilot</div>
+        <div class="copilot-tagline">The AI operating system for private dental practices and DSOs</div>
+      </div>
+      <div class="copilot-bv">
+        <div class="copilot-bv-label">Revenue Impact per Practice</div>
+        <div class="copilot-bv-val">£40k–£200k/yr</div>
+      </div>
+    </div>
+    <div class="copilot-body">
+      <div class="copilot-col">
+        <div class="copilot-col-title">Agent Capabilities</div>
+        <ul>
+          <li>Marketing Agent — runs and optimises all digital campaigns autonomously</li>
+          <li>Reactivation Agent — identifies and contacts lapsed patients without manual input</li>
+          <li>Revenue Agent — monitors KPIs, flags underperformance, recommends actions</li>
+          <li>Appointment Agent — fills gaps, reduces DNAs, optimises chair utilisation</li>
+          <li>Communication Agent — manages all patient touchpoints across all channels</li>
+          <li>Competitor Intelligence Agent — monitors local market daily</li>
+          <li>Treatment Plan Agent — tracks conversion rates, suggests pricing improvements</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Data Sources</div>
+        <ul>
+          <li>Practice Management System (Exact, Dentally, SOE)</li>
+          <li>CRM & patient database</li>
+          <li>Google Ads & Meta Ads API</li>
+          <li>Google Analytics & GMB</li>
+          <li>NHS BSA data (NHS practices)</li>
+          <li>Competitor review & pricing data</li>
+          <li>Treatment plan & case acceptance data</li>
+          <li>Insurance & payment platform data</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Automations Executed</div>
+        <ul>
+          <li>Auto-launch reactivation SMS/email campaigns</li>
+          <li>Dynamically adjust ad budgets based on appointment availability</li>
+          <li>Auto-generate monthly patient newsletter</li>
+          <li>Send treatment plan follow-up sequences</li>
+          <li>Auto-rebook DNAs within 24 hours</li>
+          <li>Generate weekly practice performance reports</li>
+          <li>Auto-respond to Google and Facebook reviews</li>
+          <li>Trigger referral programmes at optimal moments</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Business Value</div>
+        <ul>
+          <li>15–25% increase in new patient acquisition</li>
+          <li>30–50% reduction in DNAs</li>
+          <li>20–40% improvement in treatment plan conversion</li>
+          <li>Eliminates £2k–£5k/month in marketing management costs</li>
+          <li>Builds the industry's largest dental performance dataset over time</li>
+          <li>Creates structural switching cost — data moat compounds annually</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Factory Copilot -->
+  <div class="copilot-card">
+    <div class="copilot-header">
+      <div>
+        <div class="copilot-name"><em>Factory</em> Operations Copilot</div>
+        <div class="copilot-tagline">Autonomous AI intelligence layer for mid-market manufacturers</div>
+      </div>
+      <div class="copilot-bv">
+        <div class="copilot-bv-label">Cost Saving per Facility</div>
+        <div class="copilot-bv-val">£500k–£3M/yr</div>
+      </div>
+    </div>
+    <div class="copilot-body">
+      <div class="copilot-col">
+        <div class="copilot-col-title">Agent Capabilities</div>
+        <ul>
+          <li>Maintenance Agent — predicts failures, schedules preventative maintenance</li>
+          <li>Quality Agent — monitors production output via computer vision, flags defects</li>
+          <li>Procurement Agent — monitors supplier markets, auto-raises purchase orders</li>
+          <li>Scheduling Agent — optimises production run sequences dynamically</li>
+          <li>Energy Agent — shifts load, monitors consumption, identifies waste</li>
+          <li>Inventory Agent — maintains optimal stock levels autonomously</li>
+          <li>Workforce Agent — optimises shift patterns and skills allocation</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Data Sources</div>
+        <ul>
+          <li>Machine PLC / SCADA sensor data</li>
+          <li>ERP system (SAP, Epicor, Sage)</li>
+          <li>Camera feeds (computer vision)</li>
+          <li>Energy monitoring systems</li>
+          <li>Supplier portals & procurement data</li>
+          <li>Workforce management systems</li>
+          <li>Customer demand signals & orders</li>
+          <li>Market & commodity price feeds</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Automations Executed</div>
+        <ul>
+          <li>Auto-schedule preventative maintenance before failures occur</li>
+          <li>Flag and quarantine defective production batches in real time</li>
+          <li>Auto-raise POs when stock approaches reorder triggers</li>
+          <li>Dynamically reschedule production when material delays detected</li>
+          <li>Auto-generate daily operational briefing for plant managers</li>
+          <li>Trigger energy-saving protocols during low-demand periods</li>
+          <li>Generate weekly supplier performance scorecards automatically</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Business Value</div>
+        <ul>
+          <li>50–70% reduction in unplanned downtime</li>
+          <li>80–95% reduction in quality escapes</li>
+          <li>15–25% improvement in OEE</li>
+          <li>10–20% reduction in inventory holding costs</li>
+          <li>5–15% reduction in energy costs</li>
+          <li>Creates deepest industrial operations dataset in the sector</li>
+          <li>ROI typically achieved within 6 months of deployment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Construction Copilot -->
+  <div class="copilot-card">
+    <div class="copilot-header">
+      <div>
+        <div class="copilot-name"><em>Construction</em> Project Copilot</div>
+        <div class="copilot-tagline">The AI project intelligence system for contractors and developers</div>
+      </div>
+      <div class="copilot-bv">
+        <div class="copilot-bv-label">Cost Overrun Reduction</div>
+        <div class="copilot-bv-val">15–25% per project</div>
+      </div>
+    </div>
+    <div class="copilot-body">
+      <div class="copilot-col">
+        <div class="copilot-col-title">Agent Capabilities</div>
+        <ul>
+          <li>Programme Agent — monitors schedule, predicts delays, proposes recovery</li>
+          <li>Cost Agent — tracks spend vs budget, flags overruns before they occur</li>
+          <li>Compliance Agent — monitors safety and regulatory compliance daily</li>
+          <li>Procurement Agent — manages subcontractor and materials procurement</li>
+          <li>Reporting Agent — generates client reports and stakeholder updates</li>
+          <li>Risk Agent — identifies and scores project risks continuously</li>
+          <li>Tender Agent — analyses tenders, benchmarks pricing, suggests strategies</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Data Sources</div>
+        <ul>
+          <li>Project management software (Procore, Aconex)</li>
+          <li>Cost management and QS data</li>
+          <li>Site camera and drone footage</li>
+          <li>Weather APIs and forecasting data</li>
+          <li>Subcontractor performance history</li>
+          <li>Materials market pricing data</li>
+          <li>Planning and regulatory databases</li>
+          <li>Labour market and availability data</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Automations Executed</div>
+        <ul>
+          <li>Daily programme health check with auto-flagging of critical path risks</li>
+          <li>Auto-generate weekly client progress reports with photos</li>
+          <li>Automated subcontractor payment application processing</li>
+          <li>Auto-alert when project is tracking above budget on any cost code</li>
+          <li>Auto-complete Health & Safety documentation from site data</li>
+          <li>Trigger procurement actions when programme milestones are approaching</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Business Value</div>
+        <ul>
+          <li>20–35% reduction in project admin time</li>
+          <li>15–25% reduction in cost overruns</li>
+          <li>Dramatically faster programme recovery from delays</li>
+          <li>Compliance violations reduced by 60–80%</li>
+          <li>Improves contractor margin by 3–8% per project</li>
+          <li>Data compounds into industry's best project performance dataset</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logistics Copilot -->
+  <div class="copilot-card">
+    <div class="copilot-header">
+      <div>
+        <div class="copilot-name"><em>Logistics</em> Operations Copilot</div>
+        <div class="copilot-tagline">The autonomous intelligence engine for 3PLs and freight operators</div>
+      </div>
+      <div class="copilot-bv">
+        <div class="copilot-bv-label">Operational Cost Reduction</div>
+        <div class="copilot-bv-val">12–28% annually</div>
+      </div>
+    </div>
+    <div class="copilot-body">
+      <div class="copilot-col">
+        <div class="copilot-col-title">Agent Capabilities</div>
+        <ul>
+          <li>Routing Agent — optimises routes in real time, adapts to disruptions</li>
+          <li>Carrier Agent — selects optimal carriers, negotiates rates autonomously</li>
+          <li>Exception Agent — detects and resolves shipment exceptions proactively</li>
+          <li>Customs Agent — processes documentation, predicts clearance times</li>
+          <li>Risk Agent — monitors supply chain risks globally, triggers contingencies</li>
+          <li>Customer Agent — handles status queries and exception communications</li>
+          <li>Warehouse Agent — optimises slotting, pick paths, and labour allocation</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Data Sources</div>
+        <ul>
+          <li>TMS and WMS systems</li>
+          <li>GPS tracking and telematics</li>
+          <li>Carrier API integrations</li>
+          <li>Customs and border agency APIs</li>
+          <li>Weather and traffic data</li>
+          <li>Port and freight market data</li>
+          <li>Customer ERP and order systems</li>
+          <li>IoT warehouse sensors</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Automations Executed</div>
+        <ul>
+          <li>Real-time route re-optimisation when disruptions detected</li>
+          <li>Automated customs documentation generation and submission</li>
+          <li>Proactive shipment delay notifications to customers</li>
+          <li>Auto-reroute shipments around port congestion</li>
+          <li>Automated carrier rate comparison and booking</li>
+          <li>Daily operational performance dashboards for management</li>
+          <li>Auto-generate proof of delivery documentation</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Business Value</div>
+        <ul>
+          <li>15–25% reduction in fuel costs</li>
+          <li>80% reduction in manual customs processing time</li>
+          <li>Customer service query volume reduced by 60%</li>
+          <li>On-time delivery performance improved by 20–35%</li>
+          <li>Carrier cost optimisation of 8–18%</li>
+          <li>Scales without proportional headcount growth</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Copilot -->
+  <div class="copilot-card">
+    <div class="copilot-header">
+      <div>
+        <div class="copilot-name"><em>Legal</em> Practice Copilot</div>
+        <div class="copilot-tagline">The AI intelligence system for high-growth law firms</div>
+      </div>
+      <div class="copilot-bv">
+        <div class="copilot-bv-label">Billable Hour Capacity Increase</div>
+        <div class="copilot-bv-val">40–80% per fee earner</div>
+      </div>
+    </div>
+    <div class="copilot-body">
+      <div class="copilot-col">
+        <div class="copilot-col-title">Agent Capabilities</div>
+        <ul>
+          <li>Research Agent — finds case law, summarises precedents, drafts research memos</li>
+          <li>Document Agent — reviews contracts, flags risks, suggests redlines</li>
+          <li>Compliance Agent — monitors regulatory changes, maps to client obligations</li>
+          <li>Client Agent — handles routine client queries, status updates, document collection</li>
+          <li>Billing Agent — optimises time entries, predicts write-off risks</li>
+          <li>Business Development Agent — identifies cross-sell opportunities</li>
+          <li>Knowledge Agent — surfaces relevant precedents and firm know-how</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Data Sources</div>
+        <ul>
+          <li>Practice management system (Clio, Leap, Osprey)</li>
+          <li>Document management system</li>
+          <li>Case law databases (Westlaw, LexisNexis)</li>
+          <li>Regulatory databases and FCA/SRA registers</li>
+          <li>Firm precedent bank and knowhow</li>
+          <li>Client relationship data and communications</li>
+          <li>Time recording and billing data</li>
+          <li>Companies House and court records</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Automations Executed</div>
+        <ul>
+          <li>Auto-generate first draft documents from structured inputs</li>
+          <li>Daily regulatory change briefings per practice area</li>
+          <li>Automated client status update emails on matter milestones</li>
+          <li>Auto-complete routine compliance documentation</li>
+          <li>Weekly client portfolio health reports for partners</li>
+          <li>Auto-flag matters approaching budget without completion</li>
+          <li>Intelligent time entry suggestions based on calendar and email</li>
+        </ul>
+      </div>
+      <div class="copilot-col">
+        <div class="copilot-col-title">Business Value</div>
+        <ul>
+          <li>40–80% increase in fee-earner throughput</li>
+          <li>Research time reduced from days to minutes</li>
+          <li>Enables lean firm to operate at 2–3x the matter volume</li>
+          <li>Client satisfaction scores improve from faster turnaround</li>
+          <li>Builds proprietary legal intelligence database over time</li>
+          <li>Creates structural cost advantage vs non-AI competitors</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 5 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part5">
+  <div class="part-header">
+    <div class="part-number">05</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Five</div>
+      <div class="part-title">Technology<br><em>Stack</em> Architecture</div>
+    </div>
+  </div>
+
+  <div class="prose">
+    The architecture below is designed for a modern, scalable AI systems company building vertical AI products across multiple industries. It is modular, cloud-native, and engineered to support both SaaS products and consulting deployments from a shared infrastructure base.
+  </div>
+
+  <div class="section-title">Full Stack Architecture by Layer</div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">AI Models &amp; Inference</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Claude (Anthropic) — Reasoning & Generation</span>
+      <span class="tool-tag primary">GPT-4o — Multimodal tasks</span>
+      <span class="tool-tag">Gemini 1.5 Pro — Long context, document processing</span>
+      <span class="tool-tag">Llama 3.3 — On-premise / sensitive data deployments</span>
+      <span class="tool-tag">Mistral — Cost-efficient routing tasks</span>
+      <span class="tool-tag">Deepseek R1 — Chain-of-thought reasoning</span>
+      <span class="tool-tag">Computer Vision: YOLOv10, GPT-4V — Visual inspection tasks</span>
+      <span class="tool-tag">Whisper — Speech to text (clinical notes, meetings)</span>
+      <span class="tool-tag">ElevenLabs — AI voice (patient comms)</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">AI Agent Frameworks</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">LangGraph — Multi-agent orchestration &amp; state machines</span>
+      <span class="tool-tag primary">CrewAI — Multi-agent collaboration workflows</span>
+      <span class="tool-tag">AutoGen (Microsoft) — Conversational multi-agent systems</span>
+      <span class="tool-tag">LangChain — Tool calling, chains, memory management</span>
+      <span class="tool-tag">Anthropic Tool Use — Structured function calling</span>
+      <span class="tool-tag">n8n — No-code agent automation workflows</span>
+      <span class="tool-tag">Make.com — Integration automation layer</span>
+      <span class="tool-tag">Temporal — Durable agent workflow execution</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Vector Databases &amp; Memory</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Pinecone — Production vector search at scale</span>
+      <span class="tool-tag primary">Weaviate — Hybrid vector + keyword search</span>
+      <span class="tool-tag">Qdrant — Self-hosted for regulated industries</span>
+      <span class="tool-tag">pgvector (PostgreSQL) — Embedded vector storage</span>
+      <span class="tool-tag">Chroma — Development and prototyping</span>
+      <span class="tool-tag">Neon — Serverless Postgres + vector for SaaS products</span>
+      <span class="tool-tag">Redis — In-memory caching, session, short-term memory</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Data Pipelines &amp; ETL</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Airbyte — Data connector platform (300+ sources)</span>
+      <span class="tool-tag primary">dbt — Data transformation and modelling</span>
+      <span class="tool-tag">Apache Kafka — Real-time event streaming</span>
+      <span class="tool-tag">Fivetran — Managed data pipeline for SaaS integrations</span>
+      <span class="tool-tag">Apache Airflow — Workflow orchestration for batch jobs</span>
+      <span class="tool-tag">Snowflake — Enterprise data warehousing</span>
+      <span class="tool-tag">ClickHouse — High-performance analytical queries</span>
+      <span class="tool-tag">Unstructured.io — PDF, document, and file parsing</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Backend &amp; APIs</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Next.js (Node.js) — Full-stack SaaS application framework</span>
+      <span class="tool-tag primary">FastAPI (Python) — AI service APIs, ML model serving</span>
+      <span class="tool-tag">Supabase — Auth, realtime, database for SaaS products</span>
+      <span class="tool-tag">PostgreSQL / Neon — Primary relational database</span>
+      <span class="tool-tag">GraphQL (Hasura) — Flexible API layer for data products</span>
+      <span class="tool-tag">REST APIs — Industry system integrations</span>
+      <span class="tool-tag">Webhooks — Real-time event handling</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Frontend &amp; Dashboards</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Next.js + React — SaaS product frontend</span>
+      <span class="tool-tag primary">Tailwind CSS — UI styling</span>
+      <span class="tool-tag">Recharts / Chart.js — Data visualisation</span>
+      <span class="tool-tag">shadcn/ui — Component library</span>
+      <span class="tool-tag">Metabase — Internal analytics dashboards</span>
+      <span class="tool-tag">Retool — Rapid internal tool development</span>
+      <span class="tool-tag">Framer — Marketing and landing pages</span>
+      <span class="tool-tag">React Native / Expo — Mobile applications</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Infrastructure &amp; Deployment</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Vercel — Next.js hosting, edge functions</span>
+      <span class="tool-tag primary">AWS (EC2, S3, RDS, Lambda) — Core cloud infrastructure</span>
+      <span class="tool-tag">Azure — Enterprise and regulated industry deployments</span>
+      <span class="tool-tag">Docker + Kubernetes — Containerisation and orchestration</span>
+      <span class="tool-tag">Cloudflare — CDN, security, edge computing</span>
+      <span class="tool-tag">GitHub Actions — CI/CD pipelines</span>
+      <span class="tool-tag">Terraform — Infrastructure as code</span>
+      <span class="tool-tag">Datadog — Monitoring, APM, logging</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Automation &amp; Integration</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">n8n — Self-hosted workflow automation</span>
+      <span class="tool-tag primary">Make.com — SaaS integration workflows</span>
+      <span class="tool-tag">Zapier — Consumer-grade quick integrations</span>
+      <span class="tool-tag">Twilio — SMS, voice, WhatsApp messaging</span>
+      <span class="tool-tag">SendGrid / Postmark — Transactional email</span>
+      <span class="tool-tag">GoHighLevel — White-label CRM and marketing automation</span>
+      <span class="tool-tag">Apify — Web data extraction at scale</span>
+      <span class="tool-tag">Puppeteer / Playwright — Browser automation</span>
+    </div>
+  </div>
+
+  <div class="stack-layer">
+    <div class="stack-layer-label">Security &amp; Compliance</div>
+    <div class="stack-tools">
+      <span class="tool-tag primary">Auth0 / Clerk — Authentication and authorisation</span>
+      <span class="tool-tag">AWS KMS — Encryption key management</span>
+      <span class="tool-tag">Vault (HashiCorp) — Secrets management</span>
+      <span class="tool-tag">SOC 2 Type II compliance framework</span>
+      <span class="tool-tag">GDPR / UK GDPR compliance stack</span>
+      <span class="tool-tag">HIPAA compliance (for healthcare deployments)</span>
+      <span class="tool-tag">Penetration testing (annual third-party)</span>
+      <span class="tool-tag">Data residency controls (EU/UK options)</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Architecture Principle</div>
+    <p>The core principle is <strong>shared infrastructure, vertical-specific intelligence</strong>. The same data pipeline, vector database, agent framework, and deployment infrastructure serves all vertical products. What differs per vertical is the domain-specific prompts, integrations, trained models, and proprietary data layers. This enables the company to build 10 vertical AI systems at 20% of the cost of building each independently.</p>
+  </div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 6 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part6">
+  <div class="part-header">
+    <div class="part-number">06</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Six</div>
+      <div class="part-title">Business<br><em>Model</em> Design</div>
+    </div>
+  </div>
+
+  <div class="section-title">Revenue Tier Architecture</div>
+  <div class="revenue-tier">
+    <div class="rev-card tier-1">
+      <div class="rev-tier-label">Tier 1 · Entry Product</div>
+      <div class="rev-name">AI System Core</div>
+      <div class="rev-price">£500</div>
+      <div class="rev-period">per month / per location</div>
+      <ul class="rev-features">
+        <li>Core AI system (1 vertical module)</li>
+        <li>Standard integrations (top 3 tools)</li>
+        <li>AI dashboards and reporting</li>
+        <li>Email and chat support</li>
+        <li>Onboarding included</li>
+        <li>Data retained and benchmarked</li>
+      </ul>
+    </div>
+    <div class="rev-card tier-2">
+      <div class="rev-tier-label">Tier 2 · Growth Product</div>
+      <div class="rev-name">AI Copilot Platform</div>
+      <div class="rev-price">£1,500</div>
+      <div class="rev-period">per month / per location</div>
+      <ul class="rev-features">
+        <li>Full AI Copilot (all agents active)</li>
+        <li>Deep integrations (all major tools)</li>
+        <li>Autonomous agent execution</li>
+        <li>Custom AI workflows</li>
+        <li>Priority support + CSM</li>
+        <li>Quarterly strategy reviews</li>
+        <li>Benchmark data vs industry</li>
+      </ul>
+    </div>
+    <div class="rev-card tier-3">
+      <div class="rev-tier-label">Tier 3 · Enterprise / Group</div>
+      <div class="rev-name">AI Operating System</div>
+      <div class="rev-price">£5k+</div>
+      <div class="rev-period">per month / enterprise contract</div>
+      <ul class="rev-features">
+        <li>Multi-site/multi-entity deployment</li>
+        <li>Bespoke AI agent development</li>
+        <li>Custom data models and integrations</li>
+        <li>Dedicated AI engineer support</li>
+        <li>SLA guarantees</li>
+        <li>Board-level reporting and intelligence</li>
+        <li>Proprietary model fine-tuning option</li>
+        <li>White-label options for groups</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title">Revenue Streams</div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr><th>Revenue Stream</th><th>Model</th><th>Target Value</th><th>Margin</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SaaS Subscriptions</td><td>Recurring MRR</td><td>£500–£5k/mo per client</td><td>80–88%</td><td>Core growth engine — compound annually</td></tr>
+      <tr><td>Implementation &amp; Onboarding</td><td>One-time</td><td>£3k–£30k</td><td>60–70%</td><td>Funds early delivery costs, sets baseline data</td></tr>
+      <tr><td>Bespoke AI Consulting</td><td>Project + retainer</td><td>£30k–£500k</td><td>50–65%</td><td>Highest absolute margin per project</td></tr>
+      <tr><td>Data Intelligence Products</td><td>Recurring</td><td>£500–£5k/mo</td><td>90%+</td><td>Sell industry benchmarks back to suppliers, investors</td></tr>
+      <tr><td>Performance / Outcome Fees</td><td>Revenue share</td><td>5–15% of uplift</td><td>99%</td><td>The future of AI pricing — highest multiples at exit</td></tr>
+      <tr><td>White-Label Licensing</td><td>Licence fee</td><td>£2k–£15k/mo per partner</td><td>88%+</td><td>Scale without sales headcount via distribution partners</td></tr>
+      <tr><td>API Access / Usage</td><td>Consumption</td><td>Variable</td><td>75%+</td><td>For integrators and enterprise API consumers</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="section-title">Vertical Expansion Strategy</div>
+  <div class="timeline">
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Year 1 — Focus</div>
+      <div class="timeline-phase-title">Own One Vertical Completely</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="→">Select the single highest-opportunity vertical with founder domain expertise (Dental is the recommended start given existing relationships and market knowledge)</li>
+          <li data-n="→">Build one flagship AI system to market leader standard — not 10 mediocre products</li>
+          <li data-n="→">Target 20–50 paying clients within the vertical, generate £200k–£500k ARR</li>
+          <li data-n="→">Build the proprietary data layer — every client interaction compounds the intelligence</li>
+          <li data-n="→">Establish case studies, testimonials, and quantified ROI proof points</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Year 2 — Deepen</div>
+      <div class="timeline-phase-title">Expand Within Vertical, Begin Adjacent</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="→">Expand from single product to full vertical OS — upsell existing clients to higher tiers</li>
+          <li data-n="→">Scale to 100–200 clients, targeting £1–2M ARR from primary vertical</li>
+          <li data-n="→">Launch second vertical using the shared infrastructure and learnings from V1</li>
+          <li data-n="→">Hire first vertical-specific sales reps — growth off founder-led sales</li>
+          <li data-n="→">Begin data monetisation — publish industry benchmark reports to build brand authority</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Year 3–4 — Scale</div>
+      <div class="timeline-phase-title">Multi-Vertical AI Systems Platform</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="→">3–4 active verticals, each with dedicated product and GTM teams</li>
+          <li data-n="→">£5–15M ARR across the portfolio — 80%+ recurring</li>
+          <li data-n="→">Launch white-label programme for industry associations and enterprise partners</li>
+          <li data-n="→">Series A/B fundraising to accelerate vertical and geographic expansion</li>
+          <li data-n="→">Begin building the cross-vertical AI intelligence layer — proprietary industry dataset becomes a strategic asset</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Year 5+ — Dominance</div>
+      <div class="timeline-phase-title">Category-Defining AI Platform</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="→">5–8 verticals, each with 500–2,000+ clients and defensible data moats</li>
+          <li data-n="→">£50M–£200M ARR — platform company with acquisition-grade data assets</li>
+          <li data-n="→">Proprietary AI models fine-tuned on industry data are unreproducible by competitors</li>
+          <li data-n="→">Strategic exit options: strategic acquisition by Salesforce, ServiceNow, Microsoft, or SAP — or IPO</li>
+          <li data-n="→">Valuation based on data asset, not just revenue — 10–20x ARR multiples at minimum</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Sales Strategy</div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr><th>Channel</th><th>Target Client</th><th>Model</th><th>CAC Target</th><th>Priority</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Founder-led Direct Sales</td><td>First 20–50 clients</td><td>Consultative, high-touch</td><td>£500–£2k</td><td><span class="badge high">Immediate</span></td></tr>
+      <tr><td>Industry Association Partnerships</td><td>Member businesses</td><td>Group deals, endorsed access</td><td>£200–£800</td><td><span class="badge high">Year 1</span></td></tr>
+      <tr><td>Referral &amp; Affiliate Network</td><td>Practice managers, owners</td><td>Commission-based introductions</td><td>£300–£1.5k</td><td><span class="badge high">Year 1</span></td></tr>
+      <tr><td>Content Marketing / SEO</td><td>Mid-funnel inbound</td><td>Industry reports, ROI calculators</td><td>£200–£1k</td><td><span class="badge medium">Year 2</span></td></tr>
+      <tr><td>Paid Acquisition (LinkedIn)</td><td>Decision-makers, owners</td><td>Demo requests, case study leads</td><td>£500–£3k</td><td><span class="badge medium">Year 2</span></td></tr>
+      <tr><td>Enterprise / DSO Direct Sales</td><td>Groups, multi-sites</td><td>High-value, long cycle</td><td>£5k–£20k</td><td><span class="badge medium">Year 2+</span></td></tr>
+      <tr><td>White-Label / Channel Partners</td><td>Industry software vendors</td><td>Revenue share partnerships</td><td>Near-zero</td><td><span class="badge">Year 3+</span></td></tr>
+    </tbody>
+  </table></div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 7 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part7">
+  <div class="part-header">
+    <div class="part-number">07</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Seven</div>
+      <div class="part-title">The Biggest<br><em>Market Gaps</em></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    These are the 10 AI system opportunities that sit at the intersection of massive inefficiency and near-zero current AI coverage. Each represents a genuine white-space opportunity where a focused team could build a category-defining company with minimal competition for the next 24–36 months.
+  </div>
+
+  <div class="gap-grid">
+
+    <div class="gap-card">
+      <div class="gap-num">1</div>
+      <div class="gap-tag">Healthcare · Untouched</div>
+      <div class="gap-name">AI NHS Referral Intelligence Platform</div>
+      <div class="gap-desc">NHS waiting lists are destroying the UK's healthcare system. There is no AI system that analyses a patient's clinical need, maps available private and NHS options, predicts wait times, and proactively coordinates care pathways. A B2B2C platform sold to GP surgeries and insurers could transform patient outcomes while generating significant platform revenue.</div>
+      <div class="gap-market">TAM: £800M UK + global NHS equivalent markets</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">2</div>
+      <div class="gap-tag">Legal · Severely Underbuilt</div>
+      <div class="gap-name">AI Contract Intelligence for SMEs</div>
+      <div class="gap-desc">SMEs sign hundreds of contracts annually — supplier agreements, employment contracts, commercial leases, software licences — with zero legal review. They collectively lose billions to unfavourable terms, hidden auto-renewals, and unenforceable clauses. An AI contract management platform built specifically for SMEs (not law firms) is almost entirely unbuilt. The B2B SaaS opportunity here is enormous.</div>
+      <div class="gap-market">TAM: $12B+ global SME legal tech market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">3</div>
+      <div class="gap-tag">Construction · Zero Coverage</div>
+      <div class="gap-name">AI Subcontractor Intelligence Network</div>
+      <div class="gap-desc">There is no centralised intelligence platform for main contractors to discover, vet, manage, and benchmark subcontractors. Finding reliable subcontractors is still done by word of mouth. An AI platform that aggregates subcontractor performance data, vets companies, predicts reliability, and manages the entire sub-contracting lifecycle would be transformative for the industry.</div>
+      <div class="gap-market">TAM: £3B+ UK construction supply chain market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">4</div>
+      <div class="gap-tag">Hospitality · Early Stage</div>
+      <div class="gap-name">AI Restaurant Group Operating System</div>
+      <div class="gap-desc">Multi-site restaurant and pub group operators have almost no AI tools designed for their specific needs. Labour scheduling, menu performance analysis, food cost tracking, supplier management, and customer loyalty — all siloed, all manual. No company has built a unified AI operating system specifically for groups of 5–50 sites. This is a completely clear field.</div>
+      <div class="gap-market">TAM: £500M UK hospitality tech market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">5</div>
+      <div class="gap-tag">Financial Services · White Space</div>
+      <div class="gap-name">AI-Powered SME Financial Due Diligence</div>
+      <div class="gap-desc">When SMEs want to acquire businesses, raise finance, or bring on investors, they currently pay accountants and solicitors £20k–£100k for due diligence. An AI platform that automates financial due diligence for transactions up to £5M — scanning company accounts, identifying risks, and generating analysis reports — would disrupt a completely analogue market and reduce costs by 80%.</div>
+      <div class="gap-market">TAM: $4B+ global M&A advisory for SMEs</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">6</div>
+      <div class="gap-tag">Trades & Services · Ignored</div>
+      <div class="gap-name">AI Field Service Operations Platform</div>
+      <div class="gap-desc">Plumbers, electricians, heating engineers, and other trade businesses collectively represent a $500B+ market with almost zero AI adoption. Job scheduling, pricing, quoting, invoicing, parts ordering, customer communication, and compliance certificates are all done manually or on fragmented consumer apps. An AI OS for trades businesses covering all these workflows doesn't meaningfully exist yet.</div>
+      <div class="gap-market">TAM: $500B+ global field services market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">7</div>
+      <div class="gap-tag">Education · Corporate Gap</div>
+      <div class="gap-name">AI Skills Economy Platform</div>
+      <div class="gap-desc">As AI automates jobs, hundreds of millions of workers globally need skills retraining. No platform yet combines real-time labour market intelligence (which skills are being demanded by employers right now) with personalised learning pathways and credential tracking. The company that builds this and sells it to large employers as a workforce future-proofing platform will be enormous.</div>
+      <div class="gap-market">TAM: $50B+ global corporate L&D market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">8</div>
+      <div class="gap-tag">Agriculture · Unserved</div>
+      <div class="gap-name">AI Food Provenance &amp; Carbon Intelligence</div>
+      <div class="gap-desc">Regulatory pressure (EU Carbon Border Adjustment Mechanism) and consumer demand is forcing food supply chains to prove provenance and carbon footprint. No scalable AI platform exists that tracks, verifies, and certifies carbon and provenance data from farm to shelf. This regulatory-driven market will be worth billions within 5 years and has almost zero competition today.</div>
+      <div class="gap-market">TAM: $8B+ global food traceability market by 2030</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">9</div>
+      <div class="gap-tag">Property · Overlooked</div>
+      <div class="gap-name">AI Social Housing Management Platform</div>
+      <div class="gap-desc">Social housing providers (housing associations, councils) manage millions of properties with severely outdated systems and critical compliance obligations. AI-powered maintenance prediction, tenant need assessment, compliance management, and asset performance optimisation is almost entirely absent in this sector. The regulatory pressure on housing providers is intensifying — this is a government-mandated market waiting to be built.</div>
+      <div class="gap-market">TAM: £2B+ UK social housing tech market</div>
+    </div>
+
+    <div class="gap-card">
+      <div class="gap-num">10</div>
+      <div class="gap-tag">Cross-Industry · Zero Competition</div>
+      <div class="gap-name">AI Supplier Consolidation Intelligence</div>
+      <div class="gap-desc">Every business across every industry overpays for goods and services due to fragmented purchasing and lack of market intelligence. An AI platform that aggregates purchasing data across a network of businesses, identifies collective buying opportunities, benchmarks every supplier contract against market rates, and auto-negotiates better terms on behalf of its network is unbuilt. This is a cross-industry moat business with compounding network effects.</div>
+      <div class="gap-market">TAM: $200B+ global procurement tech market</div>
+    </div>
+
+  </div>
+
+</section>
+
+<div class="part-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- PART 8 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="part8">
+  <div class="part-header">
+    <div class="part-number">08</div>
+    <div class="part-title-block">
+      <div class="part-tag">Part Eight</div>
+      <div class="part-title">Go-To-Market<br><em>Strategy</em></div>
+    </div>
+  </div>
+
+  <div class="prose">
+    The following is a step-by-step, first-principles GTM plan for building the first vertical AI company. The plan assumes <strong>dental is the chosen vertical</strong>, based on existing domain expertise, established client relationships, and the specific inefficiency profile of the industry. This plan is directly applicable to any other vertical with minor adjustments.
+  </div>
+
+  <div class="pull-quote">
+    <p>"The fastest path to a defensible AI company is not to build the best AI — it is to build the best proprietary dataset. Start by solving the most expensive problem for the most willing customers."</p>
+    <cite>GTM Framework · AI Systems Co.</cite>
+  </div>
+
+  <div class="section-title">Phase-by-Phase Execution Plan</div>
+  <div class="timeline">
+
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Phase 1 · Months 1–3</div>
+      <div class="timeline-phase-title">Design the MVP AI System</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="01">Identify the single most expensive problem in the chosen vertical. For dental: patient reactivation and new patient acquisition — a practice losing £80k/yr to lapsed patients and poor marketing ROI is the ideal prospect.</li>
+          <li data-n="02">Build the MVP AI system focused on that one problem. Do not build the full OS. Build the module that generates the most measurable, fastest ROI. For dental: the AI Patient Reactivation + Marketing Attribution engine.</li>
+          <li data-n="03">Instrument every element from Day 1 — the system must capture data that compounds value. Every patient interaction, every marketing touchpoint, every conversion event must be logged and stored.</li>
+          <li data-n="04">Set up the core tech stack: Next.js frontend, Neon PostgreSQL, Claude API (Anthropic), Twilio (SMS/WhatsApp), Make.com for automation, GHL for CRM. Total build cost with AI assistance: £5k–£20k.</li>
+          <li data-n="05">Define your outcome metrics: new patient bookings generated, reactivation rate, appointment fill rate, marketing cost per new patient. These become the product's core value proposition and pricing anchor.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Phase 2 · Months 2–4</div>
+      <div class="timeline-phase-title">Sign the First 3–5 Paying Clients</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="01">Leverage existing relationships. If you have dental clients already, approach them first — a warm introduction from a trusted partner converts 10x better than cold outreach. Offer a 60-day pilot at a discounted rate in exchange for data access and a case study commitment.</li>
+          <li data-n="02">Price to close at this stage. The goal is data and proof, not margin. £500–£800/month is a psychological threshold most dental practice owners will not blink at — it's less than they spend on a single Google Ads day.</li>
+          <li data-n="03">Do everything manually that the AI system doesn't yet automate. The goal is to prove the outcome, not the technology. Be prepared to do 20% of the work manually behind the scenes if needed to deliver the result.</li>
+          <li data-n="04">Document every single outcome obsessively: before and after metrics, revenue recovered, time saved, DNAs reduced. These numbers will become the sales tool that closes the next 50 clients.</li>
+          <li data-n="05">Get written testimonials, video walkthroughs, and ideally LinkedIn endorsements from early clients. Social proof in a tight-knit industry like dentistry spreads faster than any ad campaign.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Phase 3 · Months 4–8</div>
+      <div class="timeline-phase-title">Productise and Scale to 20–50 Clients</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="01">Systemise the onboarding and deployment process. Every client should be live within 5–7 business days. Build onboarding checklists, data connection guides, and automated setup flows that reduce manual delivery time.</li>
+          <li data-n="02">Build the sales process around the ROI calculator. "Our average dental client recovers £42,000 in year one from lapsed patient reactivation alone. At £800/month, that's a 4.4x return in year one." This closes deals.</li>
+          <li data-n="03">Activate referral channels: dental consultants, accountants who serve dentists, dental suppliers, and dental association relationships. A 15–20% referral commission on first-year revenue creates powerful distribution.</li>
+          <li data-n="04">Begin speaking and publishing. Write monthly intelligence reports on dental marketing performance benchmarks. Post LinkedIn content using anonymised benchmark data. Become the industry's intelligence authority — not just a software vendor.</li>
+          <li data-n="05">Start building the premium tier. Identify your top 5 clients and offer them the first version of the AI Copilot (fully agentic, multi-module). Charge £1,500–£2,000/month. Use this to fund the next development sprint.</li>
+          <li data-n="06">Target your first DSO. One 10-site dental group at £800/month per site = £8,000 MRR from a single client. DSO operators are motivated by operational efficiency at scale — the value proposition is even stronger for groups.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Phase 4 · Months 8–18</div>
+      <div class="timeline-phase-title">Build the Moat — Data, Integrations, Depth</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="01">By month 8, you should have 20–50 clients generating real operational data. Begin building the vertical data intelligence layer — aggregate benchmarks, pattern recognition across practices, and AI models trained on your dataset. This is your competitive moat and cannot be replicated without the data.</li>
+          <li data-n="02">Build the platform integrations that increase switching cost. Deep integrations with Exact, Dentally, SOE, and the major UK PMS providers mean that switching away from your platform requires migrating 12 months of connected data history — almost nobody will.</li>
+          <li data-n="03">Launch the vertical benchmark report. "UK Private Dental Practice Performance Report — Q1 2026." This is published freely to the industry. It uses your anonymised data to show industry benchmarks. It positions your company as the industry intelligence authority and drives inbound leads at zero marginal cost.</li>
+          <li data-n="04">Pursue dental industry association partnerships. A partnership with BDIA, BDA, or NASDAL endorsing your platform as the recommended AI marketing intelligence system delivers instant credibility and a distribution channel to thousands of practices.</li>
+          <li data-n="05">Hire your first sales person — a dental industry insider who can open doors with practices through relationships, not cold outbound. Target someone who has previously sold into dental practices and comes with a Rolodex.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-phase-label">Phase 5 · Year 2</div>
+      <div class="timeline-phase-title">£1M ARR and Vertical 2 Launch</div>
+      <div class="timeline-phase-body">
+        <ul class="timeline-steps">
+          <li data-n="01">Target: 100–150 dental clients at an average of £900/month = £108k–£135k MRR / £1.3–£1.6M ARR. This is achievable with a 3-person team (founder, sales, customer success) supported by AI-automated delivery.</li>
+          <li data-n="02">Launch the full DentalOS product at the top of the pricing stack. Existing clients are upsold; new DSO clients enter at this tier. Target 15–20 DSOs or group operators on the premium tier at £3k–£8k/month.</li>
+          <li data-n="03">Begin vertical 2 using shared infrastructure. The legal services or construction sector is recommended as the second vertical — different buyer personas from dental, but using identical underlying technology. The second vertical should reach profitability 2x faster than the first.</li>
+          <li data-n="04">Begin raising a seed round if capital is needed to accelerate, or run capital-efficiently if cash flow supports growth. At £1M+ ARR with 85%+ gross margin and strong retention, you are a fundable company at a strong valuation.</li>
+          <li data-n="05">Define the exit strategy — either build toward a strategic acquisition (most likely exit by Year 5–7 to a Salesforce Health Cloud, Carestream, Henry Schein, or dental group) or continue compounding toward a platform company worth £50M–£200M+.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">Defensibility Scorecard</div>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:32px"><table class="model-table">
+    <thead>
+      <tr><th>Defensibility Lever</th><th>How It's Built</th><th>Strength at Year 1</th><th>Strength at Year 3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Proprietary Data Moat</td><td>Every client interaction logged; industry dataset grows with each client</td><td><span class="badge medium">Early</span></td><td><span class="badge high">Structural</span></td></tr>
+      <tr><td>Switching Cost</td><td>Deep PMS integrations + 12+ months of connected data history per client</td><td><span class="badge medium">Moderate</span></td><td><span class="badge high">Very High</span></td></tr>
+      <tr><td>Network Effects</td><td>Benchmarks improve with more clients; collective buying intelligence compounds</td><td><span class="badge low">Low</span></td><td><span class="badge high">Strong</span></td></tr>
+      <tr><td>Brand Authority</td><td>Industry reports, association partnerships, thought leadership content</td><td><span class="badge medium">Building</span></td><td><span class="badge high">Established</span></td></tr>
+      <tr><td>AI Model Advantage</td><td>Fine-tuned models on proprietary vertical data after 18+ months</td><td><span class="badge low">None</span></td><td><span class="badge high">Significant</span></td></tr>
+      <tr><td>Distribution Partnerships</td><td>Association endorsements, software integrations, referral networks</td><td><span class="badge medium">Building</span></td><td><span class="badge high">Strong</span></td></tr>
+      <tr><td>Outcome Pricing Lock-in</td><td>Revenue-share clients have no incentive to switch — value alignment</td><td><span class="badge medium">Piloting</span></td><td><span class="badge high">Active</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout red">
+    <div class="callout-title">Critical Warning</div>
+    <p><strong>The biggest risk is diffusion.</strong> The companies that fail build 10 vertical systems simultaneously and master none of them. The companies that win <em>dominate one vertical completely</em> before expanding. You cannot build the data moat or the switching cost in a vertical you only partially serve. Every resource decision in Year 1 must answer one question: does this deepen our position in the primary vertical?</p>
+  </div>
+
+  <div class="callout gold">
+    <div class="callout-title">The Core Thesis</div>
+    <p>AI models will commoditise within 36 months. The companies that win will not be remembered for the AI they used — they will be remembered for the <strong>proprietary data they owned, the workflows they embedded into, and the outcomes they delivered.</strong> The window to build these vertical data moats is open right now. In 3–5 years, incumbents with 10,000 clients and 5 years of industry data will be almost impossible to displace. The question is not whether to build this company — it is whether you build it now, or watch someone else own your chosen industry.</p>
+  </div>
+
+</section>
+
+</div><!-- /report-body -->
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="footer-brand">AI Systems Strategy Report · 2025–2030</div>
+  <div class="footer-note">Confidential · Strategic Planning Document · For Internal Use</div>
+  <div class="footer-note">8 Parts · 100+ Systems Identified · 10 Industries Ranked</div>
+</footer>
+
+<a href="#top" class="scroll-top">↑</a>
+
+</body>
+</html>

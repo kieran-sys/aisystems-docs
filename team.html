@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Holding Company — Family Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --off-black: #0e0e0e;
+    --white: #f0ede6;
+    --dim: #6b6860;
+    --gold: #d4a843;
+    --gold2: #f0c866;
+    --red: #c0392b;
+    --teal: #1a9e8f;
+    --slide-h: 100dvh;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+  body { background: var(--black); font-family: 'Barlow', sans-serif; overflow-x: hidden; cursor: none; }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    z-index: 100;
+    transition: width 0.4s ease;
+  }
+
+  /* Slide counter */
+  .slide-counter {
+    position: fixed;
+    bottom: 28px; right: 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    z-index: 100;
+    text-transform: uppercase;
+  }
+
+  .slide-counter span { color: var(--gold); }
+
+  /* Nav dots */
+  .nav-dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dim);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    padding: 0;
+  }
+
+  .nav-dot.active {
+    background: var(--gold);
+    transform: scale(1.5);
+  }
+
+  /* ── SLIDES ── */
+  .slide {
+    min-height: var(--slide-h);
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: 60px 72px;
+  }
+
+  /* Slide number watermark */
+  .slide-watermark {
+    position: absolute;
+    bottom: -20px; right: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(180px, 25vw, 320px);
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── SLIDE 1 — COVER ── */
+  .s1 { background: var(--black); }
+
+  .s1-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 110% 50%, rgba(212,168,67,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 80% at -10% 60%, rgba(192,57,43,0.05) 0%, transparent 50%);
+  }
+
+  .s1-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .s1-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  .s1-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+
+  .s1 h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 160px);
+    line-height: 0.92;
+    color: var(--white);
+    position: relative;
+    max-width: 900px;
+    letter-spacing: 0.01em;
+  }
+
+  .s1 h1 .gold { color: var(--gold); }
+
+  .s1-sub {
+    margin-top: 36px;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--dim);
+    max-width: 520px;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+
+  .s1-sub strong { color: var(--white); font-weight: 600; }
+
+  .s1-bottom {
+    position: absolute;
+    bottom: 40px;
+    left: 72px;
+    right: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .s1-scroll {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .s1-scroll::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--dim), transparent);
+    display: block;
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .s1-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ── SLIDE 2 — OPPORTUNITY ── */
+  .s2 { background: var(--gold); }
+
+  .s2 h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 10vw, 130px);
+    line-height: 0.9;
+    color: var(--black);
+    max-width: 800px;
+    letter-spacing: 0.01em;
+  }
+
+  .s2-body {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(0,0,0,0.15);
+    max-width: 820px;
+  }
+
+  .s2-stat {
+    background: var(--gold);
+    padding: 28px 24px;
+  }
+
+  .s2-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .s2-stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.55);
+    line-height: 1.4;
+  }
+
+  .s2-pull {
+    margin-top: 44px;
+    max-width: 660px;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(0,0,0,0.65);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .s2-pull strong {
+    font-weight: 700;
+    color: var(--black);
+    font-style: normal;
+  }
+
+  /* ── SLIDE 3 — STRUCTURE ── */
+  .s3 { background: var(--off-black); }
+
+  .s3-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .s3 h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 100px);
+    color: var(--white);
+    line-height: 0.92;
+    max-width: 700px;
+    letter-spacing: 0.01em;
+    margin-bottom: 48px;
+  }
+
+  .s3 h2 em {
+    font-style: normal;
+    color: var(--gold);
+    -webkit-text-stroke: 0;
+  }
+
+  .s3-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 880px;
+  }
+
+  .s3-pillar {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .s3-pillar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .s3-pillar.dental::before { background: var(--teal); }
+  .s3-pillar.factory::before { background: var(--gold); }
+  .s3-pillar.health::before { background: var(--red); }
+
+  .s3-pillar-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .s3-pillar.dental .s3-pillar-tag { color: var(--teal); }
+  .s3-pillar.factory .s3-pillar-tag { color: var(--gold); }
+  .s3-pillar.health .s3-pillar-tag { color: var(--red); }
+
+  .s3-pillar-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .s3-pillar-desc {
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .s3-bottom {
+    margin-top: 32px;
+    max-width: 880px;
+    padding: 20px 24px;
+    background: rgba(212,168,67,0.08);
+    border-left: 2px solid var(--gold);
+    font-size: 14px;
+    color: var(--white);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .s3-bottom strong { font-weight: 700; color: var(--gold); }
+
+  /* ── PERSON SLIDES ── */
+  .person-slide {
+    background: var(--black);
+  }
+
+  .person-slide.alt { background: #0a0a0a; }
+
+  .person-accent {
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 35%;
+    opacity: 0.04;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28vw;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 40px;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .person-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .person-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+  }
+
+  .tag-teal { color: var(--teal); }
+  .tag-teal::before { background: var(--teal); }
+  .tag-gold { color: var(--gold); }
+  .tag-gold::before { background: var(--gold); }
+  .tag-red { color: var(--red); }
+  .tag-red::before { background: var(--red); }
+  .tag-white { color: var(--white); }
+  .tag-white::before { background: var(--white); }
+
+  .person-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 11vw, 140px);
+    color: var(--white);
+    line-height: 0.88;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+  }
+
+  .person-role {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(20px, 3vw, 34px);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .role-teal { color: var(--teal); }
+  .role-gold { color: var(--gold); }
+  .role-red { color: var(--red); }
+  .role-white { color: rgba(240,237,230,0.5); }
+
+  .person-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 760px;
+  }
+
+  .person-block {
+    padding: 22px 24px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .person-block-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .person-block-body {
+    font-size: 13px;
+    color: var(--white);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .person-block-body strong {
+    font-weight: 700;
+    color: var(--gold2);
+  }
+
+  .person-statement {
+    margin-top: 28px;
+    max-width: 680px;
+    font-family: 'Barlow', sans-serif;
+    font-size: clamp(16px, 2.2vw, 22px);
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(240,237,230,0.5);
+    line-height: 1.5;
+    border-left: 2px solid;
+    padding-left: 20px;
+  }
+
+  .border-teal { border-color: var(--teal); }
+  .border-gold { border-color: var(--gold); }
+  .border-red { border-color: var(--red); }
+  .border-white { border-color: rgba(255,255,255,0.2); }
+
+  /* ── SLIDE — KIE & LEAH ── */
+  .s-kl .person-name { font-size: clamp(52px, 8.5vw, 110px); }
+
+  /* ── SLIDE FINAL — THE PRIZE ── */
+  .s-prize {
+    background: var(--black);
+    justify-content: center;
+  }
+
+  .s-prize-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 50%, rgba(212,168,67,0.06) 0%, transparent 70%);
+  }
+
+  .prize-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+  }
+
+  .prize-eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  .s-prize h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(68px, 12vw, 150px);
+    color: var(--white);
+    line-height: 0.88;
+    letter-spacing: 0.01em;
+    max-width: 900px;
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .s-prize h2 .gold { color: var(--gold); }
+
+  .prize-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 860px;
+    position: relative;
+  }
+
+  .prize-item {
+    padding: 24px 22px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .prize-item-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .prize-item-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .prize-item-desc {
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .prize-close {
+    margin-top: 40px;
+    max-width: 860px;
+    position: relative;
+    text-align: center;
+  }
+
+  .prize-close p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 3.5vw, 42px);
+    color: rgba(240,237,230,0.15);
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+
+  .prize-close p strong {
+    color: var(--gold);
+    opacity: 1;
+  }
+
+  /* ── MOAT SLIDE ── */
+  .s-moat {
+    background: #080510;
+    justify-content: flex-start;
+    padding-top: 64px;
+  }
+
+  .s-moat-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,168,67,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 100% 100%, rgba(26,158,143,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .moat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .moat-label::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  .moat-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    color: var(--white);
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .moat-gold { color: var(--gold); }
+
+  .moat-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    max-width: 860px;
+    position: relative;
+    align-items: stretch;
+    margin-bottom: 28px;
+  }
+
+  .moat-col {
+    padding: 24px 24px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .moat-bad { background: rgba(192,57,43,0.05); border-color: rgba(192,57,43,0.15); }
+  .moat-good { background: rgba(26,158,143,0.05); border-color: rgba(26,158,143,0.2); }
+
+  .moat-col-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .moat-bad .moat-col-tag { color: rgba(192,57,43,0.7); }
+  .moat-good .moat-col-tag { color: var(--teal); }
+
+  .moat-col-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .moat-bad .moat-col-title { color: rgba(192,57,43,0.8); }
+  .moat-good .moat-col-title { color: var(--teal); }
+
+  .moat-list {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  .moat-list li {
+    font-size: 12px;
+    color: var(--dim);
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .moat-bad .moat-list li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    color: rgba(192,57,43,0.6);
+    font-size: 9px;
+    top: 6px;
+  }
+
+  .moat-good .moat-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 9px;
+    top: 6px;
+  }
+
+  .moat-example {
+    font-size: 11px;
+    font-style: italic;
+    line-height: 1.5;
+    padding: 10px 12px;
+    border-radius: 1px;
+    margin-top: 4px;
+  }
+
+  .moat-bad .moat-example { background: rgba(192,57,43,0.08); color: rgba(192,57,43,0.7); }
+  .moat-good .moat-example { background: rgba(26,158,143,0.1); color: var(--teal); }
+
+  .moat-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--dim);
+    background: rgba(255,255,255,0.01);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    letter-spacing: 0.05em;
+  }
+
+  .moat-bottom {
+    max-width: 860px;
+    position: relative;
+  }
+
+  .moat-loop {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .moat-loop-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .moat-loop-item.gold-loop {
+    background: rgba(212,168,67,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(212,168,67,0.3);
+  }
+
+  .moat-loop-arrow {
+    font-size: 14px;
+    color: var(--gold);
+    opacity: 0.5;
+    padding: 0 4px;
+  }
+
+  .moat-footer-text {
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.65;
+  }
+
+  .moat-footer-text strong { color: var(--white); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .moat-grid { grid-template-columns: 1fr; max-width: 100%; }
+    .moat-divider { padding: 12px 16px; writing-mode: horizontal-tb; }
+    .moat-loop { gap: 6px; }
+    .s-moat { padding-top: 48px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  .slide > * { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .slide.in-view > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.05s; }
+  .slide.in-view > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.15s; }
+  .slide.in-view > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.25s; }
+  .slide.in-view > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.35s; }
+  .slide.in-view > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.45s; }
+  .slide.in-view > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.55s; }
+  /* Backgrounds/watermarks always visible */
+  .slide-watermark, .s1-bg, .s1-grid, .s2-bg, .s3-bg, .s-prize-bg, .person-accent { opacity: 1 !important; transform: none !important; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .slide { padding: 48px 24px; }
+    .s1-bottom { left: 24px; right: 24px; }
+    .s2-body { grid-template-columns: 1fr 1fr; }
+    .s3-pillars { grid-template-columns: 1fr; max-width: 100%; }
+    .person-body { grid-template-columns: 1fr; max-width: 100%; }
+    .prize-grid { grid-template-columns: 1fr; max-width: 100%; }
+    .nav-dots { display: none; }
+    .slide-counter { right: 16px; bottom: 20px; }
+    .person-accent { display: none; }
+    .s-prize h2 { margin-bottom: 28px; }
+    .prize-close { text-align: left; }
+    .s2-body { max-width: 100%; }
+    .s3-bottom { max-width: 100%; }
+    .person-statement { max-width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    .slide { padding: 40px 20px; min-height: 100svh; }
+    .s2-body { grid-template-columns: 1fr; }
+    .person-name { font-size: 56px !important; }
+    .s-prize h2 { font-size: 64px !important; }
+    .slide-watermark { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="progress" id="progress"></div>
+<div class="slide-counter"><span id="current">01</span> / 08</div>
+
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- ═══ SLIDE 1 — COVER ═══ -->
+<section class="slide s1" data-slide="1">
+  <div class="s1-bg"></div>
+  <div class="s1-grid"></div>
+  <div class="s1-eyebrow">Confidential · Family Briefing · 2025</div>
+  <h1>This Is<br>Our <span class="gold">Move.</span></h1>
+  <p class="s1-sub">
+    AI is rewriting every industry on earth. <strong>The window to own a vertical is open right now.</strong> In five years it won't be. This is what we're going to do about it.
+  </p>
+  <div class="s1-bottom">
+    <div class="s1-scroll">Scroll to begin</div>
+    <div class="s1-date">March 2025</div>
+  </div>
+  <div class="slide-watermark">01</div>
+</section>
+
+<!-- ═══ SLIDE 2 — THE OPPORTUNITY ═══ -->
+<section class="slide s2" data-slide="2">
+  <div class="s1-eyebrow" style="color:rgba(0,0,0,0.4);border:none">The Opportunity</div>
+  <h2>The Biggest<br>Shift In<br>A Generation.</h2>
+  <div class="s2-body">
+    <div class="s2-stat">
+      <div class="s2-stat-val">3–5</div>
+      <div class="s2-stat-label">Years before the window closes permanently</div>
+    </div>
+    <div class="s2-stat">
+      <div class="s2-stat-val">$4T+</div>
+      <div class="s2-stat-label">Combined addressable market across our three verticals</div>
+    </div>
+    <div class="s2-stat">
+      <div class="s2-stat-val">0</div>
+      <div class="s2-stat-label">Dominant AI OS incumbents in any of our chosen industries</div>
+    </div>
+  </div>
+  <p class="s2-pull">
+    AI models will commoditise. The companies that win won't be remembered for the AI they used. They'll be remembered for <strong>the data they owned, the workflows they embedded into, and the outcomes they delivered.</strong>
+  </p>
+  <div class="slide-watermark" style="color:rgba(0,0,0,0.06)">02</div>
+</section>
+
+<!-- ═══ SLIDE 3 — THE STRUCTURE ═══ -->
+<section class="slide s3" data-slide="3">
+  <div class="s3-label">The Structure</div>
+  <h2>One Family.<br><em>Three</em> Industries.<br>One Machine.</h2>
+  <div class="s3-pillars">
+    <div class="s3-pillar dental">
+      <div class="s3-pillar-tag">Vertical 01</div>
+      <div class="s3-pillar-name">DentalOS</div>
+      <div class="s3-pillar-desc">The AI operating system for private dentistry. Owned by Kie & Leah. Built on existing relationships and deep industry knowledge.</div>
+    </div>
+    <div class="s3-pillar factory">
+      <div class="s3-pillar-tag">Vertical 02</div>
+      <div class="s3-pillar-name">FactoryOS</div>
+      <div class="s3-pillar-desc">The AI operating system for manufacturing. Owned by Si. 30 years of credibility opening doors no outsider ever could.</div>
+    </div>
+    <div class="s3-pillar health">
+      <div class="s3-pillar-tag">Vertical 03</div>
+      <div class="s3-pillar-name">HealthOS</div>
+      <div class="s3-pillar-desc">AI workforce & operations intelligence for healthcare logistics. Built on deep sector knowledge and operational experience.</div>
+    </div>
+  </div>
+  <div class="s3-bottom">
+    <strong>Shared infrastructure. Separate brands.</strong> One tech stack built once — powering three category-defining businesses. Each company is independently defensible. Together, they're a holding company worth building toward for life.
+  </div>
+  <div class="slide-watermark">03</div>
+</section>
+
+<!-- ═══ SLIDE 4 — THE MOAT ═══ -->
+<section class="slide s-moat" data-slide="4">
+  <div class="s-moat-bg"></div>
+  <div class="moat-label">Why This Works Long Term</div>
+  <h2 class="moat-title">Tools Get<br>Copied. <span class="moat-gold">Data</span><br>Does Not.</h2>
+  <div class="moat-grid">
+    <div class="moat-col moat-bad">
+      <div class="moat-col-tag">The Wrong Way</div>
+      <div class="moat-col-title">Just a Tool</div>
+      <ul class="moat-list">
+        <li>Uses AI to do a task</li>
+        <li>Anyone can build the same thing</li>
+        <li>Competitor copies it in 3 months</li>
+        <li>Race to the bottom on price</li>
+        <li>Dead in 2 years</li>
+      </ul>
+      <div class="moat-example">"We use AI to send patient reminders."</div>
+    </div>
+    <div class="moat-divider">VS</div>
+    <div class="moat-col moat-good">
+      <div class="moat-col-tag">The Right Way</div>
+      <div class="moat-col-title">A Data Moat</div>
+      <ul class="moat-list">
+        <li>Every client makes the system smarter</li>
+        <li>Data compounds — year on year</li>
+        <li>Impossible to replicate without going back in time</li>
+        <li>Product literally improves itself</li>
+        <li>Worth more every single day</li>
+      </ul>
+      <div class="moat-example">"We have 3 years of data on every dental patient conversion pattern in the UK."</div>
+    </div>
+  </div>
+  <div class="moat-bottom">
+    <div class="moat-loop">
+      <div class="moat-loop-item">More Clients</div>
+      <div class="moat-loop-arrow">→</div>
+      <div class="moat-loop-item">More Data</div>
+      <div class="moat-loop-arrow">→</div>
+      <div class="moat-loop-item">Smarter Product</div>
+      <div class="moat-loop-arrow">→</div>
+      <div class="moat-loop-item gold-loop">Bigger Moat</div>
+      <div class="moat-loop-arrow">→</div>
+    </div>
+    <p class="moat-footer-text">That loop, once it's spinning, <strong>is the business.</strong> No competitor can buy their way in. No one can shortcut 5 years of compounding data.</p>
+  </div>
+  <div class="slide-watermark">04</div>
+</section>
+
+<!-- ═══ SLIDE 5 — KIE & LEAH ═══ -->
+<section class="slide person-slide s-kl" data-slide="5">
+  <div class="person-accent">D</div>
+  <div class="person-tag tag-teal">Vertical 01 · DentalOS</div>
+  <div class="person-name">Kie &<br>Leah.</div>
+  <div class="person-role role-teal">The Dental Architects</div>
+  <div class="person-body">
+    <div class="person-block">
+      <div class="person-block-title">The Unfair Advantage</div>
+      <div class="person-block-body">You're already inside the industry. <strong>Existing client relationships. Deep operational knowledge.</strong> You know exactly what a dental practice owner needs because you've been in the room with them.</div>
+    </div>
+    <div class="person-block">
+      <div class="person-block-title">The Mission</div>
+      <div class="person-block-body">Build DentalOS into <strong>the AI backbone of UK private dentistry.</strong> Every practice that joins makes the platform smarter. Every month that passes deepens the moat nobody can replicate.</div>
+    </div>
+  </div>
+  <p class="person-statement border-teal">
+    The dental industry is fragmented, inefficient, and ready to be owned. Nobody is better positioned to own it than you.
+  </p>
+  <div class="slide-watermark">04</div>
+</section>
+
+<!-- ═══ SLIDE 5 — GARY ═══ -->
+<section class="slide person-slide alt" data-slide="6">
+  <div class="person-accent">F</div>
+  <div class="person-tag tag-gold">Vertical 02 · FactoryOS</div>
+  <div class="person-name">Si.</div>
+  <div class="person-role role-gold">The Manufacturing Authority</div>
+  <div class="person-body">
+    <div class="person-block">
+      <div class="person-block-title">The Unfair Advantage</div>
+      <div class="person-block-body">30 years at Operations Director level. <strong>You are the buyer.</strong> You know the problems, you hold the relationships, and you have the credibility that takes outsiders a decade to build. You walk in as a peer, not a salesperson.</div>
+    </div>
+    <div class="person-block">
+      <div class="person-block-title">The Mission</div>
+      <div class="person-block-body">Build FactoryOS into <strong>the AI intelligence layer for UK manufacturing.</strong> Predictive maintenance, procurement, production scheduling, quality control — all in one system. All owned by us.</div>
+    </div>
+  </div>
+  <p class="person-statement border-gold">
+    Every manufacturing ops director you've ever worked alongside is a warm door. That network is worth more than any marketing budget.
+  </p>
+  <div class="slide-watermark">06</div>
+</section>
+
+<!-- ═══ SLIDE 6 — GAZ ═══ -->
+<section class="slide person-slide" data-slide="7">
+  <div class="person-accent">G</div>
+  <div class="person-tag tag-white">Growth · All Three Verticals</div>
+  <div class="person-name">Gaz.</div>
+  <div class="person-role role-white">The Growth Engine</div>
+  <div class="person-body">
+    <div class="person-block">
+      <div class="person-block-title">The Unfair Advantage</div>
+      <div class="person-block-body">15 years turning browsers into buyers. <strong>Conversion, funnel optimisation, data-driven growth</strong> — applied not to e-commerce but to three B2B AI platforms scaling from 10 clients to hundreds.</div>
+    </div>
+    <div class="person-block">
+      <div class="person-block-title">The Mission</div>
+      <div class="person-block-body">Own the full acquisition and retention engine across all three verticals. <strong>What works in dental gets applied to manufacturing.</strong> What scales in FactoryOS informs DentalOS. Nobody else has this cross-vertical view.</div>
+    </div>
+  </div>
+  <p class="person-statement border-white">
+    Every vertical builder needs someone who knows how to grow. That's not a support role — it's the difference between a product and a business.
+  </p>
+  <div class="slide-watermark">06</div>
+</section>
+
+<!-- ═══ SLIDE 7 — MUM ═══ -->
+<section class="slide person-slide alt" data-slide="7b" style="display:none">
+</section>
+
+<!-- repurpose as proper slide -->
+
+<!-- ═══ SLIDE 7 — MUM (real) ═══ -->
+<section class="slide person-slide" data-slide="8" style="background:#0a0a0a">
+  <div class="person-accent">C</div>
+  <div class="person-tag tag-red">Holding Company · Operations</div>
+  <div class="person-name">Mum.</div>
+  <div class="person-role role-red">Chief Operating Officer</div>
+  <div class="person-body">
+    <div class="person-block">
+      <div class="person-block-title">The Unfair Advantage</div>
+      <div class="person-block-body">HR Director inside a complex healthcare logistics operation. <strong>You've run organisations. You understand people, process, and what operational failure looks like from the inside.</strong> That experience is priceless at this level.</div>
+    </div>
+    <div class="person-block">
+      <div class="person-block-title">The Mission</div>
+      <div class="person-block-body">Own the backbone of the holding company. <strong>Legal structures, shared infrastructure, hiring, finance, coordination</strong> between three fast-moving businesses. The person who makes sure ambition doesn't outrun execution.</div>
+    </div>
+  </div>
+  <p class="person-statement border-red">
+    Three builders moving fast need one person making sure the whole thing holds together. That's not a supporting role — that's the most important role in the room.
+  </p>
+  <div class="slide-watermark">09</div>
+</section>
+
+<!-- ═══ SLIDE 8 — THE PRIZE ═══ -->
+<section class="slide s-prize" data-slide="9">
+  <div class="s-prize-bg"></div>
+  <div class="prize-eyebrow">Five Years From Now</div>
+  <h2>This Is<br>What We're<br>Building <span class="gold">For.</span></h2>
+  <div class="prize-grid">
+    <div class="prize-item">
+      <div class="prize-item-num">01</div>
+      <div class="prize-item-title">Three Data Moats</div>
+      <div class="prize-item-desc">Each vertical sitting on proprietary industry data that took years and hundreds of clients to build. Unreplicable by any competitor, regardless of funding.</div>
+    </div>
+    <div class="prize-item">
+      <div class="prize-item-num">02</div>
+      <div class="prize-item-title">Category Ownership</div>
+      <div class="prize-item-desc">Not "an AI company." The dental AI company. The manufacturing AI company. Owning the intelligence layer of entire industries.</div>
+    </div>
+    <div class="prize-item">
+      <div class="prize-item-num">03</div>
+      <div class="prize-item-title">A Family Legacy</div>
+      <div class="prize-item-desc">A holding company built together, owned together. The kind of thing you look back on in 20 years and know you moved when the window was open.</div>
+    </div>
+  </div>
+  <div class="prize-close">
+    <p>The window is open. <strong>It won't be forever.</strong> The question is not whether to build this. It's whether we build it <strong>now</strong> — or watch someone else own our industries.</p>
+  </div>
+  <div class="slide-watermark">09</div>
+</section>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Slides
+  const slides = [...document.querySelectorAll('.slide[data-slide]')].filter(s => s.style.display !== 'none');
+  const total = slides.length;
+  const progress = document.getElementById('progress');
+  const currentEl = document.getElementById('current');
+  const navDots = document.getElementById('navDots');
+
+  // Build nav dots
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Slide ${i + 1}`);
+    dot.addEventListener('click', () => slide.scrollIntoView({ behavior: 'smooth' }));
+    navDots.appendChild(dot);
+  });
+
+  const dots = [...navDots.querySelectorAll('.nav-dot')];
+
+  // IntersectionObserver for active slide
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        const idx = slides.indexOf(entry.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        const pct = ((idx + 1) / total) * 100;
+        progress.style.width = pct + '%';
+        currentEl.textContent = String(idx + 1).padStart(2, '0');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => io.observe(s));
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    const cur = slides.findIndex(s => s.classList.contains('in-view'));
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowRight') && cur < total - 1) {
+      slides[cur + 1].scrollIntoView({ behavior: 'smooth' });
+    }
+    if ((e.key === 'ArrowUp' || e.key === 'ArrowLeft') && cur > 0) {
+      slides[cur - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
+</body>
+</html>

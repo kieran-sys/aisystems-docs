@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Systems Co. — Document Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,900;1,900&family=DM+Sans:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#07090c;color:#e8e4dc;font-family:'DM Sans',sans-serif;min-height:100vh;}
+.hero{padding:80px 64px 60px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#a8c0f0;display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.tag::before{content:'';width:28px;height:1px;background:#a8c0f0;}
+h1{font-family:'Fraunces',serif;font-size:clamp(48px,7vw,90px);font-weight:900;line-height:.9;letter-spacing:-.03em;}
+h1 em{font-style:italic;color:#a8c0f0;}
+.sub{margin-top:20px;font-size:15px;font-weight:300;color:#4a5060;max-width:520px;line-height:1.7;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;padding:2px;}
+.card{background:#0c0f13;border:1px solid rgba(255,255,255,0.06);padding:28px 28px;text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:all .2s;position:relative;overflow:hidden;}
+.card:hover{background:#111418;border-color:rgba(255,255,255,0.12);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.card.teal::before{background:#15c4b0;}
+.card.gold::before{background:#c4820a;}
+.card.blue::before{background:#1a4fd8;}
+.card.slate::before{background:#4a6080;}
+.card.green::before{background:#1a7c3a;}
+.card.purple::before{background:#7c3aad;}
+.card.team::before{background:linear-gradient(90deg,#15c4b0,#c4820a,#1a4fd8);}
+.card-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#3a4050;}
+.card.teal .card-tag{color:#15c4b0;} .card.gold .card-tag{color:#c4820a;} .card.blue .card-tag{color:#1a4fd8;} .card.slate .card-tag{color:#7a90a8;} .card.green .card-tag{color:#1a7c3a;} .card.purple .card-tag{color:#9a5ad8;} .card.team .card-tag{color:#a8c0f0;}
+.card-title{font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1;letter-spacing:-.02em;color:#e8e4dc;}
+.card-title em{font-style:italic;}
+.card-desc{font-size:12px;color:#4a5060;line-height:1.6;}
+.card-arrow{font-size:18px;color:#2a3040;margin-top:auto;padding-top:16px;transition:color .2s;}
+.card:hover .card-arrow{color:#a8c0f0;}
+.card.featured{grid-column:span 2;}
+@media(max-width:700px){.card.featured{grid-column:span 1;} .hero{padding:48px 24px;} .grid{padding:0;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="tag">AI Systems Co. · Internal Documents · 2025</div>
+  <h1>The <em>Hub</em></h1>
+  <p class="sub">All strategy documents, product intelligence briefs, and presentation materials in one place.</p>
+</div>
+<div class="grid">
+
+  <a href="team.html" class="card team featured">
+    <div class="card-tag">★ Team Presentation · Start Here</div>
+    <div class="card-title">Family <em>Pitch Deck</em></div>
+    <div class="card-desc">The presentation for the founding team meeting. The opportunity, the structure, the three verticals, individual roles, and the prize. Present this first.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="dental.html" class="card teal">
+    <div class="card-tag">Product Intelligence · Kie & Leah</div>
+    <div class="card-title">Dental<em>OS</em></div>
+    <div class="card-desc">Full product brief. Flagship: Practice Pulse. 10 modules with features, dev breakdown, marketing angles, SWOT, and pricing.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="factory.html" class="card gold">
+    <div class="card-tag">Product Intelligence · Si</div>
+    <div class="card-title">Factory<em>OS</em></div>
+    <div class="card-desc">Full product brief. Flagship: The Ops Brief. 10 modules including predictive maintenance and computer vision QC. Audit-first model.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="health.html" class="card blue">
+    <div class="card-tag">Product Intelligence · Mum's Industry</div>
+    <div class="card-title">Health<em>OS</em></div>
+    <div class="card-desc">Full product brief. Flagship: Contract Intelligence Engine — finds more in missed rebates in 90 days than the annual fee. 10 modules.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="build-plan.html" class="card slate">
+    <div class="card-tag">Build Plan v2 · All Verticals</div>
+    <div class="card-title">Real <em>Build Costs</em></div>
+    <div class="card-desc">Honest cash costs (not developer rates). 30 modules across all three verticals. Stage 1 total across all three: ~£1,750 cash.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="what-we-offer.html" class="card green">
+    <div class="card-tag">Sales Deck · What We Do</div>
+    <div class="card-title">What We <em>Offer</em></div>
+    <div class="card-desc">Client-facing overview of all three verticals. The deck to show a prospect who asks "so what exactly do you do?"</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="strategy.html" class="card purple">
+    <div class="card-tag">VC-Grade Strategy Report</div>
+    <div class="card-title">Full <em>Strategy</em></div>
+    <div class="card-desc">100+ AI systems analysed, 10 industries ranked, tech stack, business model, GTM. The full macro picture behind this venture.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Offer — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #070709;
+    --off-black: #0d0d12;
+    --card: #111117;
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.13);
+    --white: #eeebe3;
+    --dim: #5e5c58;
+    --dim2: #3a3836;
+    --teal: #1cb0a0;
+    --teal-dim: rgba(28,176,160,0.1);
+    --teal-border: rgba(28,176,160,0.25);
+    --gold: #d4a843;
+    --gold-dim: rgba(212,168,67,0.1);
+    --gold-border: rgba(212,168,67,0.25);
+    --red: #bf3a2b;
+    --red-dim: rgba(191,58,43,0.1);
+    --red-border: rgba(191,58,43,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; overflow-x: hidden; cursor: none; }
+
+  /* Cursor */
+  #cursor { position: fixed; width: 8px; height: 8px; border-radius: 50%; background: var(--white); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: difference; transition: width .15s, height .15s; }
+
+  /* Progress */
+  #progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--teal), var(--gold)); z-index: 200; transition: width .4s ease; }
+
+  /* Counter */
+  .counter { position: fixed; bottom: 28px; right: 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .2em; color: var(--dim); z-index: 200; text-transform: uppercase; }
+  .counter span { color: var(--white); }
+
+  /* Nav dots */
+  .dots { position: fixed; right: 36px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 9px; z-index: 200; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dim2); border: none; cursor: pointer; transition: all .3s; padding: 0; }
+  .dot.active { background: var(--white); transform: scale(1.6); }
+
+  /* ── BASE SLIDE ── */
+  .slide {
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 64px 72px;
+    overflow: hidden;
+  }
+
+  .wm {
+    position: absolute;
+    bottom: -24px; right: -8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(160px, 22vw, 300px);
+    color: rgba(255,255,255,0.022);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Entrance animations */
+  .slide > *:not(.wm):not(.bg-layer) { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(1) { opacity:1; transform:none; transition-delay:.04s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(2) { opacity:1; transform:none; transition-delay:.12s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(3) { opacity:1; transform:none; transition-delay:.21s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(4) { opacity:1; transform:none; transition-delay:.30s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(5) { opacity:1; transform:none; transition-delay:.39s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(6) { opacity:1; transform:none; transition-delay:.48s; }
+  .slide.in > *:not(.wm):not(.bg-layer):nth-child(7) { opacity:1; transform:none; transition-delay:.54s; }
+
+  /* ── EYEBROW ── */
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before { content:''; width:32px; height:1px; background: currentColor; }
+  .eyebrow.t { color: var(--teal); }
+  .eyebrow.t::before { background: var(--teal); }
+  .eyebrow.g { color: var(--gold); }
+  .eyebrow.g::before { background: var(--gold); }
+  .eyebrow.r { color: var(--red); }
+  .eyebrow.r::before { background: var(--red); }
+
+  /* ── BIG HEADING ── */
+  .h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 11vw, 148px);
+    line-height: .9;
+    letter-spacing: .01em;
+    color: var(--white);
+  }
+  .h1 .t { color: var(--teal); }
+  .h1 .g { color: var(--gold); }
+  .h1 .r { color: var(--red); }
+  .h1 .ghost { -webkit-text-stroke: 1px rgba(255,255,255,0.15); color: transparent; }
+
+  /* ── COVER ── */
+  .s-cover { background: var(--black); justify-content: flex-end; padding-bottom: 80px; }
+
+  .s-cover .bg-layer {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 100% 0%, rgba(28,176,160,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 0% 100%, rgba(212,168,67,0.05) 0%, transparent 55%);
+  }
+
+  .s-cover .grid-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .cover-super {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 28px;
+  }
+
+  .cover-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 13vw, 172px);
+    line-height: .88;
+    letter-spacing: .01em;
+    max-width: 1000px;
+  }
+
+  .cover-sub {
+    margin-top: 32px;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--dim);
+    max-width: 560px;
+    line-height: 1.75;
+    letter-spacing: .02em;
+  }
+  .cover-sub strong { color: var(--white); font-weight: 600; }
+
+  .cover-verticals {
+    display: flex;
+    gap: 2px;
+    margin-top: 48px;
+    max-width: 560px;
+  }
+
+  .cv-pill {
+    flex: 1;
+    padding: 10px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid;
+  }
+  .cv-pill.t { color: var(--teal); border-color: var(--teal-border); background: var(--teal-dim); }
+  .cv-pill.g { color: var(--gold); border-color: var(--gold-border); background: var(--gold-dim); }
+  .cv-pill.r { color: var(--red); border-color: var(--red-border); background: var(--red-dim); }
+
+  /* ── PROBLEM SLIDE ── */
+  .s-problem { background: var(--off-black); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 980px;
+    margin-top: 40px;
+  }
+
+  .prob-card {
+    padding: 26px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prob-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .prob-card.t::after { background: var(--teal); }
+  .prob-card.g::after { background: var(--gold); }
+  .prob-card.r::after { background: var(--red); }
+
+  .prob-industry {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .prob-industry.t { color: var(--teal); }
+  .prob-industry.g { color: var(--gold); }
+  .prob-industry.r { color: var(--red); }
+
+  .prob-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    line-height: 1;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .prob-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .prob-stat.t { color: var(--teal); }
+  .prob-stat.g { color: var(--gold); }
+  .prob-stat.r { color: var(--red); }
+
+  .prob-stat-label {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.4;
+    margin-bottom: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .05em;
+  }
+
+  .prob-desc {
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.65;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+
+  .prob-desc strong { color: var(--white); font-weight: 600; }
+
+  /* ── VERTICAL SECTION HEADER ── */
+  .s-vhead { min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; }
+
+  .s-vhead.dental { background: #050e0d; }
+  .s-vhead.factory { background: #0d0a03; }
+  .s-vhead.health { background: #0d0407; }
+
+  .vhead-bg-dental {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 100% 50%, rgba(28,176,160,0.09) 0%, transparent 60%);
+  }
+  .vhead-bg-factory {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 100% 50%, rgba(212,168,67,0.09) 0%, transparent 60%);
+  }
+  .vhead-bg-health {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 70% at 100% 50%, rgba(191,58,43,0.09) 0%, transparent 60%);
+  }
+
+  .vhead-os {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 16vw, 200px);
+    line-height: .85;
+    letter-spacing: .01em;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .vhead-lead {
+    font-size: clamp(14px, 1.8vw, 18px);
+    font-weight: 300;
+    color: var(--dim);
+    max-width: 580px;
+    line-height: 1.75;
+    position: relative;
+    margin-bottom: 32px;
+  }
+  .vhead-lead strong { color: var(--white); font-weight: 600; }
+
+  .vhead-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .vstat {
+    border-left: 2px solid;
+    padding-left: 14px;
+  }
+  .vstat.t { border-color: var(--teal); }
+  .vstat.g { border-color: var(--gold); }
+  .vstat.r { border-color: var(--red); }
+
+  .vstat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .vstat.t .vstat-val { color: var(--teal); }
+  .vstat.g .vstat-val { color: var(--gold); }
+  .vstat.r .vstat-val { color: var(--red); }
+
+  .vstat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ── SYSTEMS SLIDE ── */
+  .s-systems { background: var(--black); padding-top: 56px; padding-bottom: 56px; min-height: 100dvh; justify-content: flex-start; }
+
+  .sys-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .sys-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: .01em;
+  }
+
+  .sys-count {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    padding-bottom: 4px;
+  }
+
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    max-width: 980px;
+  }
+
+  .sys-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color .2s;
+  }
+
+  .sys-item:hover { border-color: var(--border-bright); }
+
+  .sys-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    line-height: 1;
+    opacity: .18;
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  .sys-content {}
+
+  .sys-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 5px;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+  }
+
+  .sys-desc {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .sys-desc strong { color: rgba(255,255,255,0.55); font-weight: 600; }
+
+  /* ── AGENTS SLIDE ── */
+  .s-agents { min-height: 100dvh; justify-content: flex-start; padding-top: 60px; }
+  .s-agents.dental { background: #050e0d; }
+  .s-agents.factory { background: #0d0a03; }
+  .s-agents.health { background: #0d0407; }
+
+  .agents-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 980px;
+    margin-top: 28px;
+  }
+
+  .agent-col {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+    padding: 22px 22px;
+  }
+
+  .agent-col-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 14px;
+  }
+
+  .agent-list { list-style: none; }
+
+  .agent-list li {
+    font-size: 12px;
+    color: var(--white);
+    font-weight: 300;
+    padding: 6px 0 6px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .agent-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 10px;
+    top: 7px;
+  }
+
+  .agent-list.t li::before { color: var(--teal); }
+  .agent-list.g li::before { color: var(--gold); }
+  .agent-list.r li::before { color: var(--red); }
+
+  .agent-list li strong { font-weight: 700; }
+
+  .agents-value {
+    grid-column: span 2;
+    padding: 20px 22px;
+    background: rgba(255,255,255,.015);
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .av-item {}
+
+  .av-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .av-val.t { color: var(--teal); }
+  .av-val.g { color: var(--gold); }
+  .av-val.r { color: var(--red); }
+
+  .av-label {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.4;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .05em;
+  }
+
+  /* ── PRICING SLIDE ── */
+  .s-pricing { background: var(--off-black); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 920px;
+    margin-top: 36px;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .price-card.t::before { background: var(--teal); }
+  .price-card.g::before { background: var(--gold); }
+  .price-card.r::before { background: var(--red); }
+
+  .price-tier {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 8px;
+  }
+
+  .price-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .price-card.t .price-amount { color: var(--teal); }
+  .price-card.g .price-amount { color: var(--gold); }
+  .price-card.r .price-amount { color: var(--red); }
+
+  .price-period {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--dim);
+    margin-bottom: 20px;
+  }
+
+  .price-features {
+    list-style: none;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .price-features li {
+    font-size: 11px;
+    color: var(--dim);
+    padding: 5px 0 5px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    position: relative;
+    line-height: 1.45;
+  }
+
+  .price-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-size: 9px;
+    top: 6px;
+  }
+
+  .price-card.t .price-features li::before { color: var(--teal); }
+  .price-card.g .price-features li::before { color: var(--gold); }
+  .price-card.r .price-features li::before { color: var(--red); }
+
+  .pricing-note {
+    max-width: 920px;
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--gold);
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.65;
+  }
+  .pricing-note strong { color: var(--white); font-weight: 600; }
+
+  /* ── CLOSE SLIDE ── */
+  .s-close {
+    background: var(--black);
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .s-close .bg-layer {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,168,67,0.05) 0%, transparent 65%);
+  }
+
+  .close-h {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 10vw, 128px);
+    line-height: .9;
+    color: var(--white);
+    max-width: 820px;
+    position: relative;
+  }
+  .close-h .g { color: var(--gold); }
+
+  .close-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 920px;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .close-item {
+    padding: 22px 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .close-item-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: .3;
+  }
+
+  .close-item-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .close-item-desc {
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .close-cta {
+    margin-top: 36px;
+    position: relative;
+    max-width: 920px;
+    text-align: center;
+    border: 1px solid rgba(212,168,67,0.2);
+    padding: 24px 28px;
+    background: rgba(212,168,67,0.04);
+  }
+
+  .close-cta p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 3vw, 38px);
+    color: rgba(255,255,255,.2);
+    letter-spacing: .04em;
+    line-height: 1.3;
+  }
+
+  .close-cta p strong { color: var(--gold); }
+
+  /* ── DIVIDER between vertical sections ── */
+  .v-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    margin: 0;
+  }
+
+  /* ── NEW PRICING LAYOUT ── */
+  .new-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 980px;
+  }
+
+  .np-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 26px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .np-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .np-dental::before { background: var(--teal); }
+  .np-factory::before { background: var(--gold); }
+
+  .np-card-top {}
+
+  .np-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .np-tag.t { color: var(--teal); }
+  .np-tag.g { color: var(--gold); }
+
+  .np-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: .01em;
+  }
+
+  .np-card-model {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  .np-divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Module pricing */
+  .np-modules {}
+
+  .np-mod-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+
+  .np-mod-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .np-mod-price.t { color: var(--teal); }
+  .np-mod-price span { font-size: 18px; color: var(--dim); }
+
+  .np-mod-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .np-mod-ex {
+    font-size: 11px;
+    color: var(--dim);
+    padding: 5px 0 5px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    position: relative;
+    line-height: 1.4;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .03em;
+  }
+
+  .np-mod-ex::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    opacity: .5;
+    font-size: 9px;
+    top: 7px;
+  }
+
+  /* Bundle */
+  .np-bundle {}
+
+  .np-bundle-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .np-bundle-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .np-btier {
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--border);
+    padding: 12px 12px;
+  }
+
+  .np-btier-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 4px;
+  }
+
+  .np-btier-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .np-btier-price.t { color: var(--teal); }
+  .np-btier-price span { font-size: 12px; color: var(--dim); }
+
+  .np-btier-desc {
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1.4;
+  }
+
+  /* Audit steps */
+  .np-audit-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .np-audit-step {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .np-audit-step:first-child { padding-top: 0; }
+  .np-audit-step:last-child { border-bottom: none; }
+
+  .np-audit-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    opacity: .35;
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+  .np-audit-num.g { color: var(--gold); }
+
+  .np-audit-content {}
+
+  .np-audit-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3px;
+    letter-spacing: -.01em;
+  }
+
+  .np-audit-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    margin-bottom: 5px;
+  }
+  .np-audit-price.g { color: var(--gold); }
+
+  .np-audit-desc {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* Factory sizing table */
+  .np-factory-sizing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .np-fs-item {
+    background: rgba(212,168,67,0.05);
+    border: 1px solid rgba(212,168,67,0.15);
+    padding: 10px 12px;
+  }
+
+  .np-fs-size {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 4px;
+  }
+
+  .np-fs-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .np-fs-price.g { color: var(--gold); }
+
+  /* Shared note */
+  .np-note {
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.65;
+    padding: 12px 14px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--gold);
+    margin-top: auto;
+  }
+  .np-note strong { color: var(--white); font-weight: 700; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .slide { padding: 48px 22px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .new-pricing-grid { grid-template-columns: 1fr; }
+    .np-bundle-tiers { grid-template-columns: 1fr; }
+    .np-factory-sizing { grid-template-columns: 1fr; }
+    .systems-grid { grid-template-columns: 1fr; }
+    .agents-layout { grid-template-columns: 1fr; }
+    .agents-value { grid-column: span 1; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .close-grid { grid-template-columns: 1fr; }
+    .cover-verticals { flex-direction: column; }
+    .vhead-stats { gap: 20px; }
+    .dots { display: none; }
+    .counter { right: 18px; bottom: 18px; }
+  }
+
+  @media (max-width: 480px) {
+    .slide { padding: 40px 18px; }
+    .cover-title { font-size: 64px !important; }
+    .vhead-os { font-size: 72px !important; }
+    .wm { display: none; }
+    .agents-value { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="progress"></div>
+<div class="counter"><span id="cur">01</span> / <span id="tot">12</span></div>
+<nav class="dots" id="dots"></nav>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 1 — COVER -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-cover" data-slide="1">
+  <div class="bg-layer"></div>
+  <div class="grid-bg"></div>
+  <div class="cover-super">AI Systems Co. · Product Suite · 2025</div>
+  <div class="cover-title h1">What<br>We <span class="t">Build.</span><br>What We <span class="g">Sell.</span></div>
+  <p class="cover-sub">
+    Three industries. Three AI operating systems. Each one designed to become the <strong>central intelligence layer</strong> of its sector — not a tool, not a wrapper, but the infrastructure businesses can't operate without.
+  </p>
+  <div class="cover-verticals">
+    <div class="cv-pill t">🦷 DentalOS</div>
+    <div class="cv-pill g">🏭 FactoryOS</div>
+    <div class="cv-pill r">🏥 HealthOS</div>
+  </div>
+  <div class="wm">00</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 2 — THE PROBLEM IN ALL THREE -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-problem" data-slide="2">
+  <div class="eyebrow">The Problem We're Solving</div>
+  <div class="h1" style="font-size:clamp(40px,6vw,80px); max-width:800px; line-height:.95">Three Industries.<br>All <span class="ghost">Broken</span> By The<br>Same <span class="g">Problem.</span></div>
+  <div class="problem-grid">
+    <div class="prob-card t">
+      <div class="prob-industry t">🦷 Dentistry</div>
+      <div class="prob-name">DentalOS</div>
+      <div class="prob-stat t">6–12</div>
+      <div class="prob-stat-label">Disconnected software tools per practice — zero unified intelligence</div>
+      <div class="prob-desc"><strong>180,000+ practices</strong> in the UK & US running on spreadsheets and gut feel. Patient comms, marketing, revenue, and clinical data — all siloed. No AI. No operating system. Just chaos.</div>
+    </div>
+    <div class="prob-card g">
+      <div class="prob-industry g">🏭 Manufacturing</div>
+      <div class="prob-name">FactoryOS</div>
+      <div class="prob-stat g">$16T</div>
+      <div class="prob-stat-label">Global market — with 2.1M unfilled roles and machine data going unanalysed</div>
+      <div class="prob-desc">Machines generating <strong>millions of data points daily</strong> — almost none of it analysed intelligently. Downtime costs £500k–£5M per facility per year. Quality failures. Procurement waste. All preventable.</div>
+    </div>
+    <div class="prob-card r">
+      <div class="prob-industry r">🏥 Healthcare Logistics</div>
+      <div class="prob-name">HealthOS</div>
+      <div class="prob-stat r">90%</div>
+      <div class="prob-stat-label">Of healthcare logistics & supply chain operators unserved by AI</div>
+      <div class="prob-desc">Complex workforce compliance, agency staff management, supply chain coordination — all done manually. <strong>Critical sector. Zero AI adoption.</strong> Regulatory pressure intensifying every year.</div>
+    </div>
+  </div>
+  <div class="wm">02</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 3 — DENTALOS HEADER -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-vhead dental" data-slide="3">
+  <div class="vhead-bg-dental bg-layer"></div>
+  <div class="eyebrow t">Vertical 01 · Kie & Leah</div>
+  <div class="vhead-os h1"><span class="t">Dental</span><br>OS.</div>
+  <p class="vhead-lead">
+    The AI operating system for private dental practices and dental group operators. <strong>From a single-practice starter module to a fully autonomous AI Copilot</strong> managing marketing, revenue, patients, and clinical performance — all from one platform.
+  </p>
+  <div class="vhead-stats">
+    <div class="vstat t">
+      <div class="vstat-val">£40k–£200k</div>
+      <div class="vstat-label">Revenue impact per practice / year</div>
+    </div>
+    <div class="vstat t">
+      <div class="vstat-val">9.8/10</div>
+      <div class="vstat-label">AI opportunity score — #1 ranked vertical</div>
+    </div>
+    <div class="vstat t">
+      <div class="vstat-val">180k+</div>
+      <div class="vstat-label">Target practices in UK & US alone</div>
+    </div>
+  </div>
+  <div class="wm">03</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 4 — DENTALOS SYSTEMS -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-systems" data-slide="4">
+  <div class="eyebrow t">DentalOS · What We Build</div>
+  <div class="sys-header">
+    <div class="sys-title">The 10 AI Systems<br>Inside DentalOS</div>
+    <div class="sys-count">All 10 modules deployable independently or as a unified OS</div>
+  </div>
+  <div class="systems-grid">
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">01</div>
+      <div class="sys-content">
+        <div class="sys-name">Unified Practice Intelligence Dashboard</div>
+        <div class="sys-desc">Full AI operating system — integrates appointment flow, comms, marketing, revenue, and clinical performance. <strong>The whole practice, one screen.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">02</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Patient Reactivation Engine</div>
+        <div class="sys-desc">Identifies lapsed patients, auto-generates personalised SMS/email/WhatsApp sequences. <strong>Recovers £20k–£100k/yr per practice.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">03</div>
+      <div class="sys-content">
+        <div class="sys-name">Treatment Plan Conversion AI</div>
+        <div class="sys-desc">Monitors case acceptance rates, auto-suggests pricing tweaks, finance options, and follow-up sequences. <strong>20–40% improvement in conversion.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">04</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Appointment Optimiser</div>
+        <div class="sys-desc">Predicts no-show probability, auto-fills gaps, dynamically adjusts reminder cadences. <strong>30–50% reduction in DNAs.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">05</div>
+      <div class="sys-content">
+        <div class="sys-name">Marketing Attribution Intelligence</div>
+        <div class="sys-desc">Tracks every patient from first click to treatment accepted. Auto-reallocates budget to highest-ROI channels. <strong>Eliminates wasted ad spend.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">06</div>
+      <div class="sys-content">
+        <div class="sys-name">Competitor Intelligence Platform</div>
+        <div class="sys-desc">Monitors local competitor pricing, reviews, and new patient offers daily. <strong>Always know what's happening in your market.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">07</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Revenue Cycle Manager</div>
+        <div class="sys-desc">Automates insurance pre-auth, claim submission, and payment reconciliation. <strong>Reduces admin headcount by 60%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">08</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Clinical Documentation Assistant</div>
+        <div class="sys-desc">Voice-to-note AI captures clinical observations in real time, auto-generates compliant notes. <strong>Saves dentists 40% of admin time.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">09</div>
+      <div class="sys-content">
+        <div class="sys-name">Patient Demand Forecasting Engine</div>
+        <div class="sys-desc">Analyses patterns, seasonality, and search trends to predict demand. <strong>Enables proactive staffing and campaign timing.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--teal)">10</div>
+      <div class="sys-content">
+        <div class="sys-name">Group Practice Benchmarking Platform</div>
+        <div class="sys-desc">For DSOs — benchmarks every site, surfaces best practices, real-time intelligence dashboard. <strong>Built for operators running 5–50+ sites.</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">04</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 5 — DENTALOS AGENTS + VALUE -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-agents dental" data-slide="5">
+  <div class="eyebrow t">DentalOS · The AI Copilot</div>
+  <div class="h1" style="font-size:clamp(36px,5vw,68px)">7 Autonomous<br>Agents. One <span class="t">Copilot.</span></div>
+  <div class="agents-layout">
+    <div class="agent-col">
+      <div class="agent-col-title">AI Agents Running Autonomously</div>
+      <ul class="agent-list t">
+        <li><strong>Marketing Agent</strong> — runs & optimises all digital campaigns without input</li>
+        <li><strong>Reactivation Agent</strong> — contacts lapsed patients automatically</li>
+        <li><strong>Revenue Agent</strong> — monitors KPIs, flags underperformance</li>
+        <li><strong>Appointment Agent</strong> — fills gaps, reduces DNAs, optimises utilisation</li>
+        <li><strong>Communication Agent</strong> — manages all patient touchpoints</li>
+        <li><strong>Competitor Agent</strong> — monitors the local market every day</li>
+        <li><strong>Treatment Plan Agent</strong> — tracks conversion, suggests improvements</li>
+      </ul>
+    </div>
+    <div class="agent-col">
+      <div class="agent-col-title">What It Automates Every Week</div>
+      <ul class="agent-list t">
+        <li>Auto-launches reactivation campaigns to lapsed patient segments</li>
+        <li>Dynamically adjusts ad spend based on appointment availability</li>
+        <li>Auto-generates monthly patient newsletters</li>
+        <li>Sends treatment plan follow-up sequences</li>
+        <li>Re-books DNAs within 24 hours automatically</li>
+        <li>Generates weekly performance reports for the principal</li>
+        <li>Auto-responds to all Google & Facebook reviews</li>
+      </ul>
+    </div>
+    <div class="agents-value">
+      <div class="av-item">
+        <div class="av-val t">15–25%</div>
+        <div class="av-label">Increase in new patient acquisition</div>
+      </div>
+      <div class="av-item">
+        <div class="av-val t">30–50%</div>
+        <div class="av-label">Reduction in DNA (did not attend) rates</div>
+      </div>
+      <div class="av-item">
+        <div class="av-val t">£2–5k/mo</div>
+        <div class="av-label">Marketing management costs eliminated</div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">05</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 6 — FACTORYOS HEADER -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-vhead factory" data-slide="6">
+  <div class="vhead-bg-factory bg-layer"></div>
+  <div class="eyebrow g">Vertical 02 · Si</div>
+  <div class="vhead-os h1"><span class="g">Factory</span><br>OS.</div>
+  <p class="vhead-lead">
+    The AI intelligence layer for mid-market manufacturers. <strong>Predictive maintenance, quality control, procurement, production scheduling, and energy optimisation</strong> — unified into one autonomous operational platform that pays for itself within 6 months.
+  </p>
+  <div class="vhead-stats">
+    <div class="vstat g">
+      <div class="vstat-val">£500k–£3M</div>
+      <div class="vstat-label">Cost saving per facility per year</div>
+    </div>
+    <div class="vstat g">
+      <div class="vstat-val">9.1/10</div>
+      <div class="vstat-label">AI opportunity score — #3 ranked vertical</div>
+    </div>
+    <div class="vstat g">
+      <div class="vstat-val">$16T</div>
+      <div class="vstat-label">Global manufacturing market size</div>
+    </div>
+  </div>
+  <div class="wm">06</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 7 — FACTORYOS SYSTEMS -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-systems" data-slide="7">
+  <div class="eyebrow g">FactoryOS · What We Build</div>
+  <div class="sys-header">
+    <div class="sys-title">The 10 AI Systems<br>Inside FactoryOS</div>
+    <div class="sys-count">Each module delivers standalone ROI — combined they form a unified factory brain</div>
+  </div>
+  <div class="systems-grid">
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">01</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Predictive Maintenance Platform</div>
+        <div class="sys-desc">Analyses machine sensor data in real time, predicts failures before they happen. <strong>Reduces unplanned downtime by 50–70%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">02</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Production Scheduler</div>
+        <div class="sys-desc">Optimises production runs dynamically — demand forecasts, machine availability, material stock, workforce. <strong>OEE improvement of 15–25%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">03</div>
+      <div class="sys-content">
+        <div class="sys-name">Computer Vision Quality Control</div>
+        <div class="sys-desc">Real-time visual inspection via camera — detects defects beyond human capability. <strong>Defect escape rate reduced 80–95%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">04</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Procurement Intelligence</div>
+        <div class="sys-desc">Monitors supplier performance and market pricing. Automates POs, negotiates terms, identifies alternatives. <strong>Procurement costs down 10–20%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">05</div>
+      <div class="sys-content">
+        <div class="sys-name">Demand Forecasting Engine</div>
+        <div class="sys-desc">30/60/90-day demand forecasts combining sales history, market signals, and seasonality. <strong>Eliminates reactive production planning.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">06</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Inventory Optimiser</div>
+        <div class="sys-desc">Dynamically calculates optimal stock levels across all SKUs, automates reorder triggers. <strong>Inventory holding costs down 10–20%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">07</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Energy Optimiser</div>
+        <div class="sys-desc">Monitors all energy consumption, shifts high-use processes to off-peak, generates sustainability reporting. <strong>Energy costs down 5–15%.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">08</div>
+      <div class="sys-content">
+        <div class="sys-name">Workforce Intelligence Platform</div>
+        <div class="sys-desc">Optimises shift patterns, tracks skills gaps, monitors productivity, predicts absenteeism. <strong>Always the right people, right place.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">09</div>
+      <div class="sys-content">
+        <div class="sys-name">Supplier Intelligence Platform</div>
+        <div class="sys-desc">Risk-scores every supplier in real time — financial health, delivery, geopolitical exposure. <strong>Flags supply chain vulnerabilities before they hit.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--gold)">10</div>
+      <div class="sys-content">
+        <div class="sys-name">FactoryOS — Unified Operations AI</div>
+        <div class="sys-desc">All 9 modules combined. Real-time dashboards, AI alerts, autonomous agents, executive intelligence. <strong>The factory brain.</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">07</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 8 — FACTORYOS AGENTS + VALUE -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-agents factory" data-slide="8">
+  <div class="eyebrow g">FactoryOS · The AI Copilot</div>
+  <div class="h1" style="font-size:clamp(36px,5vw,68px)">7 Autonomous<br>Agents. One <span class="g">Factory Brain.</span></div>
+  <div class="agents-layout">
+    <div class="agent-col">
+      <div class="agent-col-title">AI Agents Running Autonomously</div>
+      <ul class="agent-list g">
+        <li><strong>Maintenance Agent</strong> — predicts failures, schedules preventative work</li>
+        <li><strong>Quality Agent</strong> — monitors output via computer vision, flags defects</li>
+        <li><strong>Procurement Agent</strong> — monitors markets, auto-raises purchase orders</li>
+        <li><strong>Scheduling Agent</strong> — optimises production sequences dynamically</li>
+        <li><strong>Energy Agent</strong> — shifts load, identifies waste, cuts costs</li>
+        <li><strong>Inventory Agent</strong> — maintains optimal stock levels autonomously</li>
+        <li><strong>Workforce Agent</strong> — optimises shifts and skills allocation</li>
+      </ul>
+    </div>
+    <div class="agent-col">
+      <div class="agent-col-title">What It Automates Every Day</div>
+      <ul class="agent-list g">
+        <li>Auto-schedules preventative maintenance before failures occur</li>
+        <li>Flags & quarantines defective batches in real time</li>
+        <li>Auto-raises POs when stock hits reorder triggers</li>
+        <li>Dynamically reschedules production when material delays detected</li>
+        <li>Auto-generates daily operational briefing for plant managers</li>
+        <li>Triggers energy-saving protocols during low-demand periods</li>
+        <li>Generates weekly supplier performance scorecards automatically</li>
+      </ul>
+    </div>
+    <div class="agents-value">
+      <div class="av-item">
+        <div class="av-val g">50–70%</div>
+        <div class="av-label">Reduction in unplanned downtime</div>
+      </div>
+      <div class="av-item">
+        <div class="av-val g">15–25%</div>
+        <div class="av-label">Improvement in OEE (overall equipment effectiveness)</div>
+      </div>
+      <div class="av-item">
+        <div class="av-val g">6 months</div>
+        <div class="av-label">Typical time to full ROI from deployment</div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">08</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 9 — HEALTHOS HEADER -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-vhead health" data-slide="9">
+  <div class="vhead-bg-health bg-layer"></div>
+  <div class="eyebrow r">Vertical 03 · Mum's Industry</div>
+  <div class="vhead-os h1"><span class="r">Health</span><br>OS.</div>
+  <p class="vhead-lead">
+    AI workforce and operations intelligence for healthcare logistics and supply chain operators. <strong>Compliance automation, workforce management, procurement intelligence, and supply chain optimisation</strong> — purpose-built for the most under-served sector in the AI market.
+  </p>
+  <div class="vhead-stats">
+    <div class="vstat r">
+      <div class="vstat-val">90%</div>
+      <div class="vstat-label">Of operators in this space unserved by AI — right now</div>
+    </div>
+    <div class="vstat r">
+      <div class="vstat-val">$9.8T</div>
+      <div class="vstat-label">Healthcare logistics & supply chain market</div>
+    </div>
+    <div class="vstat r">
+      <div class="vstat-val">8.7/10</div>
+      <div class="vstat-label">AI opportunity score — #5 ranked vertical</div>
+    </div>
+  </div>
+  <div class="wm">09</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 10 — HEALTHOS SYSTEMS -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-systems" data-slide="10">
+  <div class="eyebrow r">HealthOS · What We Build</div>
+  <div class="sys-header">
+    <div class="sys-title">The 10 AI Systems<br>Inside HealthOS</div>
+    <div class="sys-count">Workforce, compliance, procurement & supply chain — AI-powered for healthcare operators</div>
+  </div>
+  <div class="systems-grid">
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">01</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Workforce Compliance Manager</div>
+        <div class="sys-desc">Automates mandatory compliance tracking for clinical and logistics staff — certifications, DBS, training records. <strong>Zero compliance failures. Zero manual chasing.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">02</div>
+      <div class="sys-content">
+        <div class="sys-name">Agency Staff Intelligence Platform</div>
+        <div class="sys-desc">Manages agency staff procurement, performance scoring, and cost benchmarking. <strong>Cuts agency spend by 15–25%</strong> through intelligent sourcing and rate negotiation.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">03</div>
+      <div class="sys-content">
+        <div class="sys-name">Supply Chain Risk Intelligence</div>
+        <div class="sys-desc">Monitors suppliers, logistics networks, and delivery performance in real time. <strong>Predicts disruptions 2–8 weeks in advance</strong> and triggers contingency plans automatically.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">04</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Shift Scheduling Optimiser</div>
+        <div class="sys-desc">Predicts staffing demand, generates compliant shift patterns, manages swaps and absences. <strong>Labour costs reduced 10–20%</strong> without compromising cover.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">05</div>
+      <div class="sys-content">
+        <div class="sys-name">Procurement Optimisation AI</div>
+        <div class="sys-desc">Benchmarks supplier pricing, automates reordering, identifies bulk buying opportunities. <strong>Procurement costs reduced 12–18%</strong> across medical supply portfolios.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">06</div>
+      <div class="sys-content">
+        <div class="sys-name">Regulatory Compliance AI</div>
+        <div class="sys-desc">Continuously monitors CQC, MHRA, and NHS regulatory changes. Maps updates to operational obligations. <strong>Auto-generates audit evidence and compliance reports.</strong></div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">07</div>
+      <div class="sys-content">
+        <div class="sys-name">Skills Gap Intelligence Platform</div>
+        <div class="sys-desc">Maps current workforce capability against operational requirements. <strong>Auto-generates development plans</strong> and identifies training priorities before gaps become risks.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">08</div>
+      <div class="sys-content">
+        <div class="sys-name">AI Route & Delivery Optimisation</div>
+        <div class="sys-desc">For healthcare logistics operators — real-time route optimisation for medical supply deliveries. <strong>Fuel costs down 15–25%.</strong> On-time delivery performance up 20–35%.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">09</div>
+      <div class="sys-content">
+        <div class="sys-name">Operational Performance Dashboard</div>
+        <div class="sys-desc">Real-time KPI monitoring across every operational function. <strong>Executive-level intelligence</strong> that replaces 10 separate reports with one live AI-driven view.</div>
+      </div>
+    </div>
+    <div class="sys-item">
+      <div class="sys-n" style="color:var(--red)">10</div>
+      <div class="sys-content">
+        <div class="sys-name">HealthOS — Unified Operations AI</div>
+        <div class="sys-desc">Full AI operating system for healthcare logistics and supply chain operators. <strong>Workforce, compliance, procurement, and logistics — one platform, one intelligence layer.</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="wm">10</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 11 — PRICING MODEL -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-pricing" data-slide="11" style="justify-content:flex-start; padding-top:60px;">
+  <div class="eyebrow g">How We Price</div>
+  <div class="h1" style="font-size:clamp(40px,6vw,82px); max-width:820px; line-height:.92; margin-bottom:36px;">Three Verticals.<br>Three <span class="g">Pricing Models.</span></div>
+
+  <!-- NEW PRICING LAYOUT -->
+  <div class="new-pricing-grid">
+
+    <!-- DENTAL -->
+    <div class="np-card np-dental">
+      <div class="np-card-top">
+        <div class="np-tag t">🦷 DentalOS & 🏥 HealthOS</div>
+        <div class="np-card-title">Module Pricing<br>+ Bundle Builder</div>
+        <div class="np-card-model">Productised SaaS</div>
+      </div>
+      <div class="np-modules">
+        <div class="np-mod-label">Individual Modules — from</div>
+        <div class="np-mod-price t">£300<span>/mo</span></div>
+        <div class="np-mod-examples">
+          <div class="np-mod-ex">Patient Reactivation Engine — £300/mo</div>
+          <div class="np-mod-ex">Appointment Optimiser — £350/mo</div>
+          <div class="np-mod-ex">Marketing Attribution — £400/mo</div>
+          <div class="np-mod-ex">Competitor Intelligence — £350/mo</div>
+          <div class="np-mod-ex">Clinical Documentation AI — £300/mo</div>
+        </div>
+      </div>
+      <div class="np-divider"></div>
+      <div class="np-bundle">
+        <div class="np-bundle-label">Bundle Builder — pick any 3+</div>
+        <div class="np-bundle-tiers">
+          <div class="np-btier">
+            <div class="np-btier-name">Starter Bundle</div>
+            <div class="np-btier-price t">£750<span>/mo</span></div>
+            <div class="np-btier-desc">3 modules of choice</div>
+          </div>
+          <div class="np-btier">
+            <div class="np-btier-name">Growth Bundle</div>
+            <div class="np-btier-price t">£1,400<span>/mo</span></div>
+            <div class="np-btier-desc">6 modules + Copilot agents</div>
+          </div>
+          <div class="np-btier">
+            <div class="np-btier-name">Full OS</div>
+            <div class="np-btier-price t">£2,200<span>/mo</span></div>
+            <div class="np-btier-desc">All 10 modules + full Copilot</div>
+          </div>
+        </div>
+      </div>
+      <div class="np-note">Client picks what solves their biggest problem first. Upgrades naturally as ROI compounds. <strong>DSO on Full OS × 10 sites = £22k MRR from one group.</strong></div>
+    </div>
+
+    <!-- FACTORY -->
+    <div class="np-card np-factory">
+      <div class="np-card-top">
+        <div class="np-tag g">🏭 FactoryOS</div>
+        <div class="np-card-title">Audit First.<br>Then Proposal.</div>
+        <div class="np-card-model">Bespoke Consulting → SaaS</div>
+      </div>
+      <div class="np-audit-block">
+        <div class="np-audit-step">
+          <div class="np-audit-num g">01</div>
+          <div class="np-audit-content">
+            <div class="np-audit-title">Paid Manufacturing Audit</div>
+            <div class="np-audit-price g">£2,500 – £5,000</div>
+            <div class="np-audit-desc">Si spends 1–2 days on site. Identifies every area of preventable loss — downtime, quality escapes, procurement waste, energy, workforce. Delivers a full written report.</div>
+          </div>
+        </div>
+        <div class="np-audit-step">
+          <div class="np-audit-num g">02</div>
+          <div class="np-audit-content">
+            <div class="np-audit-title">Bespoke Proposal</div>
+            <div class="np-audit-price g">Priced to the savings</div>
+            <div class="np-audit-desc">Proposal is built on the audit findings. Price is anchored to documented loss — not a software fee. A factory losing £3M/yr to preventable problems won't argue a £20k/mo platform.</div>
+          </div>
+        </div>
+        <div class="np-audit-step">
+          <div class="np-audit-num g">03</div>
+          <div class="np-audit-content">
+            <div class="np-audit-title">Deployment + Retainer</div>
+            <div class="np-audit-price g">£8k – £40k/mo + outcome share</div>
+            <div class="np-audit-desc">Monthly retainer based on facility size and modules deployed. Large clients (£100M+ revenue) move to a base retainer + % of documented savings above the baseline.</div>
+          </div>
+        </div>
+      </div>
+      <div class="np-factory-sizing">
+        <div class="np-fs-item">
+          <div class="np-fs-size">£5M–£50M revenue</div>
+          <div class="np-fs-price g">£3k–£8k/mo</div>
+        </div>
+        <div class="np-fs-item">
+          <div class="np-fs-size">£50M–£500M revenue</div>
+          <div class="np-fs-price g">£8k–£25k/mo</div>
+        </div>
+        <div class="np-fs-item">
+          <div class="np-fs-size">£500M+ revenue</div>
+          <div class="np-fs-price g">Retainer + outcome %</div>
+        </div>
+      </div>
+      <div class="np-note"><strong>No public pricing page.</strong> The only CTA is "Book a Manufacturing Audit." The audit is the sales process. Si walks in as a peer — not a salesperson.</div>
+    </div>
+
+  </div>
+  <div class="wm">11</div>
+</section>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SLIDE 12 — CLOSE -->
+<!-- ══════════════════════════════════════════════ -->
+<section class="slide s-close" data-slide="12">
+  <div class="bg-layer"></div>
+  <div class="eyebrow g">The Bottom Line</div>
+  <div class="close-h h1">Not A Tool.<br>An <span class="g">Operating<br>System.</span></div>
+  <div class="close-grid">
+    <div class="close-item">
+      <div class="close-item-icon" style="color:var(--teal)">OS</div>
+      <div class="close-item-title">Embedded, not external</div>
+      <div class="close-item-desc">These systems sit inside daily operations. They're not an app someone opens occasionally — they run the business. That's what makes them impossible to remove.</div>
+    </div>
+    <div class="close-item">
+      <div class="close-item-icon" style="color:var(--gold)">∞</div>
+      <div class="close-item-title">Smarter every day</div>
+      <div class="close-item-desc">Every client makes the system smarter. Every month compounds the data moat. By Year 3 each platform has intelligence no competitor can buy, build, or replicate.</div>
+    </div>
+    <div class="close-item">
+      <div class="close-item-icon" style="color:var(--red)">£</div>
+      <div class="close-item-title">Outcomes, not software</div>
+      <div class="close-item-desc">Clients don't pay for software. They pay because the platform recovers revenue, cuts costs, and saves time worth multiples of the subscription. The ROI is measurable from Month 1.</div>
+    </div>
+  </div>
+  <div class="close-cta">
+    <p>Three industries. Three operating systems. <strong>One holding company.</strong><br>The window is open. <strong>We build now.</strong></p>
+  </div>
+  <div class="wm">12</div>
+</section>
+
+<script>
+  // Cursor
+  const cur = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => { cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px'; });
+
+  // Build slides list
+  const slides = [...document.querySelectorAll('.slide[data-slide]')];
+  const total = slides.length;
+  document.getElementById('tot').textContent = String(total).padStart(2,'0');
+
+  // Build dots
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((s,i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i===0?' active':'');
+    d.setAttribute('aria-label', `Slide ${i+1}`);
+    d.addEventListener('click', () => s.scrollIntoView({behavior:'smooth'}));
+    dotsEl.appendChild(d);
+  });
+  const dots = [...dotsEl.querySelectorAll('.dot')];
+
+  // Observer
+  const prog = document.getElementById('progress');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('in');
+        const idx = slides.indexOf(e.target);
+        dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+        prog.style.width = ((idx+1)/total*100)+'%';
+        document.getElementById('cur').textContent = String(idx+1).padStart(2,'0');
+      }
+    });
+  }, {threshold: 0.45});
+
+  slides.forEach(s => io.observe(s));
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    const idx = slides.findIndex(s => s.classList.contains('in'));
+    if((e.key==='ArrowDown'||e.key==='ArrowRight') && idx < total-1) slides[idx+1].scrollIntoView({behavior:'smooth'});
+    if((e.key==='ArrowUp'||e.key==='ArrowLeft') && idx > 0) slides[idx-1].scrollIntoView({behavior:'smooth'});
+  });
+</script>
+</body>
+</html>

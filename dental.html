@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentalOS — Product Intelligence Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;0,900;1,300;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f4ef;--bg2:#eeeae3;--bg3:#e5e0d8;--bg-dark:#0d0f0b;
+  --ink:#1a1c18;--ink2:#3d4039;--ink3:#6b6d68;
+  --teal:#0d7a6e;--teal-light:#e8f5f3;--teal-mid:#b8e0da;
+  --gold:#b8860b;--gold-light:#fef8e8;--gold-mid:#f0d898;
+  --red:#8b2020;--red-light:#fdf0f0;--red-mid:#f0b8b8;
+  --green:#1a5c2a;--green-light:#f0f8f0;--green-mid:#b8dcb8;
+  --amber:#8b5e00;--amber-light:#fef6e8;--amber-mid:#f0d0a8;
+  --border:#d8d3cb;--border2:#c8c3bb;
+  --white:#ffffff;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+/* COVER */
+.cover{background:var(--bg-dark);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:72px 72px 80px;position:relative;overflow:hidden;}
+.cover-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;}
+.cover-cross{position:absolute;top:72px;right:72px;width:80px;height:80px;opacity:.2;}
+.cover-cross::before,.cover-cross::after{content:'';position:absolute;background:var(--teal-mid);border-radius:2px;}
+.cover-cross::before{width:2px;height:100%;left:50%;transform:translateX(-50%);}
+.cover-cross::after{height:2px;width:100%;top:50%;transform:translateY(-50%);}
+.cover-dots{position:absolute;top:0;right:0;width:320px;height:320px;background-image:radial-gradient(circle,rgba(13,122,110,0.15) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:28px;display:flex;align-items:center;gap:14px;}
+.cover-tag::before{content:'';width:32px;height:1px;background:var(--teal-mid);}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(60px,9vw,120px);font-weight:900;line-height:.9;letter-spacing:-.02em;color:#f0ede6;max-width:900px;}
+.cover h1 em{font-style:italic;color:var(--teal-mid);}
+.cover-desc{margin-top:36px;font-size:15px;font-weight:300;color:rgba(240,237,230,0.5);max-width:580px;line-height:1.75;}
+.cover-desc strong{color:rgba(240,237,230,0.85);font-weight:500;}
+.cover-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:40px;}
+.cpill{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.12);color:rgba(240,237,230,0.6);background:rgba(255,255,255,.04);}
+.cover-bottom{margin-top:64px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+.cover-stat-row{display:flex;gap:48px;flex-wrap:wrap;}
+.cstat-val{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--teal-mid);line-height:1;}
+.cstat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,237,230,0.35);margin-top:4px;}
+
+/* TOC */
+.toc{background:var(--ink);padding:0 72px;}
+.toc-inner{display:flex;align-items:stretch;overflow-x:auto;}
+.toc-item{display:flex;align-items:center;gap:10px;padding:20px 24px;text-decoration:none;color:rgba(240,237,230,0.4);font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,.08);white-space:nowrap;transition:all .2s;border-bottom:2px solid transparent;}
+.toc-item:hover{color:rgba(240,237,230,.85);border-bottom-color:var(--teal-mid);}
+.toc-item.active{color:var(--teal-mid);border-bottom-color:var(--teal-mid);}
+.toc-num{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.1em;}
+
+/* PAGE */
+.page{max-width:1200px;margin:0 auto;padding:0 72px;}
+
+/* SWOT — full vertical overview */
+.swot-section{padding:72px 0 48px;}
+.swot-header{margin-bottom:40px;}
+.swot-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.swot-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--ink);}
+.swot-title em{font-style:italic;color:var(--teal);}
+.swot-desc{margin-top:16px;font-size:14px;color:var(--ink3);max-width:680px;line-height:1.75;}
+
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:40px;}
+.swot-box{padding:28px 28px;position:relative;}
+.swot-box.S{background:var(--green-light);border:1px solid var(--green-mid);}
+.swot-box.W{background:var(--red-light);border:1px solid var(--red-mid);}
+.swot-box.O{background:var(--teal-light);border:1px solid var(--teal-mid);}
+.swot-box.T{background:var(--amber-light);border:1px solid var(--amber-mid);}
+.swot-letter{font-family:'Fraunces',serif;font-size:72px;font-weight:900;position:absolute;top:12px;right:20px;line-height:1;opacity:.12;}
+.swot-box.S .swot-letter{color:var(--green);}
+.swot-box.W .swot-letter{color:var(--red);}
+.swot-box.O .swot-letter{color:var(--teal);}
+.swot-box.T .swot-letter{color:var(--amber);}
+.swot-box-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;}
+.swot-box.S .swot-box-title{color:var(--green);} .swot-box.W .swot-box-title{color:var(--red);} .swot-box.O .swot-box-title{color:var(--teal);} .swot-box.T .swot-box-title{color:var(--amber);}
+.swot-list{list-style:none;}
+.swot-list li{font-size:13px;color:var(--ink2);padding:5px 0 5px 16px;border-bottom:1px solid rgba(0,0,0,.06);position:relative;line-height:1.5;}
+.swot-list li::before{position:absolute;left:0;font-size:10px;top:6px;}
+.swot-box.S .swot-list li::before{content:'✓';color:var(--green);}
+.swot-box.W .swot-list li::before{content:'−';color:var(--red);}
+.swot-box.O .swot-list li::before{content:'→';color:var(--teal);}
+.swot-box.T .swot-list li::before{content:'!';color:var(--amber);}
+.swot-list li strong{font-weight:600;color:var(--ink);}
+
+/* TARGET AUDIENCE */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:48px;}
+.aud-card{background:var(--white);border:1px solid var(--border);padding:22px 22px;box-shadow:var(--shadow);}
+.aud-icon{font-size:28px;margin-bottom:10px;}
+.aud-type{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.aud-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;}
+.aud-desc{font-size:12px;color:var(--ink3);line-height:1.6;}
+.aud-pain{margin-top:10px;padding:8px 10px;background:var(--red-light);border-left:2px solid var(--red-mid);font-size:11px;color:var(--red);line-height:1.5;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border2);margin:64px 0;}
+.divider-dark{height:1px;background:rgba(255,255,255,.1);margin:64px 0;}
+
+/* MODULE CARD */
+.module-card{background:var(--white);border:1px solid var(--border);margin-bottom:48px;overflow:hidden;box-shadow:var(--shadow);}
+.module-header{background:var(--bg-dark);padding:32px 40px;position:relative;overflow:hidden;}
+.module-header-dots{position:absolute;bottom:-40px;right:-40px;width:200px;height:200px;background-image:radial-gradient(circle,rgba(13,122,110,0.2) 1px,transparent 1px);background-size:18px 18px;pointer-events:none;}
+.module-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,230,0.3);margin-bottom:8px;}
+.module-name{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:900;color:#f0ede6;line-height:1;letter-spacing:-.02em;margin-bottom:8px;}
+.module-name em{font-style:italic;color:var(--teal-mid);}
+.module-tagline{font-size:13px;font-weight:300;color:rgba(240,237,230,0.5);max-width:560px;line-height:1.6;}
+.module-header-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap;}
+.mh-stat-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--teal-mid);line-height:1;margin-bottom:2px;}
+.mh-stat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,230,0.3);}
+
+.module-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.module-col{padding:28px 32px;border-right:1px solid var(--border);}
+.module-col:last-child{border-right:none;}
+.module-col.full{grid-column:1/-1;border-top:1px solid var(--border);}
+.module-col.third{grid-column:auto;}
+.module-body.thirds{grid-template-columns:1fr 1fr 1fr;}
+
+.mc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;}
+.mc-label.gold{color:var(--gold);}
+.mc-label.red{color:var(--red);}
+.mc-label.green{color:var(--green);}
+
+.feature-list{list-style:none;}
+.feature-list li{font-size:13px;color:var(--ink2);padding:7px 0 7px 18px;border-bottom:1px solid var(--bg2);position:relative;line-height:1.5;}
+.feature-list li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:10px;top:9px;}
+.feature-list li strong{font-weight:600;color:var(--ink);}
+
+/* SWOT per module (compact) */
+.mod-swot{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);}
+.msw{padding:16px 16px;}
+.msw.ms{background:var(--green-light);}
+.msw.mw{background:var(--red-light);}
+.msw.mo{background:var(--teal-light);}
+.msw.mt{background:var(--amber-light);}
+.msw-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.msw.ms .msw-title{color:var(--green);}
+.msw.mw .msw-title{color:var(--red);}
+.msw.mo .msw-title{color:var(--teal);}
+.msw.mt .msw-title{color:var(--amber);}
+.msw-items{list-style:none;}
+.msw-items li{font-size:11px;color:var(--ink3);padding:3px 0;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.4;}
+.msw-items li:last-child{border-bottom:none;}
+
+/* MARKETING */
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mkt-card{background:var(--bg2);border:1px solid var(--border);padding:18px 20px;}
+.mkt-channel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.mkt-headline{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;line-height:1.3;}
+.mkt-copy{font-size:12px;color:var(--ink3);line-height:1.6;}
+.mkt-hook{margin-top:10px;padding:8px 10px;background:var(--gold-light);border-left:2px solid var(--gold-mid);font-size:11px;font-style:italic;color:var(--gold);line-height:1.5;}
+
+/* TECH */
+.tech-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--bg2);}
+.tech-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);min-width:120px;letter-spacing:.04em;padding-top:2px;}
+.tech-val{font-size:13px;color:var(--ink2);line-height:1.5;}
+.tech-val strong{font-weight:600;color:var(--ink);}
+
+/* PRICING */
+.price-row{display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bg2);}
+.price-tier{font-size:13px;color:var(--ink2);}
+.price-val{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--teal);}
+
+/* CALLOUT */
+.callout{padding:18px 22px;border:1px solid;border-left-width:3px;margin:24px 0;}
+.callout.teal{border-color:var(--teal-mid);background:var(--teal-light);}
+.callout.gold{border-color:var(--gold-mid);background:var(--gold-light);}
+.callout.red{border-color:var(--red-mid);background:var(--red-light);}
+.callout.green{border-color:var(--green-mid);background:var(--green-light);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
+.callout.teal .callout-title{color:var(--teal);}
+.callout.gold .callout-title{color:var(--gold);}
+.callout.red .callout-title{color:var(--red);}
+.callout.green .callout-title{color:var(--green);}
+.callout p{font-size:13px;color:var(--ink2);line-height:1.65;}
+.callout p strong{color:var(--ink);font-weight:600;}
+
+/* SECTION HEADER */
+.sec-hdr{padding:72px 0 40px;border-bottom:1px solid var(--border);margin-bottom:48px;}
+.sec-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:.95;letter-spacing:-.02em;}
+.sec-title em{font-style:italic;color:var(--teal);}
+.sec-desc{margin-top:16px;font-size:14px;color:var(--ink3);max-width:680px;line-height:1.75;}
+
+/* FOOTER */
+footer{background:var(--bg-dark);padding:40px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:80px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:20px;font-weight:900;font-style:italic;color:var(--teal-mid);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:rgba(240,237,230,0.3);letter-spacing:.1em;}
+
+.scroll-top{position:fixed;bottom:22px;right:22px;width:38px;height:38px;background:var(--teal);display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:16px;z-index:100;transition:all .2s;box-shadow:0 2px 12px rgba(13,122,110,0.3);}
+.scroll-top:hover{background:var(--teal);opacity:.85;}
+
+/* BADGE */
+.badge{display:inline-block;padding:3px 8px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;}
+.badge.teal{background:var(--teal-light);color:var(--teal);border:1px solid var(--teal-mid);}
+.badge.gold{background:var(--gold-light);color:var(--gold);border:1px solid var(--gold-mid);}
+.badge.green{background:var(--green-light);color:var(--green);border:1px solid var(--green-mid);}
+.badge.red{background:var(--red-light);color:var(--red);border:1px solid var(--red-mid);}
+
+/* MOBILE */
+@media(max-width:900px){
+  .cover,.page,footer{padding-left:24px;padding-right:24px;}
+  .toc{padding-left:24px;padding-right:24px;}
+  .module-body,.module-body.thirds{grid-template-columns:1fr;}
+  .module-col{border-right:none;border-bottom:1px solid var(--border);}
+  .mod-swot{grid-template-columns:1fr 1fr;}
+  .swot-grid{grid-template-columns:1fr;}
+  .mkt-grid{grid-template-columns:1fr;}
+  .audience-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .audience-grid{grid-template-columns:1fr;}
+  .mod-swot{grid-template-columns:1fr;}
+  .cover-stat-row{gap:28px;}
+  .module-header-stats{gap:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover" id="top">
+  <div class="cover-noise"></div>
+  <div class="cover-cross"></div>
+  <div class="cover-dots"></div>
+  <div class="cover-tag">Product Intelligence Document · 2025</div>
+  <h1>Dental<em>OS</em></h1>
+  <p class="cover-desc">
+    The complete product intelligence brief for DentalOS — <strong>the AI operating system for private dental practices and dental group operators.</strong> Module-by-module breakdown covering development, features, marketing angles, SWOT analysis, and target audience.
+  </p>
+  <div class="cover-pills">
+    <div class="cpill">10 Modules</div>
+    <div class="cpill">Built by Kie & Leah</div>
+    <div class="cpill">Private Dentistry UK & US</div>
+    <div class="cpill">£300–£2,200/mo pricing</div>
+    <div class="cpill">Stage 1 MVP: ~£500 cash</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-stat-row">
+      <div><div class="cstat-val">180k+</div><div class="cstat-label">Target practices UK & US</div></div>
+      <div><div class="cstat-val">9.8/10</div><div class="cstat-label">AI opportunity score</div></div>
+      <div><div class="cstat-val">£40k–£200k</div><div class="cstat-label">Revenue impact per practice/yr</div></div>
+      <div><div class="cstat-val">6–12</div><div class="cstat-label">Avg disconnected tools per practice</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NAV -->
+<nav class="toc" id="toc">
+  <div class="toc-inner">
+    <a href="#hero" class="toc-item" style="border-bottom:2px solid var(--teal);color:var(--teal-mid);"><span class="toc-num">★&nbsp;</span>Practice Pulse</a>
+    <a href="#overview" class="toc-item"><span class="toc-num">00&nbsp;</span>Overview & SWOT</a>
+    <a href="#m01" class="toc-item"><span class="toc-num">01&nbsp;</span>Reactivation</a>
+    <a href="#m02" class="toc-item"><span class="toc-num">02&nbsp;</span>Competitor Intel</a>
+    <a href="#m03" class="toc-item"><span class="toc-num">03&nbsp;</span>Appointment Optimiser</a>
+    <a href="#m04" class="toc-item"><span class="toc-num">04&nbsp;</span>Treatment Plan AI</a>
+    <a href="#m05" class="toc-item"><span class="toc-num">05&nbsp;</span>Marketing Attribution</a>
+    <a href="#m06" class="toc-item"><span class="toc-num">06&nbsp;</span>Clinical Docs AI</a>
+    <a href="#m07" class="toc-item"><span class="toc-num">07&nbsp;</span>Demand Forecasting</a>
+    <a href="#m08" class="toc-item"><span class="toc-num">08&nbsp;</span>Revenue Cycle</a>
+    <a href="#m09" class="toc-item"><span class="toc-num">09&nbsp;</span>Group Benchmarking</a>
+    <a href="#m10" class="toc-item"><span class="toc-num">10&nbsp;</span>Full DentalOS</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- ═══════════ SECTION 0 — OVERVIEW ═══════════ -->
+<section id="overview">
+  <div class="swot-section">
+    <div class="swot-header">
+      <div class="swot-tag">Section 00 — Product Overview</div>
+      <div class="swot-title">DentalOS:<br>The <em>Market</em> Opportunity</div>
+      <p class="swot-desc">Private dentistry in the UK and US is a £50B+ market dominated by independent owner-operators running fragmented, inefficient businesses with no AI infrastructure. The opportunity to own the intelligence layer of this industry is wide open right now.</p>
+    </div>
+
+    <div class="callout teal">
+      <div class="callout-title">The Core Problem We're Solving</div>
+      <p>The average dental practice uses <strong>6–12 disconnected software tools</strong> — a PMS (practice management system), a separate CRM, a social media scheduler, Google Ads managed by an agency, an email platform, a payment system, and more. None of them talk to each other. None of them generate actionable intelligence. The practice owner has no single view of their business, no way to track what's actually generating revenue, and no AI doing anything useful. <strong>DentalOS replaces all of it with one connected AI operating system.</strong></p>
+    </div>
+
+    <!-- FULL SWOT -->
+    <div class="swot-tag" style="margin-bottom:16px">DentalOS — Full SWOT Analysis</div>
+    <div class="swot-grid">
+      <div class="swot-box S">
+        <div class="swot-letter">S</div>
+        <div class="swot-box-title">Strengths</div>
+        <ul class="swot-list">
+          <li><strong>Existing client relationships</strong> — Kie & Leah already work inside the industry, warm doors from Day 1</li>
+          <li><strong>Domain expertise</strong> — deep understanding of what practices actually need vs what they think they need</li>
+          <li><strong>First-mover advantage</strong> — no dominant AI OS exists for independent dental practices yet</li>
+          <li><strong>Low build cost</strong> — Claude builds the code, MVP cash cost under £500</li>
+          <li><strong>Recurring revenue model</strong> — once embedded, extremely sticky. Switching requires migrating 12+ months of data</li>
+          <li><strong>Data moat</strong> — every client interaction compounds into a proprietary intelligence dataset</li>
+          <li><strong>Proven pain points</strong> — lapsed patients, poor marketing ROI, and DNAs are universal problems every practice owner feels</li>
+          <li><strong>Built on existing infrastructure</strong> — GHL, Twilio, Make.com already paid for</li>
+        </ul>
+      </div>
+      <div class="swot-box W">
+        <div class="swot-letter">W</div>
+        <div class="swot-box-title">Weaknesses</div>
+        <ul class="swot-list">
+          <li><strong>PMS integration complexity</strong> — UK market has multiple PMS systems (Exact, Dentally, SOE) each with different APIs</li>
+          <li><strong>Clinical modules require compliance review</strong> — anything touching patient records needs GDC sign-off before deployment</li>
+          <li><strong>No brand recognition yet</strong> — starting from zero credibility as a software company (offset by personal dental industry credibility)</li>
+          <li><strong>No developer on the team</strong> — entirely AI-dependent for code; complex integrations take more iteration time</li>
+          <li><strong>Healthcare data sensitivity</strong> — GDPR + UK GDPR requirements are strict for patient data; need proper data processing agreements with each client</li>
+          <li><strong>Competing priorities</strong> — team also building FactoryOS and HealthOS simultaneously</li>
+        </ul>
+      </div>
+      <div class="swot-box O">
+        <div class="swot-letter">O</div>
+        <div class="swot-box-title">Opportunities</div>
+        <ul class="swot-list">
+          <li><strong>DSO (Dental Service Organisation) market</strong> — groups of 5–50 sites are the highest-value clients, increasingly common as dentistry consolidates</li>
+          <li><strong>NHS to private transition wave</strong> — thousands of NHS practices converting to private; these need the full marketing and patient acquisition stack urgently</li>
+          <li><strong>Post-COVID patient backlog</strong> — millions of patients who haven't been seen since 2020 are ripe for reactivation campaigns</li>
+          <li><strong>Dental association partnerships</strong> — BDA, BDIA, NASDAL endorsement gives instant credibility and distribution to thousands of members</li>
+          <li><strong>UK dental shortage</strong> — practices are desperate for new patients; the value prop of AI-powered patient acquisition has never been stronger</li>
+          <li><strong>International expansion</strong> — US, Australia, Canada have similar market structures and can be served with minimal product changes</li>
+          <li><strong>Benchmark data monetisation</strong> — publish industry intelligence reports once you have 50+ clients, positioning as the data authority</li>
+          <li><strong>Strategic acquisition target</strong> — Henry Schein, Carestream, iSmile, or major DSOs would pay significant multiples for a platform with 500+ clients and proprietary data</li>
+        </ul>
+      </div>
+      <div class="swot-box T">
+        <div class="swot-letter">T</div>
+        <div class="swot-box-title">Threats</div>
+        <ul class="swot-list">
+          <li><strong>Existing players adding AI</strong> — Exact, Dentally, SOE could add AI features to their PMS products; however, their core competency is clinical workflow, not marketing/revenue intelligence</li>
+          <li><strong>Dental marketing agencies pivoting to AI</strong> — agencies that currently manage dental practices' marketing could attempt to build similar tools</li>
+          <li><strong>Patient data regulation changes</strong> — UK GDPR enforcement increasing; any data breach in a dental context would be severely damaging</li>
+          <li><strong>AI model price increases</strong> — Claude API pricing could increase as Anthropic scales; partially mitigated by passing costs to clients</li>
+          <li><strong>Economic pressure on dentistry</strong> — cost-of-living pressures reduce patient spending on elective dental treatment, squeezing practice revenues and willingness to invest in software</li>
+          <li><strong>Commoditisation of AI tools</strong> — generic AI tools (ChatGPT etc.) could be adapted by technically confident practice owners to replicate basic functionality</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TARGET AUDIENCE -->
+    <div class="swot-tag" style="margin-bottom:16px">Primary Target Audiences</div>
+    <div class="audience-grid">
+      <div class="aud-card">
+        <div class="aud-icon">🦷</div>
+        <div class="aud-type">Primary Target · Entry</div>
+        <div class="aud-name">Independent Practice Owner</div>
+        <div class="aud-desc">Owns 1–3 private or mixed practices. Likely the principal dentist. Wears every hat — clinician, marketer, HR manager, CFO. Deeply frustrated by admin overhead.</div>
+        <div class="aud-pain">Pain: "I'm spending £1,500/mo on Google Ads with no idea if they're working. I have 200 patients I haven't seen in 2 years. I don't have time to do anything about either."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📋</div>
+        <div class="aud-type">Primary Target · Growth</div>
+        <div class="aud-name">Practice Manager</div>
+        <div class="aud-desc">Runs the business operations day-to-day. Responsible for KPIs, staff, marketing execution, and patient experience. Looking for tools that make their job easier and make them look good to the principal.</div>
+        <div class="aud-pain">Pain: "The principal wants a report on marketing performance but our data is in three different systems. I spend 4 hours every month pulling it together manually."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🏢</div>
+        <div class="aud-type">Primary Target · Enterprise</div>
+        <div class="aud-name">DSO / Group Operator</div>
+        <div class="aud-desc">Owns or operates 5–50+ dental sites. May have a clinical director, operations director, and marketing function. Needs standardised performance visibility across all sites.</div>
+        <div class="aud-pain">Pain: "I have 12 practices and no single system telling me which ones are performing and which aren't. Every site manager gives me a different spreadsheet."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📈</div>
+        <div class="aud-type">Secondary Target</div>
+        <div class="aud-name">NHS-to-Private Converters</div>
+        <div class="aud-desc">Practices transitioning from NHS to private — or adding a private list alongside NHS. Need patient acquisition capabilities urgently. No existing private patient base or marketing system.</div>
+        <div class="aud-pain">Pain: "We've just gone private and we have no idea how to find new patients, what to charge, or how to market ourselves. We're starting from scratch."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">💎</div>
+        <div class="aud-type">Secondary Target</div>
+        <div class="aud-name">High-Value Specialist Practices</div>
+        <div class="aud-desc">Orthodontists, implant specialists, cosmetic dentistry practices. High treatment values (£3k–£15k per patient) make patient acquisition and treatment plan conversion even more critical.</div>
+        <div class="aud-pain">Pain: "One failed treatment plan conversion costs us £8,000 in lost revenue. We have no system to track why patients say no or follow up properly."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🌱</div>
+        <div class="aud-type">Tertiary Target</div>
+        <div class="aud-name">New Practice Startups</div>
+        <div class="aud-desc">Newly opened squat practices or recently acquired practices starting patient lists from scratch. Need every acquisition and retention tool from Day 1.</div>
+        <div class="aud-pain">Pain: "We opened 6 months ago and have 180 active patients. We need to grow to 800+ to be viable. We don't know how to do that systematically."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════ HERO MODULE — PRACTICE PULSE ═══════════ -->
+<section id="hero">
+  <div class="module-card" style="border:2px solid var(--teal);box-shadow:0 0 0 4px rgba(13,122,110,0.08),var(--shadow);">
+    <div class="module-header" style="background:linear-gradient(135deg,#04201c 0%,#0d2e28 40%,#0a1a16 100%);">
+      <div class="module-header-dots"></div>
+      <!-- Hero badge -->
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(13,122,110,0.25);border:1px solid var(--teal-mid);padding:5px 14px;margin-bottom:16px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--teal-mid);display:inline-block;"></span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-mid);">Flagship Product · The Signature Module</span>
+      </div>
+      <div class="module-name" style="font-size:clamp(40px,6vw,72px);">Practice <em>Pulse</em></div>
+      <div class="module-tagline" style="font-size:15px;max-width:680px;color:rgba(240,237,230,0.65);">The daily intelligence briefing every practice owner opens before they unlock the door. Competitor radar, live ad intelligence, marketing recommendations, daily checklist, and dental industry news — all generated overnight and delivered at 7am. The product DentalOS becomes synonymous with.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">7am</div><div class="mh-stat-label">Daily delivery — before the practice opens</div></div>
+        <div><div class="mh-stat-val">~£200</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">Daily habit</div><div class="mh-stat-label">The module you'd miss most if cancelled</div></div>
+      </div>
+    </div>
+
+    <!-- Why it's the hero -->
+    <div style="background:rgba(13,122,110,0.06);border-bottom:1px solid var(--teal-mid);padding:20px 32px;">
+      <div class="mc-label" style="margin-bottom:8px;">Why This Is The Flagship</div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.7;max-width:900px;">Every category-defining product company has one thing they're known for first. Dyson means vacuum. Stripe means payments. <strong style="color:var(--ink);">DentalOS means Practice Pulse.</strong> It's the thing you describe in one sentence that makes a practice owner say "I want that." It creates a daily habit — something you open every morning like a newspaper written specifically for your practice. That habit is what makes it nearly impossible to cancel. Once it's part of your morning routine, removing it feels like losing a team member. Every other DentalOS module adds value. This one creates dependency.</p>
+    </div>
+
+    <div class="module-body" style="grid-template-columns:1fr 1fr;">
+      <div class="module-col">
+        <div class="mc-label">The 6 Daily Deliverables</div>
+        <ul class="feature-list">
+          <li><strong>Competitor Radar</strong> — any practice within 5 miles that changed pricing, launched a new patient offer, updated their website, or got a wave of new reviews overnight. Scraped nightly via Apify. Delivered as a ranked list: most significant changes first.</li>
+          <li><strong>Live Ad Intelligence</strong> — what Google and Meta ads your local competitors are running right now. Creative description, messaging angle, estimated spend tier, and how long the campaign has been active. Uses Meta Ad Library API and Google Ads Transparency data — publicly available, fully legitimate.</li>
+          <li><strong>AI Marketing Recommendation</strong> — one specific, actionable marketing suggestion generated from competitor movements, seasonal demand data, and the practice's own performance. "Your nearest competitor cut their check-up price by £20. Here are three ways to respond without devaluing your brand."</li>
+          <li><strong>Daily Practice Checklist</strong> — a 5-item operational checklist tailored to the practice's current performance gaps. If DNA rates are elevated, the top item is "Review today's high-risk appointments and trigger additional reminders." If treatment plan conversion is down, it's "Follow up on the 3 outstanding implant plans from this week."</li>
+          <li><strong>Dental Industry News — Top 5</strong> — scraped overnight from GDC website, BDA news, NHS BSA, Dental Tribune, and key dental publications. Claude reads everything and surfaces only the 5 most relevant items. Plain English summaries. Link to source.</li>
+          <li><strong>One Marketing Idea</strong> — AI-generated campaign concept based on the time of year, local events, recent competitor activity, and practice's current patient acquisition gaps. With copy suggestions, channel recommendation, and estimated effort level.</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Competitor pricing</span><span class="tech-val"><strong>Apify scrapers</strong> — custom actors scrape competitor Google My Business listings, website pricing pages, and social profiles nightly (2am run). Results stored in Supabase with timestamp for trend tracking.</span></div>
+        <div class="tech-row"><span class="tech-label">Ad intelligence</span><span class="tech-val"><strong>Meta Ad Library API (free)</strong> — returns all active ads for any Facebook page. Claude identifies dental competitor pages in the client's area and pulls their live ads nightly. <strong>Google Ads Transparency Centre</strong> — scraped via Apify for Google ad creative intelligence.</span></div>
+        <div class="tech-row"><span class="tech-label">News aggregation</span><span class="tech-val">Apify scrapes 10–15 dental industry sources nightly. Claude reads all articles, filters for relevance to UK private dentistry, ranks by importance, and generates plain-English summaries. Stored in Supabase.</span></div>
+        <div class="tech-row"><span class="tech-label">Checklist engine</span><span class="tech-val">Make.com queries the practice's live KPI data from other DentalOS modules (DNA rate, conversion rate, reactivation rate) and Claude generates a tailored daily checklist based on what's underperforming vs benchmark.</span></div>
+        <div class="tech-row"><span class="tech-label">Recommendation engine</span><span class="tech-val">Claude API — fed competitor movements, seasonal data (Google Trends for dental terms in the practice's postcode), and practice performance data. Generates one specific, actionable marketing idea per day.</span></div>
+        <div class="tech-row"><span class="tech-label">Delivery</span><span class="tech-val">Beautiful HTML email generated by Claude and sent via SendGrid at 7am every morning. Also accessible via dashboard. Designed to be read in 90 seconds on a phone before the commute ends.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">Web app on Vercel — 30-day archive of all briefings, competitor intelligence timeline, ad library for local competitors with creative history, marketing ideas archive with implementation status tracking.</span></div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Practice Owner / Direct</div>
+            <div class="mkt-headline">"Every morning at 7am you get a briefing on exactly what's happening in your local dental market. Your competitors don't know you have it."</div>
+            <div class="mkt-copy">Practice Pulse is the unfair advantage most practice owners don't know exists. While your competitors are guessing about the market, you know exactly what ads they're running, what prices they've changed, and what new offers they've just launched — before your first patient walks through the door. Plus a daily marketing idea, the day's operational priorities, and the five pieces of dental news that actually matter to your practice.</div>
+            <div class="mkt-hook">"One of our clients saw a competitor had launched a 0% finance offer for Invisalign at 9am on a Monday. By 11am they had matched it, updated their website, and briefed their front desk team. That's the intelligence advantage Practice Pulse creates."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Demo / Sales Tool</div>
+            <div class="mkt-headline">"Let me show you what your competitors are doing in your market right now."</div>
+            <div class="mkt-copy">This is the most powerful demo in the DentalOS arsenal. Pull up Practice Pulse live during a sales call, enter the prospect's postcode, and show them their local competitor's current Google and Meta ads, their most recent pricing changes, and their review trajectory — in real time. Every prospect leans forward. Nobody has ever shown them this before.</div>
+            <div class="mkt-hook">"The demo closes deals before the pricing slide. When a practice owner sees their nearest competitor's active Meta ad creative for the first time, the conversation changes immediately."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Retention / Anti-Churn</div>
+            <div class="mkt-headline">"The product you'd miss the most the morning after you cancelled."</div>
+            <div class="mkt-copy">Practice Pulse is specifically designed to create a morning habit. The daily 7am delivery, the fresh competitor intelligence, the tailored checklist — all of it builds a routine that feels natural within weeks. Cancellation doesn't feel like switching software. It feels like losing your morning briefing. That's the retention mechanism.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Referral / Word of Mouth</div>
+            <div class="mkt-headline">"Our clients tell other practice owners about Practice Pulse before they tell them about anything else we do."</div>
+            <div class="mkt-copy">The ad intelligence feature is highly shareable — practice owners screenshot competitor ads and send them to their colleagues. "Have you seen this?" becomes "how are you seeing this?" which becomes the referral conversation. Design the sharing moment deliberately: make it easy to forward the briefing, add a referral link at the bottom, offer a month free for each referred practice.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Creates a daily habit — by far the highest engagement of any DentalOS module</li><li>Demo-able in real time during any sales call — pull up any postcode and show live competitor data</li><li>Shareable — briefings get forwarded, creating organic referral loops</li><li>Ad intelligence using Meta Ad Library is free API data — no grey area</li><li>Positions DentalOS as the market intelligence authority, not just another dental software tool</li><li>Works from Day 1 — doesn't need months of client data to deliver value like some modules</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Apify scraper maintenance — competitor websites change structure periodically</li><li>Quality depends on competition density — rural practice with no nearby competitors sees less value from the radar element</li><li>Ad intelligence limited to what Meta and Google make public — doesn't capture every campaign type</li><li>Checklist quality depends on other DentalOS modules being live to feed performance data</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add Instagram monitoring — competitor posts, engagement rates, content strategy</li><li>Add review response AI — auto-draft responses to new Google and Facebook reviews overnight</li><li>DSO version — one briefing covering all sites with inter-site benchmarking</li><li>Industry benchmark data from 50+ practices — "Your new patient cost is 23% above the DentalOS network average"</li><li>Integrate with Google Ads and Meta Ads accounts to make the one-click marketing idea actionable instantly</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Meta or Google restricting Ad Library / Transparency API access</li><li>Competitors copying the concept — this is the most obviously copyable module</li><li>Briefing fatigue if quality drops — must stay fresh and genuinely useful every single day</li><li>Email deliverability — daily emails risk hitting spam; must use a reputable sender and manage domain health carefully</li></ul></div>
+        </div>
+      </div>
+
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--gold);">Pricing</div>
+        <div class="price-row"><span class="price-tier">Practice Pulse standalone</span><span class="price-val" style="color:var(--teal);">£400/mo</span></div>
+        <div class="price-row"><span class="price-tier">Included in all DentalOS bundles</span><span class="price-val" style="color:var(--teal);">Included</span></div>
+        <div class="price-row"><span class="price-tier">Setup / competitor mapping</span><span class="price-val" style="color:var(--teal);">£150 one-time</span></div>
+        <div class="price-row"><span class="price-tier">DSO version (all sites)</span><span class="price-val" style="color:var(--teal);">£800/mo</span></div>
+        <div style="margin-top:16px;padding:12px 14px;background:rgba(13,122,110,0.06);border-left:2px solid var(--teal-mid);">
+          <p style="font-size:12px;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);">Positioning note:</strong> Practice Pulse should be the first thing on the DentalOS website, the first thing in every sales call, and the first module offered in every free trial. It's the entry drug. Everything else follows.</p>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--green);">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Daily email open rate (target: 70%+ — elite for daily email)</li>
+          <li>Briefing open rate on delivery day vs days old</li>
+          <li>Competitor changes detected per week (activity indicator)</li>
+          <li>Checklists completed vs opened</li>
+          <li>Marketing ideas actioned per month</li>
+          <li>Referrals generated from forwarded briefings</li>
+          <li>Cancellation rate for Practice Pulse subscribers vs non-subscribers (proves retention value)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 01 ═══════════ -->
+<section id="m01">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 01 · Stage 1 — Build Now</div>
+      <div class="module-name">AI Patient <em>Reactivation</em> Engine</div>
+      <div class="module-tagline">Identifies every lapsed patient in the practice and automatically runs personalised outreach campaigns to bring them back — across SMS, email, and WhatsApp — without any manual input from the practice team.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£20–100k</div><div class="mh-stat-label">Revenue recovered per practice/yr</div></div>
+        <div><div class="mh-stat-val">~£150</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£80–120</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Lapsed patient segmentation</strong> — automatically identifies patients who haven't visited in 6, 12, 18, 24+ months from PMS data</li>
+          <li><strong>Value scoring</strong> — ranks lapsed patients by estimated treatment value and reactivation probability so highest-value patients are contacted first</li>
+          <li><strong>Personalised multi-channel sequences</strong> — AI generates personalised SMS, email, and WhatsApp messages for each patient segment</li>
+          <li><strong>Sequence logic</strong> — 3-touch outreach: friendly reminder → value offer → final nudge, spaced 7 days apart</li>
+          <li><strong>Reply handling</strong> — GHL manages responses and routes booking requests directly to the diary system</li>
+          <li><strong>Exclusion logic</strong> — automatically excludes patients who have moved, deceased records flagged, patients who explicitly opted out</li>
+          <li><strong>Revenue dashboard</strong> — tracks reactivation rates, bookings generated, and estimated revenue recovered per campaign</li>
+          <li><strong>Campaign scheduler</strong> — practice can schedule seasonal campaigns (e.g. January new year, back-to-school)</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data source</span><span class="tech-val"><strong>PMS export (CSV)</strong> — patient name, DOB, last visit date, treatment history, contact details. Most PMS systems (Exact, Dentally, SOE) can export this.</span></div>
+        <div class="tech-row"><span class="tech-label">Segmentation</span><span class="tech-val">Claude builds a Python script that parses the CSV, applies segmentation rules, and outputs prioritised contact lists by segment.</span></div>
+        <div class="tech-row"><span class="tech-label">Message generation</span><span class="tech-val">Claude API generates personalised message copy for each patient segment. Dental-specific tone and compliance with GDC communication guidelines.</span></div>
+        <div class="tech-row"><span class="tech-label">Automation</span><span class="tech-val">Make.com scenario — triggers sequences based on segment, manages timing, handles opt-outs, logs all sends.</span></div>
+        <div class="tech-row"><span class="tech-label">Delivery</span><span class="tech-val">GHL handles SMS (via Twilio), email, and WhatsApp Business delivery. One sub-account per client.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">Claude builds React dashboard showing campaign performance: sent, delivered, replied, booked, revenue recovered. Deployed on Vercel.</span></div>
+        <div class="tech-row"><span class="tech-label">Maintenance</span><span class="tech-val">Sequences run automatically. Monthly CSV refresh from PMS. Under 1 hour/month ongoing.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">LinkedIn / Owner Direct</div>
+            <div class="mkt-headline">"You have 340 patients who haven't visited in over a year. That's £68,000 sitting in your database."</div>
+            <div class="mkt-copy">The average dental practice has 200–500 lapsed patients they've never systematically tried to re-engage. Our AI identifies them, writes the messages, sends them, and books the appointments — automatically. Most practices recover £20–40k in the first 90 days.</div>
+            <div class="mkt-hook">"One of our clients recovered £34,000 in 6 weeks from patients they'd completely written off."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Email / Practice Manager</div>
+            <div class="mkt-headline">"Stop writing reactivation letters manually. Let AI do it — and do it better."</div>
+            <div class="mkt-copy">Most practices attempt patient reactivation once a year with a generic newsletter. Our AI runs personalised, segment-specific outreach continuously — contacting the right patients, with the right message, at the right time. Zero staff time required.</div>
+            <div class="mkt-hook">"If you're not actively reactivating lapsed patients, you're leaving £2,000+ per month on the table every single month."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Referral / Word of Mouth</div>
+            <div class="mkt-headline">"The module that pays for itself in the first month."</div>
+            <div class="mkt-copy">At £300/month, the Reactivation Engine needs to recover just £300 in treatment bookings to break even. Most practices see that in the first week of activation. Everything after that is pure profit.</div>
+            <div class="mkt-hook">"ROI positive from Week 1. No other software investment comes close."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Social Proof / Case Study</div>
+            <div class="mkt-headline">"How [Practice Name] recovered £47,000 in 12 weeks without spending a penny more on advertising."</div>
+            <div class="mkt-copy">The highest-converting marketing asset for this module is the case study. Every early client is a story: revenue recovered, patients reactivated, time saved. Request permission early and document obsessively.</div>
+            <div class="mkt-hook">Every practice owner who sees this case study will ask "how many lapsed patients do I have?"</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Immediate, measurable ROI</li><li>Universal dental problem</li><li>Near-zero build cost</li><li>Runs autonomously once set up</li><li>Very low churn — clients see revenue</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Requires clean patient contact data (some practices have poor data hygiene)</li><li>WhatsApp Business approval needed (1–3 day process)</li><li>PMS export must be set up per client</li><li>GDC communication guidelines must be followed</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add real-time PMS sync (live integration, not just export)</li><li>Upsell to Treatment Plan AI once reactivated patients are booked</li><li>Post-COVID backlog makes this more valuable than ever</li><li>Seasonal campaign packages — premium add-on revenue</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>PMS providers could add native reactivation features</li><li>GDC cracks down on unsolicited patient communications (use opt-in carefully)</li><li>Poor message quality could damage practice reputation</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£300/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Starter Bundle (3 modules)</span><span class="price-val">£750/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup / onboarding fee</span><span class="price-val">£250 one-time</span></div>
+        <div class="price-row"><span class="price-tier">Seasonal campaign add-on</span><span class="price-val">£150/campaign</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Lapsed patients contacted per month</li>
+          <li>Reply rate % (target: 8–15%)</li>
+          <li>Booking conversion rate (target: 4–8%)</li>
+          <li>Revenue recovered per month</li>
+          <li>Average treatment value of reactivated patients</li>
+          <li>Cost per reactivated patient (should be under £10)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 02 ═══════════ -->
+<section id="m02">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 02 · Stage 1 — Build Now</div>
+      <div class="module-name">Competitor <em>Intelligence</em> Platform</div>
+      <div class="module-tagline">Continuously monitors every competitor practice in the client's local catchment area — pricing, reviews, new patient offers, service launches — and delivers a weekly competitive intelligence briefing automatically.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">Weekly</div><div class="mh-stat-label">Intelligence delivery cadence</div></div>
+        <div><div class="mh-stat-val">~£180</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£60–100</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Competitor mapping</strong> — practice inputs their 5–10 nearest competitor practices; system monitors all of them automatically</li>
+          <li><strong>Google My Business tracking</strong> — monitors competitor review scores, new reviews, review responses, and rating trends weekly</li>
+          <li><strong>Pricing intelligence</strong> — Apify scrapes competitor website pricing pages for key treatments (check-ups, whitening, implants, Invisalign) weekly</li>
+          <li><strong>New patient offer monitoring</strong> — detects when competitors launch new patient promotions or change their offer</li>
+          <li><strong>Service expansion detection</strong> — flags when a competitor adds a new service, hires a specialist, or expands capacity</li>
+          <li><strong>Review sentiment analysis</strong> — Claude analyses competitor reviews to identify their strengths and weaknesses in patients' own words</li>
+          <li><strong>Weekly intelligence report</strong> — beautifully formatted email report delivered every Monday morning with the week's key movements</li>
+          <li><strong>Market positioning dashboard</strong> — shows how the client practice compares to their local market on key metrics</li>
+          <li><strong>Alert system</strong> — instant alert if a major change is detected (competitor cuts prices by 20%, gets a 1-star review wave, etc.)</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Scraping</span><span class="tech-val"><strong>Apify</strong> — custom actors scrape competitor GMB listings, website pricing pages, and social media profiles. Runs weekly on a cron schedule.</span></div>
+        <div class="tech-row"><span class="tech-label">Data storage</span><span class="tech-val">Supabase database — stores competitor data over time so trends can be tracked week-on-week.</span></div>
+        <div class="tech-row"><span class="tech-label">Analysis</span><span class="tech-val">Claude API analyses scraped data — generates narrative intelligence commentary, flags significant changes, identifies actionable insights.</span></div>
+        <div class="tech-row"><span class="tech-label">Report generation</span><span class="tech-val">Claude generates a professional HTML email report. Make.com sends it to the practice owner every Monday at 8am.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React dashboard on Vercel — shows market positioning over time, competitor movement charts, and historical reports.</span></div>
+        <div class="tech-row"><span class="tech-label">Alert system</span><span class="tech-val">n8n monitors for threshold breaches (competitor rating drops below 4.0, new 1-star reviews etc.) and triggers instant Slack/SMS alert.</span></div>
+        <div class="tech-row"><span class="tech-label">Maintenance</span><span class="tech-val">Apify actors occasionally break when competitor websites change structure. Claude rebuilds them in under 30 minutes when flagged. ~1–2 hrs/month.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Direct / Practice Owner</div>
+            <div class="mkt-headline">"Do you know what the dental practice 0.3 miles from you is offering new patients right now?"</div>
+            <div class="mkt-copy">Most practice owners have no idea what their competitors are doing until a patient tells them. By that point it's too late. Our AI monitors every competitor in your area 24/7 and briefs you every Monday morning. Never be caught off-guard again.</div>
+            <div class="mkt-hook">"One of our clients discovered their nearest competitor had launched an Invisalign promotion at £500 less than them — and changed their pricing within the same week."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">LinkedIn / Industry</div>
+            <div class="mkt-headline">"The dental practices winning in 2025 know exactly what their market looks like. The ones losing are guessing."</div>
+            <div class="mkt-copy">In a competitive local market, intelligence is a weapon. Our Competitor Intelligence Platform gives independent practices the same market visibility that large DSOs pay dedicated teams to produce — at £350/month.</div>
+            <div class="mkt-hook">"You wouldn't run a business without a P&L. Why would you run one without knowing what your competition is doing?"</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Visible value from Week 1</li><li>Completely automated</li><li>No equivalent product in the dental market</li><li>Creates anxiety about cancelling (FOMO of losing intelligence)</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Apify actors require maintenance when competitor sites change</li><li>Limited to publicly available data — can't scrape private portals</li><li>Value depends on market competitiveness — rural practice with no nearby competitors sees less value</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Aggregate anonymised pricing data across all clients → publish industry pricing benchmarks</li><li>Add social media monitoring (competitor Facebook ads, Instagram campaigns)</li><li>Expand to Google Ads transparency (what keywords competitors are bidding on)</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Competitors' websites become harder to scrape (rate limiting, anti-bot)</li><li>Google changes GMB data accessibility</li><li>GDPR concerns around scraping publicly posted information (low risk but worth monitoring)</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Starter Bundle</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup / competitor mapping</span><span class="price-val">£150 one-time</span></div>
+        <div class="price-row"><span class="price-tier">Extended monitoring (10+ competitors)</span><span class="price-val">+£100/mo</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Number of competitor changes detected per week</li>
+          <li>Report open rate (target: 80%+ — this is the engagement anchor)</li>
+          <li>Pricing alerts actioned by client</li>
+          <li>Market position score vs local competitors</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 03 ═══════════ -->
+<section id="m03">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 03 · Stage 1 — Build Now</div>
+      <div class="module-name">AI Appointment <em>Optimiser</em></div>
+      <div class="module-tagline">Predicts which patients are most likely to DNA (Did Not Attend), automatically sends additional reminder touchpoints to high-risk patients, and fills cancellation gaps by contacting the waitlist within minutes — without any staff involvement.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">30–50%</div><div class="mh-stat-label">Reduction in DNA rates</div></div>
+        <div><div class="mh-stat-val">~£200</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£80–140</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>DNA risk scoring</strong> — each appointment is scored 1–10 for non-attendance probability based on patient history, appointment type, day of week, and time slot</li>
+          <li><strong>Dynamic reminder cadences</strong> — standard patients get 2 reminders; high-risk patients get 3–4 across different channels with escalating urgency</li>
+          <li><strong>Cancellation gap-fill</strong> — the moment a cancellation is detected in the PMS, an automated campaign goes to the waitlist within 5 minutes</li>
+          <li><strong>Waitlist management</strong> — patients can join the waitlist for specific appointment types (check-up, emergency, specific treatment)</li>
+          <li><strong>Two-way reply handling</strong> — patients can confirm, cancel, or request rebooking via SMS/WhatsApp reply; GHL handles all responses</li>
+          <li><strong>Chair utilisation dashboard</strong> — tracks fill rate by chair, by dentist, by day of week; identifies persistent gap patterns</li>
+          <li><strong>Revenue impact tracking</strong> — calculates estimated revenue saved by filled appointments vs the previous DNA rate</li>
+          <li><strong>Overbooking intelligence</strong> — for practices that overbook, AI helps identify optimal buffer appointment allocation</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data source</span><span class="tech-val"><strong>PMS appointment data</strong> — daily export or API sync. Appointment time, patient ID, treatment type, duration, chair/dentist assigned.</span></div>
+        <div class="tech-row"><span class="tech-label">Risk model</span><span class="tech-val">Claude builds scoring model using patient's historical DNA rate, appointment lead time, appointment type, and day/time patterns. Improves as data accumulates.</span></div>
+        <div class="tech-row"><span class="tech-label">Reminder engine</span><span class="tech-val">Make.com sends reminders at configured intervals (48hrs, 24hrs, 2hrs before appointment). Channel selection (SMS vs email vs WhatsApp) based on patient preference.</span></div>
+        <div class="tech-row"><span class="tech-label">Gap-fill automation</span><span class="tech-val">Webhook from PMS triggers cancellation event → n8n detects → Make.com fires gap-fill campaign to waitlist patients within 5 minutes.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React dashboard showing chair utilisation, DNA rates by dentist/day, fill rate history, and revenue saved.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Direct / Operations Focus</div>
+            <div class="mkt-headline">"The average dental practice loses £18,000 a year to DNAs. We fix that."</div>
+            <div class="mkt-copy">Every empty chair in a dental practice costs £150–350 per hour. Our AI predicts who won't show up and sends extra nudges automatically. When someone does cancel, the next available patient is contacted and booked within minutes — not hours.</div>
+            <div class="mkt-hook">"A practice with 8% DNA rate dropping to 3% saves £12–25k per year. At £350/month, that's a 3x return minimum."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Receptionist / Team Pitch</div>
+            <div class="mkt-headline">"Stop spending 2 hours every morning calling patients to confirm appointments."</div>
+            <div class="mkt-copy">Receptionists in dental practices spend 1–3 hours every day manually calling to confirm appointments and chasing cancellations. Our Appointment Optimiser does all of it automatically — freeing your team to focus on patients in front of them.</div>
+            <div class="mkt-hook">"Your receptionist didn't train for years to spend their morning doing phone admin. Let the AI do it."</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Direct financial ROI — quantifiable in pounds saved</li><li>Eliminates a staff time drain every practice experiences</li><li>Compounds — DNA model improves with more data</li><li>Two-way reply capability creates convenience for patients</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Requires reliable PMS integration for appointment data</li><li>Gap-fill only works if practice has an active waitlist</li><li>Initial DNA model accuracy is limited — needs 3–6 months of data to be highly predictive</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add pre-appointment health questionnaire automation</li><li>Integrate online booking widget so waitlist patients can self-book</li><li>Holiday/seasonal demand intelligence — proactively overfill before practice closures</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>PMS providers adding native reminder features (most are basic vs this system)</li><li>Patient fatigue from too many reminder messages (requires thoughtful configuration)</li><li>GDPR compliance on WhatsApp — must use business-verified templates</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Starter Bundle</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£200 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>DNA rate before vs after (primary KPI)</li>
+          <li>Chair fill rate % (target: 90%+)</li>
+          <li>Average time to fill cancelled appointment</li>
+          <li>Waitlist conversion rate</li>
+          <li>Monthly revenue saved from filled gaps</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 04 ═══════════ -->
+<section id="m04">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 04 · Stage 2 — Build Once Earning</div>
+      <div class="module-name">Treatment Plan <em>Conversion AI</em></div>
+      <div class="module-tagline">Tracks every treatment plan presented to patients, analyses why plans are accepted or declined, and automatically runs follow-up sequences to convert outstanding plans — turning a dentist's clinical recommendations into booked treatment.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">20–40%</div><div class="mh-stat-label">Improvement in case acceptance rate</div></div>
+        <div><div class="mh-stat-val">~£350</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£70–120</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Treatment plan tracking</strong> — every presented plan logged with treatment type, value, presenting dentist, and outcome (accepted, declined, pending)</li>
+          <li><strong>Conversion analytics</strong> — dashboard showing acceptance rates by treatment type, dentist, time of year, and patient demographics</li>
+          <li><strong>Outstanding plan follow-up sequences</strong> — automatic 3-touch follow-up to patients with pending plans: benefits reminder → urgency message → financial options introduction</li>
+          <li><strong>Finance option integration</strong> — patients who decline due to cost are automatically sent information about 0% payment plan options</li>
+          <li><strong>Decline pattern analysis</strong> — AI identifies why patients decline (cost, time, fear, urgency not felt) and suggests messaging adjustments</li>
+          <li><strong>Dentist performance insights</strong> — anonymised comparison of conversion rates per dentist to identify best practices and coaching opportunities</li>
+          <li><strong>High-value treatment alerts</strong> — flags when a high-value plan (£1,000+) goes cold so the practice can prioritise personal follow-up</li>
+          <li><strong>Patient finance pre-qualification</strong> — pre-qualify patients for finance options before their appointment to remove the cost objection in-chair</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data source</span><span class="tech-val">PMS treatment plan data — exported daily. Treatment type, value, date presented, patient ID, status (accepted/declined/pending).</span></div>
+        <div class="tech-row"><span class="tech-label">Analytics engine</span><span class="tech-val">Claude builds data analysis layer — calculates conversion rates by segment, identifies statistically significant patterns in acceptance vs decline.</span></div>
+        <div class="tech-row"><span class="tech-label">Follow-up automation</span><span class="tech-val">Make.com sequences triggered when a plan remains in "pending" status for 48+ hours. Personalised messages per treatment type.</span></div>
+        <div class="tech-row"><span class="tech-label">Finance integration</span><span class="tech-val">Integration with patient finance providers (DentiCare, Chrysalis Finance) — automated finance information email when cost objection detected.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React analytics dashboard — acceptance rate trends, outstanding plan value at risk, dentist comparison, revenue recovered from follow-up sequences.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">High-Value Practice / Implants</div>
+            <div class="mkt-headline">"You're presenting £200,000 of treatment plans every month. How much is actually getting accepted?"</div>
+            <div class="mkt-copy">The average practice accepts 55–65% of presented treatment plans. Our AI tracks every plan, follows up automatically, removes cost objections with finance options, and turns a 60% acceptance rate into 75–80% — without additional marketing spend.</div>
+            <div class="mkt-hook">"Improving case acceptance from 60% to 75% on £200k of monthly treatment plans = £30,000 more revenue every month."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Practice Principal / Revenue Focus</div>
+            <div class="mkt-headline">"Your biggest untapped revenue source isn't new patients. It's the treatment plans already sitting in your system."</div>
+            <div class="mkt-copy">Most practices have hundreds of thousands of pounds in accepted-but-not-yet-booked and declined treatment plans. Our AI identifies them all, follows up automatically, and converts a meaningful percentage every month — with zero additional clinical overhead.</div>
+            <div class="mkt-hook">"Before you spend another pound on advertising, find out how much revenue is already sitting in your treatment plan pipeline."</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Directly tied to revenue — conversion rate improvements are immediately measurable</li><li>Particularly valuable for high-ticket treatment types (implants, ortho, cosmetic)</li><li>Decline pattern insights improve dentist communication skills over time</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Requires treatment plan data in a structured format from PMS — quality varies</li><li>Finance integration requires relationships with finance providers</li><li>Follow-up sequences can feel pushy if poorly calibrated — needs thoughtful copy</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Pre-appointment treatment value estimation — tells practice the likely treatment value of each patient before they arrive</li><li>Cross-practice benchmarking — anonymised acceptance rate comparison across all DentalOS clients</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>GDC rules on commercial communications to existing patients (low risk if properly configured)</li><li>Patient experience damage if follow-up feels too aggressive</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£400/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Growth Bundle</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£300 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Case acceptance rate % (primary KPI)</li>
+          <li>Outstanding treatment plan value (£)</li>
+          <li>Follow-up sequence conversion rate</li>
+          <li>Finance option uptake rate</li>
+          <li>Revenue recovered from follow-up per month</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 05 ═══════════ -->
+<section id="m05">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 05 · Stage 2 — Build Once Earning</div>
+      <div class="module-name">Marketing <em>Attribution</em> Intelligence</div>
+      <div class="module-tagline">Tracks every new patient from their first marketing touchpoint through to treatment acceptance, identifying exactly which channels, campaigns, and messages generate the highest-value patients — and automatically reallocates budget accordingly.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£500–2k</div><div class="mh-stat-label">Typical monthly ad waste identified</div></div>
+        <div><div class="mh-stat-val">£400–800</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£120–200</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Full-funnel tracking</strong> — connects ad click → landing page → enquiry form → phone call → booked appointment → attended appointment → treatment accepted → revenue</li>
+          <li><strong>Multi-channel attribution</strong> — tracks Google Ads, Meta Ads, Google My Business, organic search, referrals, and direct traffic</li>
+          <li><strong>Revenue per channel</strong> — shows true cost per new patient and average revenue per new patient by channel, not just cost per click</li>
+          <li><strong>Campaign-level analysis</strong> — drills down to individual ad campaigns, ad sets, and even individual ads to show which creative generates highest-value patients</li>
+          <li><strong>Budget optimisation recommendations</strong> — weekly AI-generated recommendation on where to increase and decrease ad spend based on performance data</li>
+          <li><strong>Agency accountability dashboard</strong> — if client uses a marketing agency, this module shows exactly what the agency's campaigns are actually delivering in revenue terms</li>
+          <li><strong>Treatment type revenue attribution</strong> — breaks down new patient revenue by treatment type from each channel (e.g. "Google generates 3x more implant patients than Meta")</li>
+          <li><strong>Monthly attribution report</strong> — auto-generated executive summary of marketing performance for principal review</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Integrations</span><span class="tech-val"><strong>Google Ads API, Meta Marketing API, GA4 API, GHL</strong> — Claude builds the integration layer connecting all four. Each requires OAuth credentials from the client.</span></div>
+        <div class="tech-row"><span class="tech-label">Data pipeline</span><span class="tech-val">Neon DB stores all attribution events. Claude builds the ETL pipeline — pulling data from each API daily, normalising, and loading into Neon.</span></div>
+        <div class="tech-row"><span class="tech-label">Attribution model</span><span class="tech-val">Linear attribution model initially (credit shared across all touchpoints). Claude can build last-click or data-driven models as dataset grows.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React dashboard with Recharts visualisations — channel comparison, revenue funnel, campaign performance table, budget recommendation card.</span></div>
+        <div class="tech-row"><span class="tech-label">Reporting</span><span class="tech-val">Monthly PDF/email report auto-generated by Claude from the previous month's data. Sent automatically on the 1st of each month.</span></div>
+        <div class="tech-row"><span class="tech-label">Complexity note</span><span class="tech-val">This is the most technically complex Stage 2 module — 4 API connections, each with token refresh requirements. Budget for 3–4 debugging sessions with Claude during build.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Practices Currently Using Agencies</div>
+            <div class="mkt-headline">"Your marketing agency tells you how many clicks they got. We tell you how much money they made you."</div>
+            <div class="mkt-copy">Marketing agencies report on vanity metrics — impressions, clicks, cost-per-click. None of those pay your lab bills. Our attribution system tracks every patient from first ad impression to treatment revenue, so you always know the true ROI of every pound you spend on marketing.</div>
+            <div class="mkt-hook">"One client discovered their Google Ads were generating 70% of new patient revenue but only receiving 40% of the budget. We fixed it and revenue went up 28% within 60 days."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Practice Owners Spending £1k+/mo on Ads</div>
+            <div class="mkt-headline">"Spending £2,000 a month on ads and not sure what's working? This will tell you in 30 days."</div>
+            <div class="mkt-copy">Most practices can tell you roughly how many new patients they got last month. Almost none can tell you which channel those patients came from, what treatment they ended up having, or whether the marketing investment was profitable. We change that.</div>
+            <div class="mkt-hook">"You wouldn't run a business without knowing your P&L. Don't run your marketing without knowing your ROI."</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Extremely high perceived value — shows money being wasted</li><li>Creates dependency — once set up, every marketing decision flows through it</li><li>Differentiator vs any dental agency (no agency shows true revenue attribution)</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Most complex Stage 2 module to build — 4 API connections</li><li>Requires client to give API access to their ad accounts (sometimes politically sensitive if an agency manages them)</li><li>Attribution is inherently imperfect — phone calls without call tracking can't be fully attributed</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add call tracking (Infinity, CallRail) to capture phone call attribution</li><li>Automated budget adjustment (not just recommendations but actual spend changes)</li><li>Benchmark marketing performance across all DentalOS clients — "your cost per new patient vs industry average"</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Google/Meta API changes can break integrations (happens 2–3x per year)</li><li>iOS privacy changes continue to reduce Meta attribution accuracy</li><li>Clients with agencies may face pushback from agencies threatened by the visibility this creates</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£450/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Growth Bundle</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup / API connection fee</span><span class="price-val">£400 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>True cost per new patient by channel</li>
+          <li>Revenue per channel (not clicks or impressions)</li>
+          <li>Marketing ROI % (revenue / ad spend)</li>
+          <li>Attribution coverage % (% of new patients tracked)</li>
+          <li>Budget recommendations actioned by client</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 06 ═══════════ -->
+<section id="m06">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 06 · Stage 2 — Build Once Earning</div>
+      <div class="module-name">AI Clinical <em>Documentation</em> Assistant</div>
+      <div class="module-tagline">Captures dentist voice observations during appointments, automatically generates GDC-compliant clinical notes, and pushes them to the PMS — reducing clinical admin time by 40% and eliminating documentation risk.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">40%</div><div class="mh-stat-label">Reduction in dentist admin time</div></div>
+        <div><div class="mh-stat-val">£600–1.2k</div><div class="mh-stat-label">Real cash build cost (incl. compliance review)</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£80–160</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Voice capture</strong> — dentist dictates clinical observations verbally during or immediately after the appointment using any device (phone, tablet, computer)</li>
+          <li><strong>Real-time transcription</strong> — OpenAI Whisper transcribes speech to text in seconds with high accuracy for dental terminology</li>
+          <li><strong>Structured note generation</strong> — Claude processes the transcription and generates a GDC-compliant clinical note in the practice's preferred format</li>
+          <li><strong>Template library</strong> — pre-built templates for all common appointment types (check-up, hygiene, extraction, composite, crown prep, implant placement)</li>
+          <li><strong>Auto-populated fields</strong> — tooth charting notation, BPE scores, treatment plan entries auto-formatted in standard dental notation</li>
+          <li><strong>Compliance gap detection</strong> — flags if a note is missing required elements (consent confirmation, medical history review, treatment plan discussion)</li>
+          <li><strong>One-click PMS push</strong> — completed note pushed to PMS with a single click, or automatically via API if PMS supports it</li>
+          <li><strong>Edit and approve workflow</strong> — dentist reviews AI-generated note and approves or edits before finalisation — maintains clinical responsibility</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Voice input</span><span class="tech-val">Browser-based recording (no app install) using Web Audio API. Works on any device — tablet in surgery most common use case.</span></div>
+        <div class="tech-row"><span class="tech-label">Transcription</span><span class="tech-val"><strong>OpenAI Whisper API</strong> — £0.006/minute. A 5-minute dictation costs 3p. Fine-tuned on dental vocabulary for accuracy.</span></div>
+        <div class="tech-row"><span class="tech-label">Note generation</span><span class="tech-val">Claude API with detailed system prompt encoding GDC note standards and dental formatting conventions. Different prompts per appointment type.</span></div>
+        <div class="tech-row"><span class="tech-label">Frontend</span><span class="tech-val">Clean, distraction-free React app on Vercel. Tap to record → review → approve. Designed for surgery use — large tap targets, works on iPad.</span></div>
+        <div class="tech-row"><span class="tech-label">PMS integration</span><span class="tech-val">Initially: formatted note copied to clipboard for manual paste into PMS. Later: direct API push for Dentally and Exact (both have write APIs).</span></div>
+        <div class="tech-row"><span class="tech-label">Compliance</span><span class="tech-val"><strong>GDC compliance review required (£500–800 one-time)</strong> — dental compliance consultant reviews note format and system workflow before going live with any client.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Dentist Direct / Clinical</div>
+            <div class="mkt-headline">"Stop writing clinical notes. Start dictating them. Done in 30 seconds."</div>
+            <div class="mkt-copy">The average dentist spends 40–60 minutes per day writing clinical notes. Our AI does it for them — dictate observations while the patient is still in the chair, get a GDC-compliant note in 30 seconds. Approved, saved, done. Every dentist gets back nearly an hour a day.</div>
+            <div class="mkt-hook">"At a dentist's clinical time value of £250/hour, that's £1,250/week returned to clinical work. Every week."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Risk / Compliance Angle</div>
+            <div class="mkt-headline">"86% of GDC fitness to practise cases involve inadequate clinical records. We fix that."</div>
+            <div class="mkt-copy">Poor clinical documentation is one of the most common causes of GDC complaints and the hardest to defend without good records. Our AI automatically checks that every note contains the required elements — consent, clinical findings, treatment provided, and aftercare advice.</div>
+            <div class="mkt-hook">"The best clinical defence is always the best clinical record. We make every note defensible by default."</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Solves a problem every single dentist has</li><li>High perceived value — saves time AND reduces risk</li><li>Compliance angle creates urgency (GDC cases are a constant fear)</li><li>Very low ongoing cost (Whisper API is incredibly cheap)</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Requires GDC compliance sign-off before deployment — adds cost and time</li><li>Dentists must adapt their note-taking behaviour (behaviour change is the hardest sell)</li><li>Accuracy depends on clear dictation — accents and dental jargon can trip up transcription</li><li>Patient data processing — clinical notes are special category GDPR data</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add auto-photography documentation (iPad camera capture linked to notes)</li><li>Treatment plan auto-generation from clinical observations</li><li>Expand to other regulated healthcare settings (optometry, physiotherapy)</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>PMS providers adding voice note features to their own software</li><li>GDC regulatory changes to note requirements (requires system update)</li><li>Data breach risk — clinical notes are extremely sensitive; must have robust encryption and access controls</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Per dentist / per month</span><span class="price-val">£150/mo</span></div>
+        <div class="price-row"><span class="price-tier">Practice (up to 3 dentists)</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee (incl. compliance config)</span><span class="price-val">£500 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Notes generated per week per dentist</li>
+          <li>Average time to complete a note (target: under 2 minutes)</li>
+          <li>Edit rate (% of notes that require significant editing)</li>
+          <li>Compliance gap detection rate (% of notes with missing elements caught)</li>
+          <li>Dentist NPS — are they actually saving time?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 07 ═══════════ -->
+<section id="m07">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 07 · Stage 2 — Build Once Earning</div>
+      <div class="module-name">Patient Demand <em>Forecasting Engine</em></div>
+      <div class="module-tagline">Analyses appointment patterns, seasonality, demographics, and Google search trends to predict patient demand 30, 60, and 90 days ahead — enabling proactive staffing, supply ordering, and perfectly timed marketing campaigns.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">90 days</div><div class="mh-stat-label">Forward demand visibility</div></div>
+        <div><div class="mh-stat-val">~£350</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–5 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£70–130</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Historical demand analysis</strong> — baseline appointment volumes by treatment type, day of week, week of year, and month across the practice's entire history</li>
+          <li><strong>Seasonal pattern detection</strong> — identifies the practice's unique seasonal patterns (post-holiday rush, back-to-school, January health resolutions etc.)</li>
+          <li><strong>Google Trends integration</strong> — combines local search trend data for dental-related queries to enhance demand forecasting</li>
+          <li><strong>30/60/90-day demand forecast</strong> — rolling forward forecast with confidence intervals showing expected patient volumes and treatment mix</li>
+          <li><strong>Staffing recommendations</strong> — suggests optimal shift patterns and whether to bring in associate cover during predicted high-demand periods</li>
+          <li><strong>Supply ordering triggers</strong> — when high-demand period predicted, alerts practice manager to pre-order materials (composites, implant components etc.)</li>
+          <li><strong>Marketing campaign timing</strong> — recommends when to run campaigns based on demand gaps (e.g. "historically low in February — run a whitening campaign in January")</li>
+          <li><strong>Capacity utilisation projection</strong> — shows projected chair utilisation vs capacity for the next 90 days</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data requirements</span><span class="tech-val">Minimum 12 months of PMS appointment history for reliable forecasting. 24 months preferred. Less useful for new practices.</span></div>
+        <div class="tech-row"><span class="tech-label">Forecasting model</span><span class="tech-val">Claude builds time-series model using Facebook Prophet library (Python). Handles seasonality well and generates confidence intervals natively.</span></div>
+        <div class="tech-row"><span class="tech-label">External signals</span><span class="tech-val">Google Trends API (free) pulls search volume for dental terms in practice's postcode area. Enhances demand predictions with external intent signals.</span></div>
+        <div class="tech-row"><span class="tech-label">Data storage</span><span class="tech-val">Neon DB stores historical appointment data and forecast outputs. Refreshed monthly with new actuals.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React dashboard with Recharts — 90-day forecast chart, seasonality heatmap, staffing recommendation card, marketing timing calendar.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Principal</div>
+            <div class="mkt-headline">"Know whether February is going to be quiet before December ends."</div>
+            <div class="mkt-copy">Every dental practice has its quiet periods and its panic periods — but almost nobody plans for them in advance. Our forecasting engine tells you exactly what demand will look like 90 days out, so you can staff correctly, order supplies efficiently, and run marketing campaigns before you need patients, not after.</div>
+            <div class="mkt-hook">"Reactive practices scramble. Proactive practices dominate. This is how you become proactive."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Practice Manager</div>
+            <div class="mkt-headline">"Stop being surprised by quiet weeks. Start predicting them 3 months out."</div>
+            <div class="mkt-copy">Practice managers who can predict demand in advance can optimise staffing rotas, ensure materials are stocked, and coordinate with the marketing team to run campaigns at exactly the right time. Our demand forecasting engine makes that possible without any manual analysis.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Creates forward-looking operational intelligence — unique in dentistry</li><li>Low ongoing cost once built</li><li>Compounds in value as dataset grows over years</li><li>Naturally integrates with other modules (triggers marketing campaigns, staffing alerts)</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Not useful for practices with under 12 months of data</li><li>External disruptions (NHS policy changes, local events) can make forecasts unreliable</li><li>Less exciting in demonstration than revenue-impact modules</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Aggregate forecasts across multiple DentalOS clients to create industry-level demand signals</li><li>Integrate with supply ordering platforms for automated material procurement</li><li>Add NHS waiting list data (public) for practices targeting NHS-to-private converters</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Significant market disruptions (COVID-equivalent events) invalidate all historical patterns</li><li>Google Trends API has limited granularity at postcode level</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Growth Bundle</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£250 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Forecast accuracy % (predicted vs actual volume)</li>
+          <li>Staffing actions taken from recommendations</li>
+          <li>Marketing campaigns triggered by forecast insights</li>
+          <li>Supply order efficiency improvements</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 08 ═══════════ -->
+<section id="m08">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 08 · Stage 3 — Build When Established</div>
+      <div class="module-name">AI Revenue <em>Cycle Manager</em></div>
+      <div class="module-tagline">Automates the entire financial administration cycle — insurance pre-authorisation, claim submission, rejection handling, payment reconciliation, and debtor management — eliminating the biggest source of administrative overhead in any dental practice.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">60%</div><div class="mh-stat-label">Reduction in billing admin headcount</div></div>
+        <div><div class="mh-stat-val">£1k–2.5k</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">6–8 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£150–300</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Insurance pre-authorisation automation</strong> — automatically submits pre-auth requests before planned treatments, tracks approvals, and alerts when expired</li>
+          <li><strong>Claim submission workflow</strong> — automates dental claim submission to major insurers (BUPA, AXA, Cigna, MetLife), including attachment handling</li>
+          <li><strong>Rejection analysis and resubmission</strong> — when a claim is rejected, AI categorises the rejection reason and automatically resubmits with corrections where possible</li>
+          <li><strong>Payment reconciliation</strong> — matches insurance payments to patient accounts automatically, flags discrepancies</li>
+          <li><strong>Debtor management sequences</strong> — automated payment reminders for outstanding patient balances via SMS, email, and letter</li>
+          <li><strong>Revenue cycle dashboard</strong> — shows outstanding claims by age, claim acceptance rates, average reimbursement time, and overdue patient balances</li>
+          <li><strong>NHS FP17 automation</strong> — for mixed practices, automates NHS FP17 form submission and UDA/UOA tracking</li>
+          <li><strong>Financial reporting</strong> — automated weekly and monthly revenue cycle performance reports</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Complexity</span><span class="tech-val"><strong>Highest complexity dental module.</strong> Touches financial data, requires PMS deep integration, and has compliance requirements around financial data handling.</span></div>
+        <div class="tech-row"><span class="tech-label">PMS integration</span><span class="tech-val">Requires read/write API access to PMS for claim data — Exact and SOE have this; Dentally has limited write access. Some PMS vendors charge for API access.</span></div>
+        <div class="tech-row"><span class="tech-label">Insurer connections</span><span class="tech-val">Each insurer has a different submission portal or API. BUPA and AXA have APIs. Others require Healthcode (EDI clearinghouse) integration — additional setup.</span></div>
+        <div class="tech-row"><span class="tech-label">Payment systems</span><span class="tech-val">Stripe or Healthcode for payment processing. Reconciliation logic built by Claude to match payments to patient accounts.</span></div>
+        <div class="tech-row"><span class="tech-label">Why Stage 3</span><span class="tech-val">This module touches money and insurance — two areas requiring careful compliance handling. Build after 20+ clients when you have resources to do it properly. Don't rush this one.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Finance Manager / Billing Team</div>
+            <div class="mkt-headline">"Your billing team spends 40% of their time on tasks AI can do in seconds."</div>
+            <div class="mkt-copy">Insurance pre-auth, claim submission, rejection handling, payment reconciliation — every one of these is a repeatable, structured task that AI can automate end-to-end. Free your billing team to focus on the complex cases that actually need human judgement.</div>
+            <div class="mkt-hook">"One large practice reduced their billing team from 3 FTE to 1 FTE after deployment. That's £60,000 in annual labour savings."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Practice Principal / Cash Flow</div>
+            <div class="mkt-headline">"Stop waiting 45 days for insurance claims to be paid. Start getting them right first time."</div>
+            <div class="mkt-copy">Most dental claim rejections are caused by simple, preventable errors that AI catches automatically. Our Revenue Cycle Manager submits clean claims the first time, monitors them to resolution, and alerts you the moment anything needs attention.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Enormous time saving — billing admin is universally hated</li><li>Direct cash flow improvement — faster claims = faster payment</li><li>Scales to group practices without proportional headcount increase</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Most complex build — multiple PMS, insurer, and payment integrations</li><li>Insurer portals change frequently, breaking integrations</li><li>Financial data requires strict security measures and DPA compliance</li><li>High maintenance burden vs other modules</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Performance pricing — charge % of additional revenue recovered from improved claim acceptance</li><li>Private healthcare insurer market is growing — timing perfect</li><li>NHS practice automation — significant FP17 admin burden if NHS practices targeted</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Insurer portals changing their APIs or blocking automated submissions</li><li>NHS BSA rule changes for NHS module</li><li>FCA regulation if crossing into financial advice territory (maintain boundaries)</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Standalone module</span><span class="price-val">£600/mo</span></div>
+        <div class="price-row"><span class="price-tier">In Full OS</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee (integrations)</span><span class="price-val">£800 one-time</span></div>
+        <div class="price-row"><span class="price-tier">Performance add-on</span><span class="price-val">10% of recovered claims</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Claim first-pass acceptance rate (target: 95%+)</li>
+          <li>Average days to payment (target: under 14 days)</li>
+          <li>Rejected claim rate and reasons</li>
+          <li>Outstanding patient balance (total and aged)</li>
+          <li>Monthly debtor recovery rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 09 ═══════════ -->
+<section id="m09">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 09 · Stage 3 — Build When Established</div>
+      <div class="module-name">Group Practice <em>Benchmarking Platform</em></div>
+      <div class="module-tagline">For DSOs and multi-site operators — provides a real-time intelligence dashboard comparing performance across all practices in the group, against industry benchmarks generated from all DentalOS clients, surfacing underperformers and best practices automatically.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">DSO</div><div class="mh-stat-label">Primary target: groups of 5–50+ sites</div></div>
+        <div><div class="mh-stat-val">£1.5k–3k</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">6–8 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£200–400</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Multi-site dashboard</strong> — single login shows all practice sites with key KPIs side by side: revenue, new patients, DNA rate, treatment plan conversion, chair utilisation</li>
+          <li><strong>Industry benchmark comparison</strong> — each site's performance compared against anonymised benchmarks from all DentalOS practices (this is the proprietary data moat)</li>
+          <li><strong>Underperformer detection</strong> — AI automatically flags sites that are below benchmark on key metrics and generates a priority action list</li>
+          <li><strong>Best practice surfacing</strong> — identifies which sites are performing above benchmark and surfaces the practices or processes that are driving that outperformance</li>
+          <li><strong>Site manager scorecards</strong> — individual performance cards for each site manager, updated weekly</li>
+          <li><strong>Group revenue intelligence</strong> — consolidated group revenue, growth trajectory, and profit-per-site analysis</li>
+          <li><strong>AI weekly commentary</strong> — automatically generated narrative explaining the week's performance movements across the group</li>
+          <li><strong>Role-based access</strong> — group operators see everything; site managers see their own site plus anonymised benchmark comparison</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Architecture</span><span class="tech-val">Multi-tenant application — each client organisation has data isolated from others. Claude builds the data model in Neon with strict row-level security.</span></div>
+        <div class="tech-row"><span class="tech-label">Data ingestion</span><span class="tech-val">Each practice site has its own DentalOS data connection. Benchmarking database aggregates anonymised KPIs across all sites and all DentalOS clients.</span></div>
+        <div class="tech-row"><span class="tech-label">Benchmark engine</span><span class="tech-val">Claude builds aggregation pipeline — calculates percentile distributions for each KPI across the full DentalOS client base. Refreshed weekly.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">Most complex React dashboard in the product — multi-site comparison tables, benchmark visualisations, AI commentary cards, trend charts per site.</span></div>
+        <div class="tech-row"><span class="tech-label">Why Stage 3</span><span class="tech-val">Only valuable when DentalOS has 20+ practices generating benchmark data. The intelligence is in the network — build when the network exists.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">DSO / Group Operator</div>
+            <div class="mkt-headline">"You own 12 dental practices. Do you actually know which 3 are underperforming and why?"</div>
+            <div class="mkt-copy">Most DSO operators rely on site managers giving them the information they want to share. Our Group Intelligence Platform gives you objective, real-time performance data across every site — compared against industry benchmarks from 100s of UK practices — with AI that tells you exactly what's wrong and what to do about it.</div>
+            <div class="mkt-hook">"We had one DSO client discover that 3 of their 8 practices had DNA rates 2x the industry average. Within 60 days of deploying the Appointment Optimiser across those 3 sites, group revenue increased by £180,000 annualised."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Investment / Private Equity Backed DSOs</div>
+            <div class="mkt-headline">"The intelligence layer your portfolio company needs to hit its EBITDA targets."</div>
+            <div class="mkt-copy">Private equity-backed dental groups are under significant pressure to optimise operational performance across their portfolios. Our Group Benchmarking Platform provides the operational intelligence infrastructure they need — without building a £500k internal analytics team.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Highest ticket price module — DSOs pay well for intelligence</li><li>Benchmark data is a genuine competitive moat — only possible with DentalOS scale</li><li>Once deployed across a DSO, almost impossible to remove</li><li>Creates institutional-level switching cost</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Requires significant DentalOS client base to generate meaningful benchmarks</li><li>Multi-tenant architecture is more complex to build and maintain</li><li>DSO sales cycles are longer — 3–6 months to close a deal</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Sell benchmark data back to dental suppliers, insurers, and investors as anonymised intelligence reports</li><li>Private equity dental roll-ups are accelerating — timing perfect for a Group Intelligence platform</li><li>White-label the platform for dental franchise groups</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Large DSOs may build internal BI teams rather than buy external</li><li>GDPR constraints on aggregating and sharing benchmarks (even anonymised) must be carefully managed</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 5 sites</span><span class="price-val">£1,200/mo</span></div>
+        <div class="price-row"><span class="price-tier">6–15 sites</span><span class="price-val">£2,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">16–50 sites</span><span class="price-val">£4,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup / onboarding per site</span><span class="price-val">£200/site</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Number of DSO clients active</li>
+          <li>Total sites in benchmarking network</li>
+          <li>Underperformer detection accuracy</li>
+          <li>Performance improvement of flagged sites after action</li>
+          <li>Executive dashboard engagement (weekly active users)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MODULE 10 ═══════════ -->
+<section id="m10">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-dots"></div>
+      <div class="module-num">Module 10 · Stage 3 — The Full Product</div>
+      <div class="module-name">Dental<em>OS</em> — The Full Operating System</div>
+      <div class="module-tagline">All 9 modules unified into a single AI operating system — one login, one dashboard, one AI intelligence layer running every function of the dental practice autonomously. The version you show DSOs. The product you build toward from Day 1.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£2,200</div><div class="mh-stat-label">Full OS pricing per site/mo</div></div>
+        <div><div class="mh-stat-val">5–6 months</div><div class="mh-stat-label">Build timeline (cumulative)</div></div>
+        <div><div class="mh-stat-val">£5–10k</div><div class="mh-stat-label">Total real cash build cost</div></div>
+        <div><div class="mh-stat-val">85%+</div><div class="mh-stat-label">Target gross margin</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">What the Full OS Delivers</div>
+        <ul class="feature-list">
+          <li><strong>Unified intelligence dashboard</strong> — every KPI from every module in one screen: revenue, patients, DNA rate, conversion, attribution, competitor position</li>
+          <li><strong>AI morning briefing</strong> — practice owner receives a daily AI-generated briefing at 8am: what happened yesterday, what needs attention today, what the week looks like</li>
+          <li><strong>Autonomous agent layer</strong> — 7 AI agents running continuously in the background: Marketing Agent, Reactivation Agent, Appointment Agent, Revenue Agent, Competitor Agent, Treatment Plan Agent, Communication Agent</li>
+          <li><strong>Cross-module intelligence</strong> — modules that inform each other (e.g. demand forecast triggers marketing campaign triggers reactivation sequence)</li>
+          <li><strong>Practice health score</strong> — single 0–100 score representing overall practice operational health, benchmarked against DentalOS network</li>
+          <li><strong>Strategic recommendation engine</strong> — monthly AI-generated strategic recommendations for each practice based on their data</li>
+          <li><strong>Complete audit trail</strong> — every action taken by AI agents logged and visible for compliance and review</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Build Strategy</div>
+        <div class="tech-row"><span class="tech-label">Month 1</span><span class="tech-val">Modules 01–03 (Reactivation + Competitor Intel + Appointment Optimiser) — Stage 1 MVP, ~£500 cash, first clients signed</span></div>
+        <div class="tech-row"><span class="tech-label">Month 2–3</span><span class="tech-val">Modules 04–05 (Treatment Plan + Marketing Attribution) — funded by first client subscriptions</span></div>
+        <div class="tech-row"><span class="tech-label">Month 3–4</span><span class="tech-val">Modules 06–07 (Clinical Docs + Demand Forecasting) — compliance review done, team growing</span></div>
+        <div class="tech-row"><span class="tech-label">Month 5–6</span><span class="tech-val">Modules 08–09 (Revenue Cycle + Group Benchmarking) — built once 20+ single-site clients established</span></div>
+        <div class="tech-row"><span class="tech-label">Month 6+</span><span class="tech-val">Module 10 — Claude unifies all modules under a single dashboard. AI briefing and agent orchestration layer built on top of existing modules.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Full OS SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>No comparable product exists in the dental market</li><li>Comprehensive switching cost — 12+ months of integrated data</li><li>Data moat compounds with every client and every month</li><li>Premium pricing justified by breadth and depth of capability</li><li>Each module independently valuable — modular pricing drives adoption</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Complex to sell to independent single-site practices (simpler modules are the wedge)</li><li>Requires significant client onboarding investment per site</li><li>Support burden higher than single-module deployments</li><li>Integration maintenance across all PMS systems is ongoing</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Dental market consolidation accelerating — more DSOs = more enterprise clients</li><li>Franchise dental groups expanding — each franchise as a client</li><li>International expansion — same product, similar market in US, Australia, Canada</li><li>Acquisition opportunity — strategic buyers (Henry Schein, Carestream) for a platform with 500+ clients and proprietary data</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Large incumbent software providers (Carestream, Dentally, Exact) acquiring AI companies to embed in their platforms</li><li>US-funded dental AI startups entering the UK market with deeper pockets</li><li>GDC regulatory changes affecting what AI can and cannot do in clinical contexts</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label gold">Full OS Pricing</div>
+        <div class="price-row"><span class="price-tier">Starter Bundle (3 modules)</span><span class="price-val">£750/mo</span></div>
+        <div class="price-row"><span class="price-tier">Growth Bundle (6 modules)</span><span class="price-val">£1,400/mo</span></div>
+        <div class="price-row"><span class="price-tier">Full DentalOS (all modules)</span><span class="price-val">£2,200/mo</span></div>
+        <div class="price-row"><span class="price-tier">Group (per site on Full OS)</span><span class="price-val">£1,800/site</span></div>
+        <div class="price-row"><span class="price-tier">DSO (10+ sites) — custom</span><span class="price-val">from £15k/mo</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Year 1 Revenue Targets</div>
+        <ul class="feature-list">
+          <li>Month 1–3: 5 clients on Starter Bundle = £3,750 MRR</li>
+          <li>Month 3–6: 15 clients avg £900/mo = £13,500 MRR</li>
+          <li>Month 6–9: 30 clients avg £1,100/mo = £33,000 MRR</li>
+          <li>Month 9–12: 50 clients avg £1,200/mo = £60,000 MRR</li>
+          <li>Month 12: First DSO on Group plan = £8,000+ MRR from one client</li>
+          <li><strong>Year 1 ARR target: £500k–£800k</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="callout teal" style="margin-bottom:80px;">
+  <div class="callout-title">The Strategic Reminder</div>
+  <p>Every module you build, every client you sign, every month of operational data you collect is compounding into something that becomes <strong>increasingly impossible for any competitor to replicate.</strong> The technology is the easy part. The data is the moat. Build the product fast, sign clients immediately, and let the dataset do the work of defending the business over the next 3–5 years. This is a category-defining opportunity — but only for the team that moves first and goes deepest.</p>
+</div>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="footer-brand">DentalOS</div>
+  <div class="footer-note">Product Intelligence Document · AI Systems Co. · 2025</div>
+  <div class="footer-note">10 Modules · Built by Kie & Leah · Confidential</div>
+</footer>
+
+<a href="#top" class="scroll-top">↑</a>
+</body>
+</html>

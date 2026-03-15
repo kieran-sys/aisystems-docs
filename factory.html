@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FactoryOS — Product Intelligence Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;0,900;1,300;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f4f0;--bg2:#ece9e2;--bg3:#e2ddd4;--bg-dark:#0a0c08;
+  --ink:#1c1e18;--ink2:#3a3d34;--ink3:#68706a;
+  --gold:#c4820a;--gold-light:#fef9ed;--gold-mid:#f5d898;
+  --red:#7a1f1f;--red-light:#fdf2f2;--red-mid:#e8b0b0;
+  --green:#1a5226;--green-light:#f0f8f0;--green-mid:#b0d8b0;
+  --amber:#8a5a00;--amber-light:#fef8ee;--amber-mid:#f0cc98;
+  --steel:#2c4a6e;--steel-light:#eef3f8;--steel-mid:#a8c0d8;
+  --border:#ccc8bf;--border2:#bab6ac;
+  --white:#ffffff;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+.cover{background:var(--bg-dark);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:72px 72px 80px;position:relative;overflow:hidden;}
+.cover-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 90% 10%,rgba(196,130,10,0.1) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 5% 90%,rgba(44,74,110,0.08) 0%,transparent 55%);pointer-events:none;}
+.cover-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-mid);margin-bottom:28px;position:relative;display:flex;align-items:center;gap:14px;}
+.cover-tag::before{content:'';width:32px;height:1px;background:var(--gold-mid);}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(60px,9vw,120px);font-weight:900;line-height:.9;letter-spacing:-.02em;color:#f0ede6;max-width:900px;}
+.cover h1 em{font-style:italic;color:var(--gold-mid);}
+.cover-desc{margin-top:36px;font-size:15px;font-weight:300;color:rgba(240,237,230,0.5);max-width:580px;line-height:1.75;}
+.cover-desc strong{color:rgba(240,237,230,0.85);font-weight:500;}
+.cover-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:36px;}
+.cpill{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.1);color:rgba(240,237,230,0.5);background:rgba(255,255,255,.03);}
+.cover-bottom{margin-top:64px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+.cover-stat-row{display:flex;gap:48px;flex-wrap:wrap;}
+.cstat-val{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--gold-mid);line-height:1;}
+.cstat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,237,230,0.3);margin-top:4px;}
+
+.toc{background:var(--ink);padding:0 72px;}
+.toc-inner{display:flex;align-items:stretch;overflow-x:auto;}
+.toc-item{display:flex;align-items:center;gap:10px;padding:20px 24px;text-decoration:none;color:rgba(240,237,230,0.4);font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,.07);white-space:nowrap;transition:all .2s;border-bottom:2px solid transparent;}
+.toc-item:hover{color:rgba(240,237,230,.85);border-bottom-color:var(--gold-mid);}
+.toc-num{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.1em;}
+
+.page{max-width:1200px;margin:0 auto;padding:0 72px;}
+
+.swot-section{padding:72px 0 48px;}
+.swot-header{margin-bottom:40px;}
+.swot-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.swot-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--ink);}
+.swot-title em{font-style:italic;color:var(--gold);}
+.swot-desc{margin-top:16px;font-size:14px;color:var(--ink3);max-width:680px;line-height:1.75;}
+
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:40px;}
+.swot-box{padding:28px 28px;position:relative;}
+.swot-box.S{background:var(--green-light);border:1px solid var(--green-mid);}
+.swot-box.W{background:var(--red-light);border:1px solid var(--red-mid);}
+.swot-box.O{background:var(--gold-light);border:1px solid var(--gold-mid);}
+.swot-box.T{background:var(--amber-light);border:1px solid var(--amber-mid);}
+.swot-letter{font-family:'Fraunces',serif;font-size:72px;font-weight:900;position:absolute;top:12px;right:20px;line-height:1;opacity:.1;}
+.swot-box.S .swot-letter{color:var(--green);}
+.swot-box.W .swot-letter{color:var(--red);}
+.swot-box.O .swot-letter{color:var(--gold);}
+.swot-box.T .swot-letter{color:var(--amber);}
+.swot-box-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;}
+.swot-box.S .swot-box-title{color:var(--green);}.swot-box.W .swot-box-title{color:var(--red);}.swot-box.O .swot-box-title{color:var(--gold);}.swot-box.T .swot-box-title{color:var(--amber);}
+.swot-list{list-style:none;}
+.swot-list li{font-size:13px;color:var(--ink2);padding:5px 0 5px 16px;border-bottom:1px solid rgba(0,0,0,.06);position:relative;line-height:1.5;}
+.swot-list li::before{position:absolute;left:0;font-size:10px;top:6px;}
+.swot-box.S .swot-list li::before{content:'✓';color:var(--green);}
+.swot-box.W .swot-list li::before{content:'−';color:var(--red);}
+.swot-box.O .swot-list li::before{content:'→';color:var(--gold);}
+.swot-box.T .swot-list li::before{content:'!';color:var(--amber);}
+.swot-list li strong{font-weight:600;color:var(--ink);}
+
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:48px;}
+.aud-card{background:var(--white);border:1px solid var(--border);padding:22px 22px;box-shadow:var(--shadow);}
+.aud-icon{font-size:28px;margin-bottom:10px;}
+.aud-type{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.aud-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;}
+.aud-desc{font-size:12px;color:var(--ink3);line-height:1.6;}
+.aud-pain{margin-top:10px;padding:8px 10px;background:var(--red-light);border-left:2px solid var(--red-mid);font-size:11px;color:var(--red);line-height:1.5;}
+
+.divider{height:1px;background:var(--border2);margin:64px 0;}
+
+.module-card{background:var(--white);border:1px solid var(--border);margin-bottom:48px;overflow:hidden;box-shadow:var(--shadow);}
+.module-header{background:var(--bg-dark);padding:32px 40px;position:relative;overflow:hidden;}
+.module-header-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 90% 50%,rgba(196,130,10,0.12) 0%,transparent 60%);pointer-events:none;}
+.module-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,230,0.3);margin-bottom:8px;}
+.module-name{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:900;color:#f0ede6;line-height:1;letter-spacing:-.02em;margin-bottom:8px;}
+.module-name em{font-style:italic;color:var(--gold-mid);}
+.module-tagline{font-size:13px;font-weight:300;color:rgba(240,237,230,0.5);max-width:560px;line-height:1.6;}
+.module-header-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap;}
+.mh-stat-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--gold-mid);line-height:1;margin-bottom:2px;}
+.mh-stat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,230,0.3);}
+
+.module-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.module-col{padding:28px 32px;border-right:1px solid var(--border);}
+.module-col:last-child{border-right:none;}
+.module-col.full{grid-column:1/-1;border-top:1px solid var(--border);}
+
+.mc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.mc-label.steel{color:var(--steel);}
+.mc-label.red{color:var(--red);}
+.mc-label.green{color:var(--green);}
+
+.feature-list{list-style:none;}
+.feature-list li{font-size:13px;color:var(--ink2);padding:7px 0 7px 18px;border-bottom:1px solid var(--bg2);position:relative;line-height:1.5;}
+.feature-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:10px;top:9px;}
+.feature-list li strong{font-weight:600;color:var(--ink);}
+
+.mod-swot{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);}
+.msw{padding:16px 16px;}
+.msw.ms{background:var(--green-light);}
+.msw.mw{background:var(--red-light);}
+.msw.mo{background:var(--gold-light);}
+.msw.mt{background:var(--amber-light);}
+.msw-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.msw.ms .msw-title{color:var(--green);}.msw.mw .msw-title{color:var(--red);}.msw.mo .msw-title{color:var(--gold);}.msw.mt .msw-title{color:var(--amber);}
+.msw-items{list-style:none;}
+.msw-items li{font-size:11px;color:var(--ink3);padding:3px 0;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.4;}
+.msw-items li:last-child{border-bottom:none;}
+
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mkt-card{background:var(--bg2);border:1px solid var(--border);padding:18px 20px;}
+.mkt-channel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.mkt-headline{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;line-height:1.3;}
+.mkt-copy{font-size:12px;color:var(--ink3);line-height:1.6;}
+.mkt-hook{margin-top:10px;padding:8px 10px;background:var(--gold-light);border-left:2px solid var(--gold-mid);font-size:11px;font-style:italic;color:var(--gold);line-height:1.5;}
+
+.tech-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid var(--bg2);}
+.tech-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);min-width:120px;letter-spacing:.04em;padding-top:2px;}
+.tech-val{font-size:13px;color:var(--ink2);line-height:1.5;}
+.tech-val strong{font-weight:600;color:var(--ink);}
+
+.price-row{display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bg2);}
+.price-tier{font-size:13px;color:var(--ink2);}
+.price-val{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--gold);}
+
+.callout{padding:18px 22px;border:1px solid;border-left-width:3px;margin:24px 0;}
+.callout.gold{border-color:var(--gold-mid);background:var(--gold-light);}
+.callout.red{border-color:var(--red-mid);background:var(--red-light);}
+.callout.green{border-color:var(--green-mid);background:var(--green-light);}
+.callout.amber{border-color:var(--amber-mid);background:var(--amber-light);}
+.callout.steel{border-color:var(--steel-mid);background:var(--steel-light);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
+.callout.gold .callout-title{color:var(--gold);}.callout.red .callout-title{color:var(--red);}.callout.green .callout-title{color:var(--green);}.callout.amber .callout-title{color:var(--amber);}.callout.steel .callout-title{color:var(--steel);}
+.callout p{font-size:13px;color:var(--ink2);line-height:1.65;}
+.callout p strong{color:var(--ink);font-weight:600;}
+
+.stage-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.stage-badge.s1{background:rgba(26,82,38,0.1);color:var(--green);border:1px solid var(--green-mid);}
+.stage-badge.s2{background:rgba(196,130,10,0.1);color:var(--gold);border:1px solid var(--gold-mid);}
+.stage-badge.s3{background:rgba(122,31,31,0.1);color:var(--red);border:1px solid var(--red-mid);}
+
+footer{background:var(--bg-dark);padding:40px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:80px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:20px;font-weight:900;font-style:italic;color:var(--gold-mid);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:rgba(240,237,230,0.3);letter-spacing:.1em;}
+
+.scroll-top{position:fixed;bottom:22px;right:22px;width:38px;height:38px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:16px;z-index:100;transition:all .2s;box-shadow:0 2px 12px rgba(196,130,10,0.35);}
+
+@media(max-width:900px){
+  .cover,.page,footer,.toc{padding-left:24px;padding-right:24px;}
+  .module-body{grid-template-columns:1fr;}
+  .module-col{border-right:none;border-bottom:1px solid var(--border);}
+  .mod-swot{grid-template-columns:1fr 1fr;}
+  .swot-grid{grid-template-columns:1fr;}
+  .mkt-grid{grid-template-columns:1fr;}
+  .audience-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){
+  .audience-grid,.mod-swot{grid-template-columns:1fr;}
+  .cover-stat-row{gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<section class="cover" id="top">
+  <div class="cover-glow"></div><div class="cover-lines"></div>
+  <div class="cover-tag">Product Intelligence Document · 2025</div>
+  <h1>Factory<em>OS</em></h1>
+  <p class="cover-desc">The complete product intelligence brief for FactoryOS — <strong>the AI operating system for mid-market manufacturers.</strong> Module-by-module breakdown covering development, features, marketing angles, SWOT analysis, and target audience. Built by Si — for people who think in production lines, not dashboards.</p>
+  <div class="cover-pills">
+    <div class="cpill">10 Modules</div>
+    <div class="cpill">Built by Si</div>
+    <div class="cpill">Mid-Market Manufacturing UK</div>
+    <div class="cpill">Audit-first pricing model</div>
+    <div class="cpill">Stage 1 MVP: ~£850 cash</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-stat-row">
+      <div><div class="cstat-val">£500k–£3M</div><div class="cstat-label">Cost saving per facility per year</div></div>
+      <div><div class="cstat-val">9.1/10</div><div class="cstat-label">AI opportunity score</div></div>
+      <div><div class="cstat-val">$16T</div><div class="cstat-label">Global manufacturing market</div></div>
+      <div><div class="cstat-val">2.1M</div><div class="cstat-label">Unfilled roles in US manufacturing</div></div>
+    </div>
+  </div>
+</section>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#hero" class="toc-item" style="border-bottom:2px solid var(--gold);color:var(--gold-mid);"><span class="toc-num">★&nbsp;</span>The Ops Brief</a>
+    <a href="#overview" class="toc-item"><span class="toc-num">00&nbsp;</span>Overview & SWOT</a>
+    <a href="#m01" class="toc-item"><span class="toc-num">01&nbsp;</span>Demand Forecasting</a>
+    <a href="#m02" class="toc-item"><span class="toc-num">02&nbsp;</span>Inventory Optimiser</a>
+    <a href="#m03" class="toc-item"><span class="toc-num">03&nbsp;</span>Procurement Intelligence</a>
+    <a href="#m04" class="toc-item"><span class="toc-num">04&nbsp;</span>Supplier Intelligence</a>
+    <a href="#m05" class="toc-item"><span class="toc-num">05&nbsp;</span>Energy Optimiser</a>
+    <a href="#m06" class="toc-item"><span class="toc-num">06&nbsp;</span>Workforce Intelligence</a>
+    <a href="#m07" class="toc-item"><span class="toc-num">07&nbsp;</span>Production Scheduler</a>
+    <a href="#m08" class="toc-item"><span class="toc-num">08&nbsp;</span>Predictive Maintenance</a>
+    <a href="#m09" class="toc-item"><span class="toc-num">09&nbsp;</span>Computer Vision QC</a>
+    <a href="#m10" class="toc-item"><span class="toc-num">10&nbsp;</span>Full FactoryOS</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<section id="overview">
+  <div class="swot-section">
+    <div class="swot-header">
+      <div class="swot-tag">Section 00 — Product Overview</div>
+      <div class="swot-title">FactoryOS:<br>The <em>Market</em> Opportunity</div>
+      <p class="swot-desc">Mid-market manufacturing is the largest addressable market of all three verticals — $16T globally — and the most data-rich industry on earth. Machine sensors, ERP systems, procurement databases, and energy meters generate millions of data points daily. Almost none of it is being analysed intelligently. That is the opportunity.</p>
+    </div>
+
+    <div class="callout gold">
+      <div class="callout-title">The Core Problem We're Solving</div>
+      <p>The average mid-market manufacturer (<strong>£5M–£500M revenue</strong>) has a modern ERP system, sophisticated machinery, and years of operational data — but zero AI intelligence layer sitting on top of it. Decisions about production scheduling, procurement timing, maintenance windows, and quality standards are made by experienced people using gut feel and spreadsheets. <strong>FactoryOS replaces gut feel with real-time AI intelligence</strong> — predicting failures before they happen, optimising decisions before they're made, and automating workflows before staff waste time on them.</p>
+    </div>
+
+    <div class="callout steel">
+      <div class="callout-title">Why Si Is The Unfair Advantage</div>
+      <p>30 years at Operations Director level in manufacturing means Si <strong>is the buyer persona.</strong> He understands the language, the politics, the procurement process, and the specific problems that keep ops directors awake at night. He can walk into any manufacturing boardroom as a peer — not a salesperson. His network of former colleagues, suppliers, and industry contacts represents a warm pipeline that would take a normal software company years and millions in marketing to replicate. <strong>The audit is Si's sales process.</strong> He walks in as a consultant and walks out with a contract.</p>
+    </div>
+
+    <div class="swot-tag" style="margin-bottom:16px">FactoryOS — Full SWOT Analysis</div>
+    <div class="swot-grid">
+      <div class="swot-box S">
+        <div class="swot-letter">S</div>
+        <div class="swot-box-title">Strengths</div>
+        <ul class="swot-list">
+          <li><strong>30 years domain expertise</strong> — Si is the target buyer. Deep credibility, industry relationships, and operational authority</li>
+          <li><strong>Audit-first model</strong> — consultative sales process identifies problems before pitching solutions. Clients feel understood, not sold to</li>
+          <li><strong>Highest ticket pricing</strong> — enterprise manufacturing clients pay £8k–£40k/month without blinking when ROI is clearly documented</li>
+          <li><strong>Richest data environment</strong> — manufacturing generates more structured operational data than any other industry, creating compounding intelligence advantages</li>
+          <li><strong>Stage 1 modules work from spreadsheets</strong> — demand forecasting and inventory optimisation work from CSV exports. No hardware or integration required to start</li>
+          <li><strong>Clear, quantifiable ROI</strong> — every module ties directly to cost savings: downtime cost, defect cost, procurement overspend, energy waste. Easy to justify</li>
+          <li><strong>Long contract terms</strong> — manufacturing clients sign 12–24 month contracts. Revenue is highly predictable</li>
+          <li><strong>Consulting audit revenue</strong> — the audit itself is a paid engagement (£2.5–5k), generating cash before a single platform module is built</li>
+        </ul>
+      </div>
+      <div class="swot-box W">
+        <div class="swot-letter">W</div>
+        <div class="swot-box-title">Weaknesses</div>
+        <ul class="swot-list">
+          <li><strong>Stage 3 modules require specialist</strong> — PLC/sensor integration for predictive maintenance needs an industrial automation engineer. Real external cost.</li>
+          <li><strong>Long sales cycles</strong> — manufacturing enterprise sales take 3–6 months from first meeting to signed contract. Cash flow planning required.</li>
+          <li><strong>ERP integration complexity</strong> — SAP, Epicor, Sage 200, and others each have different API structures and data formats. Each integration is a custom build.</li>
+          <li><strong>Fewer clients than dental</strong> — the high ticket price means fewer clients needed for revenue targets, but also fewer data points to train benchmarking intelligence</li>
+          <li><strong>No developer on team</strong> — entirely reliant on Claude for all code. Complex manufacturing integrations require careful iteration and significant testing time</li>
+          <li><strong>Hardware dependency (Stage 3)</strong> — camera installations and sensor hardware require site visits and physical work outside Claude's capability</li>
+        </ul>
+      </div>
+      <div class="swot-box O">
+        <div class="swot-letter">O</div>
+        <div class="swot-box-title">Opportunities</div>
+        <ul class="swot-list">
+          <li><strong>UK manufacturing renaissance</strong> — reshoring, defence spending, and energy transition driving significant new manufacturing investment</li>
+          <li><strong>Net zero compliance pressure</strong> — energy optimisation and carbon reporting are regulatory requirements for many manufacturers. Government-mandated urgency.</li>
+          <li><strong>Labour shortage crisis</strong> — 2.1M unfilled manufacturing roles in the US alone. Automation and AI are the only viable path to managing this shortage</li>
+          <li><strong>Smart factory government grants</strong> — UK Government Made Smarter programme and Innovate UK funding available for manufacturers adopting digital and AI technologies</li>
+          <li><strong>Industry 4.0 momentum</strong> — every major manufacturer has an Industry 4.0 strategy on paper. FactoryOS delivers it without requiring the client to rebuild their infrastructure</li>
+          <li><strong>Supply chain resilience agenda</strong> — post-COVID supply chain disruption has made supply chain risk intelligence a boardroom priority</li>
+          <li><strong>Outcome-based pricing potential</strong> — at scale, move to % of documented savings pricing. A factory saving £3M/year gladly pays £300–500k/year for the system doing it</li>
+          <li><strong>White-label for industrial consultancies</strong> — large management consultancies (McKinsey, Deloitte) would pay for white-label access to FactoryOS for their manufacturing clients</li>
+        </ul>
+      </div>
+      <div class="swot-box T">
+        <div class="swot-letter">T</div>
+        <div class="swot-box-title">Threats</div>
+        <ul class="swot-list">
+          <li><strong>Large ERP vendors adding AI</strong> — SAP, Oracle, and Microsoft are all adding AI modules to their existing ERP systems. Risk of incumbent extension rather than new platform adoption</li>
+          <li><strong>Specialist industrial AI companies</strong> — well-funded startups (Sight Machine, Eigen Innovations, Uptake) are already building in the predictive maintenance space</li>
+          <li><strong>Cultural resistance</strong> — shop floor culture can be resistant to change. Ops managers who have 30 years of experience may resist AI-generated recommendations</li>
+          <li><strong>Data quality issues</strong> — many manufacturers have poor data hygiene in their ERP. Garbage in, garbage out.</li>
+          <li><strong>Cybersecurity concerns</strong> — connecting manufacturing systems to cloud AI raises legitimate security concerns. Industrial OT networks are especially sensitive</li>
+          <li><strong>Recession sensitivity</strong> — manufacturing investment decisions are heavily cyclical. A UK recession could freeze capex and software budgets</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="swot-tag" style="margin-bottom:16px">Primary Target Audiences</div>
+    <div class="audience-grid">
+      <div class="aud-card">
+        <div class="aud-icon">⚙️</div>
+        <div class="aud-type">Primary Target · Entry</div>
+        <div class="aud-name">Operations Director / COO</div>
+        <div class="aud-desc">Responsible for production efficiency, cost control, and operational performance. The buyer and champion. Si's peer. Motivated by cost savings, uptime improvement, and reducing dependency on individual knowledge holders.</div>
+        <div class="aud-pain">Pain: "We have 20 years of machine data in our SCADA system that nobody ever looks at. I know there are patterns in there that could prevent our breakdowns — I just don't have the resources to analyse it."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🏭</div>
+        <div class="aud-type">Primary Target · Scale</div>
+        <div class="aud-name">Plant / Factory Manager</div>
+        <div class="aud-desc">Runs day-to-day factory operations. Measured on OEE, waste, and output targets. Directly responsible for the problems FactoryOS solves. Often the champion who brings the ops director in.</div>
+        <div class="aud-pain">Pain: "My best maintenance engineer is retiring next year and he carries 30 years of machine knowledge in his head. I have no idea how I'm going to replace that."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📦</div>
+        <div class="aud-type">Primary Target · Procurement</div>
+        <div class="aud-name">Procurement / Supply Chain Manager</div>
+        <div class="aud-desc">Responsible for materials sourcing, supplier management, and supply chain risk. Under constant pressure to reduce costs without compromising quality or reliability.</div>
+        <div class="aud-pain">Pain: "I'm managing 200 suppliers and I have no systematic way to monitor their financial health. Last year one went into administration with £80k of our materials on order."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">💰</div>
+        <div class="aud-type">Primary Target · Finance</div>
+        <div class="aud-name">CFO / Finance Director</div>
+        <div class="aud-desc">Approves capex. Motivated by hard cost savings, payback periods, and EBITDA improvement. Needs the ROI case made clearly and conservatively — over-promise and they'll push back hard.</div>
+        <div class="aud-pain">Pain: "Our energy costs went up 45% last year and nobody in the business can tell me exactly where it's all going or what we can do about it."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🔧</div>
+        <div class="aud-type">Secondary Target</div>
+        <div class="aud-name">Maintenance Manager</div>
+        <div class="aud-desc">Responsible for keeping machines running. Often under-resourced and reactive. Predictive maintenance is a direct quality-of-life improvement for this person — they go from firefighting to prevention.</div>
+        <div class="aud-pain">Pain: "I spend 80% of my time reacting to breakdowns. I want to prevent them but I don't have time to analyse the data — I'm too busy fixing machines."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🎯</div>
+        <div class="aud-type">Ideal Client Profile</div>
+        <div class="aud-name">Mid-Market Manufacturer</div>
+        <div class="aud-desc">£10M–£500M revenue. 50–2,000 employees. Modern ERP (SAP, Epicor, Sage). Multiple production lines. Has data but no intelligence layer. Too large for zero-tech, too small for enterprise AI vendor attention.</div>
+        <div class="aud-pain">The sweet spot: large enough to have meaningful data, small enough that an AI solution delivers transformative impact without competing with a 50-person IT department.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HERO MODULE — THE OPS BRIEF -->
+<section id="hero">
+  <div class="module-card" style="border:2px solid var(--gold);box-shadow:0 0 0 4px rgba(196,130,10,0.08),var(--shadow);">
+    <div class="module-header" style="background:linear-gradient(135deg,#120d02 0%,#1e1503 40%,#0f0a01 100%);">
+      <div class="module-header-glow"></div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(196,130,10,0.2);border:1px solid var(--gold-mid);padding:5px 14px;margin-bottom:16px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--gold-mid);display:inline-block;"></span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-mid);">Flagship Product · The Signature Module</span>
+      </div>
+      <div class="module-name" style="font-size:clamp(40px,6vw,72px);">The <em>Ops Brief</em></div>
+      <div class="module-tagline" style="font-size:15px;max-width:680px;color:rgba(240,237,230,0.65);">The daily intelligence briefing every operations director wants before their 8am shift handover. Factory health score, overnight anomalies, today's risk register, cost leakage report, production performance vs plan, and market intelligence — delivered in 90 seconds. The product FactoryOS becomes synonymous with.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">8am</div><div class="mh-stat-label">Daily delivery — before the shift handover meeting</div></div>
+        <div><div class="mh-stat-val">~£250</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">90 secs</div><div class="mh-stat-label">Target read time every morning</div></div>
+      </div>
+    </div>
+
+    <div style="background:rgba(196,130,10,0.05);border-bottom:1px solid var(--gold-mid);padding:20px 32px;">
+      <div class="mc-label" style="margin-bottom:8px;color:var(--gold);">Why This Is The Flagship</div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.7;max-width:900px;">Si's 30 years as an Operations Director gives him an immediate empathetic in: <strong style="color:var(--ink);">every ops director wishes they had an intelligence officer who briefed them before the shift handover meeting.</strong> Someone who read the night shift data, checked the machine health logs, looked at cost leakage, and told them what matters before the day kicks off. The Ops Brief is that person. It doesn't replace the ops director — it makes them look like the sharpest person in every room they walk into. It's also the perfect audit deliverable: Si can generate a sample Ops Brief using the client's own data during the audit day itself, which closes contracts more reliably than any slide deck.</p>
+    </div>
+
+    <div class="module-body" style="grid-template-columns:1fr 1fr;">
+      <div class="module-col">
+        <div class="mc-label">The 6 Daily Deliverables</div>
+        <ul class="feature-list">
+          <li><strong>Factory Health Score Overnight</strong> — what happened on the night shift. Any machine anomaly readings, any quality flags triggered by the vision system, any energy spikes outside normal parameters. A single score (0–100) with a plain-English summary of what drove it. Takes 10 seconds to read. Replaces a 40-page shift report nobody reads.</li>
+          <li><strong>Today's Risk Register — Top 3</strong> — the three things most likely to cause a problem today. Machine with elevated vibration that's trending toward a maintenance alert. Supplier delivery running 2 days late that threatens tomorrow's production run. Operator on their 5th consecutive shift approaching WTR overtime limits. Ranked by financial impact if the risk materialises.</li>
+          <li><strong>Cost Leakage Report — This Week</strong> — a weekly rolling view of where money is leaving the factory that shouldn't be. Energy waste by machine vs baseline. Procurement prices above current market rate. Overtime patterns that suggest scheduling inefficiency. Scrap rate by production line vs target. Every item has a £ figure next to it. Nothing abstract.</li>
+          <li><strong>Production Performance vs Plan</strong> — how yesterday tracked against the production schedule. Where the gaps were, what caused them, and what today needs to look like to stay on track for the week's output commitments. Customer delivery risk flags if any orders are threatened.</li>
+          <li><strong>Market Intelligence for Ops</strong> — commodity price movements relevant to the client's key materials (steel, copper, plastics, packaging — configured per client). Any relevant regulatory or standards changes. Regional skills market movements. Keeps the ops director commercially aware without them having to go looking.</li>
+          <li><strong>One Improvement Opportunity</strong> — AI-identified highest-impact operational improvement available right now. Could be a load-shift scheduling change that saves £800 this week. A procurement substitution that saves £2,000 per month. A production sequencing change that recovers 2 OEE percentage points. One specific, actionable recommendation per day.</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data aggregation</span><span class="tech-val">Make.com or n8n orchestrates nightly data pull from all active FactoryOS modules — machine health, production data, energy readings, inventory levels, procurement prices. All land in Neon DB by 6am.</span></div>
+        <div class="tech-row"><span class="tech-label">Health score</span><span class="tech-val">Claude builds composite scoring algorithm — weights machine anomalies (40%), quality events (25%), production plan adherence (20%), energy performance (15%). Calibrated per factory type.</span></div>
+        <div class="tech-row"><span class="tech-label">Risk detection</span><span class="tech-val">Claude analyses all module data against configurable risk thresholds. Ranks risks by financial impact of materialisation. Generates plain-English description of each risk and recommended mitigation action.</span></div>
+        <div class="tech-row"><span class="tech-label">Cost leakage</span><span class="tech-val">Claude compares actual vs benchmarked costs across energy, procurement, labour, and quality. Calculates £ value of each variance. Rolling 7-day view updated daily.</span></div>
+        <div class="tech-row"><span class="tech-label">Market intelligence</span><span class="tech-val">Apify scrapes commodity price indices (LME, Platts, ICIS) for configured commodities nightly. Perplexity searches for relevant regulatory and industry news. Claude filters and summarises.</span></div>
+        <div class="tech-row"><span class="tech-label">Delivery</span><span class="tech-val">Beautiful HTML email (designed to read in 90 seconds on a phone) sent via SendGrid at 7am. Also available as a Slack message and web dashboard. Si can show a sample brief during any audit using real client data from their ERP export — the most powerful demo in the FactoryOS arsenal.</span></div>
+        <div class="tech-row"><span class="tech-label">Build dependency</span><span class="tech-val">The Ops Brief gets richer as more FactoryOS modules are deployed. It works with just Module 01 and 02 (ERP data only) but becomes genuinely transformative once machine sensor data (Module 08) is live. Build it early. It improves automatically as the platform grows.</span></div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Plant Manager</div>
+            <div class="mkt-headline">"What if someone read your entire factory's data overnight and briefed you in 90 seconds before your shift handover meeting?"</div>
+            <div class="mkt-copy">That's The Ops Brief. Every morning at 8am, you know the factory health score from overnight, the three things most likely to cause a problem today, where you're leaking money this week, how yesterday tracked against plan, and one specific thing you can do today to improve performance. All in 90 seconds. No dashboards. No log files. No shift reports nobody reads.</div>
+            <div class="mkt-hook">"Si used to spend his first 90 minutes every morning piecing this picture together from six different systems. The Ops Brief delivers it in the time it takes to walk from the car park to the office."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Audit Demo / Sales Closing Tool</div>
+            <div class="mkt-headline">"During the audit, we'll show you your own factory's Ops Brief using your ERP data. That's not a demo. That's your actual business."</div>
+            <div class="mkt-copy">The most powerful moment in the FactoryOS sales process is the audit day. Si collects the client's ERP export in the morning, builds the demand forecast and cost leakage analysis during lunch, and presents The Ops Brief — using their actual data — in the afternoon meeting. No hypotheticals. No competitor case studies. Their numbers, their risks, their opportunities. Contracts get signed the same week.</div>
+            <div class="mkt-hook">"We've never lost a deal when we've been able to show a client their own Ops Brief on audit day."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">MD / CEO / Board</div>
+            <div class="mkt-headline">"The operations report your board has been asking for — generated automatically every month."</div>
+            <div class="mkt-copy">The Ops Brief has a monthly version too — a board-ready operational performance report compiled automatically from all FactoryOS module data. OEE trajectory, cost savings delivered, risk events detected and avoided, production plan adherence. The report boards have always wanted but operations teams have never had time to write properly.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Retention / Stickiness</div>
+            <div class="mkt-headline">"Within 3 weeks, the 8am Ops Brief becomes the first thing the ops director opens every morning."</div>
+            <div class="mkt-copy">Daily habits in professional contexts are the most powerful retention mechanism in software. The Ops Brief is specifically designed to be read on the commute — formatted for a phone screen, 90 seconds maximum, delivered at exactly the right time. Once it's part of the morning routine, the idea of not having it feels like removing a team member. Cancellation rates for Ops Brief subscribers are projected to be 40–60% lower than for non-subscribers.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Can be demoed live on audit day using client's own ERP data — closes deals</li><li>Creates a daily habit — highest engagement of any FactoryOS module</li><li>Works with minimal data (just ERP exports) and improves as more modules go live</li><li>Si's credibility as a 30-year ops director makes the pitch completely authentic</li><li>No competing product exists in mid-market manufacturing</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Quality of the brief depends directly on quality of underlying module data</li><li>Early deployments with only ERP data are less impressive than full-platform deployments</li><li>Commodity price coverage needs to be configured per client (different materials)</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>WhatsApp delivery option — many ops directors would prefer a WhatsApp message to email</li><li>Voice version — 90-second audio brief generated by ElevenLabs for hands-free commute listening</li><li>Multi-plant version for manufacturers with multiple sites — one brief, all facilities</li><li>Industry benchmark comparison — "Your OEE is 12 points below the FactoryOS network average"</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>ERP vendors building their own morning intelligence digests</li><li>Quality must stay high — a brief that cries wolf or misses important events quickly loses trust</li><li>Commodity data sources may change API structure or pricing</li></ul></div>
+        </div>
+      </div>
+
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--gold);">Pricing</div>
+        <div class="price-row"><span class="price-tier">The Ops Brief (standalone)</span><span class="price-val" style="color:var(--gold);">£800/mo</span></div>
+        <div class="price-row"><span class="price-tier">Included in all FactoryOS bundles</span><span class="price-val" style="color:var(--gold);">Included</span></div>
+        <div class="price-row"><span class="price-tier">Audit deliverable (sample brief)</span><span class="price-val" style="color:var(--gold);">Part of audit fee</span></div>
+        <div class="price-row"><span class="price-tier">Multi-site version</span><span class="price-val" style="color:var(--gold);">£1,500/mo</span></div>
+        <div style="margin-top:16px;padding:12px 14px;background:rgba(196,130,10,0.06);border-left:2px solid var(--gold-mid);">
+          <p style="font-size:12px;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);">Positioning note:</strong> The Ops Brief should be the opening 5 minutes of every FactoryOS audit presentation. Generate it from their own data. Show it before explaining anything else. Let the brief sell the platform.</p>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--green);">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Daily email open rate (target: 75%+ — ops directors are disciplined readers)</li>
+          <li>Risk events flagged that materialised vs didn't (brief accuracy score)</li>
+          <li>Cost opportunities identified vs actioned per month</li>
+          <li>Audit-to-contract conversion rate when Ops Brief demoed live (track this obsessively)</li>
+          <li>Cancellation rate — Ops Brief subscribers vs non-subscribers</li>
+          <li>Time saved in morning reporting (self-reported at 3 and 6 months)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 01 -->
+<section id="m01">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 01 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">Demand <em>Forecasting Engine</em></div>
+      <div class="module-tagline">Generates accurate 30, 60, and 90-day demand forecasts from existing ERP order history — no sensor integration, no hardware, no live system connection required. Works from a spreadsheet export. The module Si can demo during the audit itself.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">~£200</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£80–150</div><div class="mh-stat-label">Monthly running cost</div></div>
+        <div><div class="mh-stat-val">Audit day</div><div class="mh-stat-label">Can demo from client's own data</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Historical demand analysis</strong> — ingests 24+ months of order/shipment history from ERP export, identifies seasonal patterns, trends, and cyclical demand shifts</li>
+          <li><strong>30/60/90-day rolling forecast</strong> — generates forward-looking demand predictions by product family, SKU, or customer segment with confidence intervals</li>
+          <li><strong>External signal integration</strong> — layers in economic indicators, commodity price movements, and industry indices to enhance forecast accuracy beyond historical patterns</li>
+          <li><strong>Customer demand signals</strong> — if client shares customer order forecasts, integrates these as leading indicators to sharpen near-term predictions</li>
+          <li><strong>Forecast vs actual tracking</strong> — compares each forecast to eventual actual demand, calculates MAPE (accuracy score), and improves model parameters over time</li>
+          <li><strong>Production planning output</strong> — translates demand forecast directly into recommended production volumes, sequencing suggestions, and raw material requirements</li>
+          <li><strong>Exception alerting</strong> — flags when actual demand diverges significantly from forecast, triggering production and procurement review</li>
+          <li><strong>Weekly forecast briefing</strong> — auto-generated email summary of the week's demand outlook with key changes highlighted, sent to production planning team</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val"><strong>CSV export from any ERP</strong> — order history, shipment records, customer data. Si collects this during the audit. No system integration needed to start.</span></div>
+        <div class="tech-row"><span class="tech-label">Forecasting model</span><span class="tech-val">Claude builds <strong>Facebook Prophet</strong> time-series model (Python). Handles seasonality, trend, and external regressors natively. Generates confidence intervals automatically.</span></div>
+        <div class="tech-row"><span class="tech-label">Data storage</span><span class="tech-val">Neon DB (serverless Postgres) stores historical data and forecast outputs. Refreshed monthly with new actuals from updated CSV.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React app on Vercel — 90-day forecast chart with confidence bands, product-level drill-down, forecast vs actual comparison, production plan output table.</span></div>
+        <div class="tech-row"><span class="tech-label">Reporting</span><span class="tech-val">Claude generates weekly forecast summary email. Make.com sends automatically every Monday. No manual input required.</span></div>
+        <div class="tech-row"><span class="tech-label">Audit demo</span><span class="tech-val"><strong>Si's secret weapon:</strong> take the client's ERP export on audit day, run the model during lunch, present a live forecast of their own business that afternoon. Closes deals on the spot.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Production Planning</div>
+            <div class="mkt-headline">"Stop planning production based on last month's numbers. See 90 days ahead with your own data."</div>
+            <div class="mkt-copy">Most manufacturers plan production reactively — responding to demand as it arrives. Our forecasting engine analyses your ERP history and tells you what demand will look like in 30, 60, and 90 days. Better planning. Less overstock. Fewer emergency runs. Every decision made earlier and smarter.</div>
+            <div class="mkt-hook">"We showed one client a forecast of their own business during our first meeting — using their own data. They asked us to start the following week."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">CFO / Finance Focus</div>
+            <div class="mkt-headline">"Inventory overstock costs UK manufacturers £8.1B per year. Most of it is preventable with better forecasting."</div>
+            <div class="mkt-copy">Inaccurate demand forecasting leads to overproduction, overstock, mark-downs, and cash tied up in materials that don't move. Our AI forecasting reduces demand error by 30–60%, directly improving working capital efficiency and reducing write-off risk.</div>
+            <div class="mkt-hook">"A 30% improvement in forecast accuracy on a £5M inventory typically frees £400–800k of working capital."</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Works from spreadsheet — zero integration needed</li><li>Demo-able on audit day using client's own data</li><li>Immediate, measurable impact on planning efficiency</li><li>Improves automatically as more data accumulates</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Needs 12+ months of historical data for reliable output</li><li>External demand shocks (COVID, geopolitical) break historical patterns</li><li>Forecast accuracy varies by product complexity and demand volatility</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add real-time ERP sync once relationship established</li><li>Integrate customer portals for demand signal data</li><li>Cross-client industry benchmarking of forecast accuracy</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>ERP vendors adding native forecasting features</li><li>Market volatility reducing forecast reliability (undermines confidence)</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Post-audit retainer</span><span class="price-val">£1,500–3,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Included in FactoryOS bundles</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Audit deliverable (standalone)</span><span class="price-val">£2,500–5,000</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Mean Absolute Percentage Error (MAPE) — forecast accuracy score</li>
+          <li>Reduction in inventory overstock value (£)</li>
+          <li>Stockout incidents before vs after deployment</li>
+          <li>Production plan adherence rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 02 -->
+<section id="m02">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 02 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">AI Inventory <em>Optimiser</em></div>
+      <div class="module-tagline">Calculates the optimal stock level for every SKU in the business — eliminating overstock that ties up cash and understocks that halt production — using demand forecast data to set dynamic reorder points rather than static rules.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">10–20%</div><div class="mh-stat-label">Reduction in inventory holding costs</div></div>
+        <div><div class="mh-stat-val">~£250</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£80–150</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Dynamic safety stock calculation</strong> — replaces static safety stock rules with AI-calculated levels that account for demand variability and supplier lead time uncertainty per SKU</li>
+          <li><strong>Reorder point optimisation</strong> — calculates optimal reorder point for each SKU based on demand forecast, supplier lead times, and target service level</li>
+          <li><strong>Overstock identification</strong> — flags SKUs where current stock significantly exceeds optimal level, calculating the cash tied up in excess stock</li>
+          <li><strong>Stockout risk scoring</strong> — risk-scores every SKU by probability of stockout in next 30/60/90 days given current stock and forecast demand</li>
+          <li><strong>Automated reorder alerts</strong> — triggers purchase requisition alerts when stock approaches reorder point, with suggested order quantity and recommended supplier</li>
+          <li><strong>ABC/XYZ classification</strong> — automatically classifies all SKUs by value and demand variability, enabling differentiated management strategies</li>
+          <li><strong>Inventory health dashboard</strong> — visual overview of portfolio health: overstocked, optimal, understocked, and at-risk SKUs with financial values</li>
+          <li><strong>Write-off risk prediction</strong> — identifies slow-moving stock at risk of obsolescence before it becomes a write-off problem</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">ERP inventory export — current stock levels, reorder points, lead times, supplier codes, historical consumption. Claude processes CSV daily.</span></div>
+        <div class="tech-row"><span class="tech-label">Optimisation model</span><span class="tech-val">Claude builds EOQ (Economic Order Quantity) model enhanced with demand forecast data from Module 01. Calculates optimal order quantity and reorder point per SKU.</span></div>
+        <div class="tech-row"><span class="tech-label">Alert system</span><span class="tech-val">n8n monitors stock levels daily against optimised reorder points. Triggers Slack/email alert when any SKU crosses threshold with recommended action.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React dashboard — RAG (Red/Amber/Green) status per SKU, overstock cash value, stockout risk chart, ABC/XYZ matrix visualisation. Deployed on Vercel.</span></div>
+        <div class="tech-row"><span class="tech-label">Integration</span><span class="tech-val">Works from daily CSV export initially. Can be upgraded to live ERP API sync once relationship established and client IT team engaged.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">CFO / Working Capital</div>
+            <div class="mkt-headline">"How much cash does your business have tied up in stock you don't need right now?"</div>
+            <div class="mkt-copy">The average mid-market manufacturer carries 15–25% more inventory than necessary, based on outdated static reorder rules. Our AI calculates the true optimal stock level for every SKU using forward demand data — releasing working capital without increasing stockout risk.</div>
+            <div class="mkt-hook">"One client identified £1.2M of excess stock in their first month. They freed up £800k of working capital within 6 months of optimised ordering."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Production Planning</div>
+            <div class="mkt-headline">"Stop running out of the parts that halt production. Stop over-ordering the parts that fill your warehouse."</div>
+            <div class="mkt-copy">Stockouts cost production time. Overstock costs warehouse space and cash. Our Inventory Optimiser finds the exact right level for every single item in your system — automatically — and alerts you when it's time to order, with the right quantity pre-calculated.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Immediate, measurable cash impact</li><li>Works from ERP export — no live integration needed</li><li>Most powerful when paired with Demand Forecasting Module</li><li>Every manufacturer has this problem</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Effectiveness depends on ERP data quality (many have poor lead time data)</li><li>100+ SKUs needed for meaningful optimisation impact</li><li>Doesn't handle make-to-order businesses well (limited demand history)</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Direct integration with supplier portals for automatic PO generation</li><li>Consignment stock optimisation for high-value components</li><li>Multi-site inventory balancing for manufacturers with multiple warehouses</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>ERP systems (SAP, Oracle) adding native AI inventory optimisation</li><li>Supply chain disruptions making historical lead times unreliable</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Post-audit retainer</span><span class="price-val">£1,500–3,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Combined with Demand Forecasting</span><span class="price-val">£2,500–4,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">Working capital ROI share option</span><span class="price-val">5–10% of savings</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Total inventory value reduction (£ and %)</li>
+          <li>Stockout incidents per month</li>
+          <li>Inventory turns improvement</li>
+          <li>Working capital released (£)</li>
+          <li>Write-off rate reduction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 03 -->
+<section id="m03">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 03 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">AI Procurement <em>Intelligence</em></div>
+      <div class="module-tagline">Monitors supplier pricing, market rates, and alternative sourcing options continuously — identifying where the business is overpaying, automating purchase order generation, and giving procurement teams the market intelligence to negotiate from a position of strength.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">10–20%</div><div class="mh-stat-label">Reduction in procurement costs</div></div>
+        <div><div class="mh-stat-val">~£400</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£120–200</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Spend baseline analysis</strong> — analyses ERP purchase history to establish actual spend per commodity, per supplier, and per category across the business</li>
+          <li><strong>Market price benchmarking</strong> — Apify scrapes supplier pricing, distributor catalogues, and commodity market data weekly to benchmark client's pricing against market</li>
+          <li><strong>Overpayment identification</strong> — flags every category where client is paying above market rate, with estimated annual overspend and recommended action</li>
+          <li><strong>Alternative supplier identification</strong> — surfaces qualified alternative suppliers for categories where primary supplier pricing is above market</li>
+          <li><strong>Automated PO draft generation</strong> — when stock hits reorder point, AI drafts purchase order with optimal quantity, suggested supplier, and competitive pricing reference</li>
+          <li><strong>Negotiation intelligence pack</strong> — before supplier contract renewals, generates a briefing pack with market pricing data, supplier alternatives, and recommended negotiation targets</li>
+          <li><strong>Commodity price alert system</strong> — monitors key commodity prices (steel, copper, plastics, etc.) and alerts when significant moves create buying or hedging opportunities</li>
+          <li><strong>Procurement dashboard</strong> — spend by category, supplier concentration risk, price trend charts, and monthly savings delivered</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">ERP PO history export — supplier, commodity, quantity, price paid, delivery date. Claude processes and categorises spend by commodity code.</span></div>
+        <div class="tech-row"><span class="tech-label">Market data</span><span class="tech-val"><strong>Apify scrapers</strong> — custom actors scrape distributor pricing, competitor RFQ responses (publicly available tenders), commodity exchange data (LME, etc.).</span></div>
+        <div class="tech-row"><span class="tech-label">Alternative suppliers</span><span class="tech-val">Perplexity + Claude research pipeline identifies and qualifies alternative suppliers per category. Companies House API verifies financial stability.</span></div>
+        <div class="tech-row"><span class="tech-label">PO automation</span><span class="tech-val">n8n workflow — detects reorder trigger from Inventory module → Claude drafts PO with market pricing data appended → procurement team reviews and approves in dashboard.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React procurement intelligence dashboard — spend treemap, price vs market comparison charts, PO approval queue, commodity price feeds, monthly savings summary.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Procurement Manager / Director</div>
+            <div class="mkt-headline">"Your suppliers know what the market rate is. Do you?"</div>
+            <div class="mkt-copy">Procurement teams often negotiate in the dark — they know what they've paid historically, but not what the market actually supports today. Our AI monitors market pricing continuously, so every negotiation, every contract renewal, and every new PO is made with current market intelligence rather than historical habit.</div>
+            <div class="mkt-hook">"One client discovered they were paying 23% above market rate on a category representing £800k of annual spend. The first renegotiation saved them £180k."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">CFO / Cost Reduction</div>
+            <div class="mkt-headline">"Procurement is the fastest way to improve EBITDA without cutting headcount or raising prices."</div>
+            <div class="mkt-copy">A 10% reduction in materials procurement cost on £5M of annual materials spend = £500k straight to the bottom line. Our AI finds that 10% by identifying where you're overpaying, who you should be buying from instead, and arming your team with the data to negotiate it.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Direct EBITDA impact — savings go straight to bottom line</li><li>High urgency post-inflation — procurement costs rose 20–40% 2021–2023; many contracts haven't been renegotiated</li><li>Works from ERP export — no live integration needed initially</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Apify scrapers for industrial pricing require more maintenance than consumer retail scraping</li><li>Market pricing for specialised components is not always publicly available</li><li>Savings require client action (negotiation) — AI identifies the opportunity, humans must execute it</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Collective purchasing aggregation across multiple FactoryOS clients — group buying power</li><li>Integration with e-procurement platforms (Jaggaer, Coupa) for direct PO submission</li><li>Sustainability scoring of suppliers — carbon footprint as procurement criterion</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Suppliers restricting pricing visibility online as AI scraping becomes common</li><li>Procurement teams protecting their relationships — may resist AI-generated alternative supplier recommendations</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Post-audit retainer</span><span class="price-val">£2,000–4,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Performance option</span><span class="price-val">15% of documented savings</span></div>
+        <div class="price-row"><span class="price-tier">Combined Stage 1 bundle (all 3)</span><span class="price-val">£5,000–8,000/mo</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Monthly procurement cost vs market benchmark (£ and %)</li>
+          <li>Savings identified vs savings actioned</li>
+          <li>Supplier concentration risk score</li>
+          <li>PO automation rate (% of POs auto-drafted)</li>
+          <li>Price variance from market per category</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 04 -->
+<section id="m04">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 04 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Supplier <em>Intelligence Platform</em></div>
+      <div class="module-tagline">Continuously monitors the financial health, delivery performance, geopolitical exposure, and risk signals of every supplier in the business — giving procurement teams early warning of vulnerabilities before they become supply chain crises.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">2–8 weeks</div><div class="mh-stat-label">Advance warning of supplier disruptions</div></div>
+        <div><div class="mh-stat-val">~£350</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–5 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£100–180</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Financial health monitoring</strong> — Companies House API tracks every supplier's accounts, filing history, director changes, and credit events. Flags deteriorating financial position weeks before it becomes public knowledge</li>
+          <li><strong>Delivery performance tracking</strong> — analyses ERP delivery history per supplier — on-time rate, order fill rate, quality rejection rate — and trends these over time</li>
+          <li><strong>News and risk monitoring</strong> — Apify monitors news mentions, industry publications, and social signals for each supplier, flagging strikes, fires, regulatory issues, or financial press</li>
+          <li><strong>Geopolitical exposure scoring</strong> — maps each supplier's country of origin and assesses exposure to trade disputes, export restrictions, and regional instability</li>
+          <li><strong>RAG risk dashboard</strong> — Red/Amber/Green rating for every supplier in real time, with drill-down into specific risk factors driving the rating</li>
+          <li><strong>Concentration risk analysis</strong> — identifies where the business is dangerously dependent on a single supplier for critical components</li>
+          <li><strong>Alert system</strong> — immediate notification when any supplier moves to Red status or a significant risk event is detected</li>
+          <li><strong>Quarterly supplier scorecard</strong> — auto-generated performance report per supplier for use in review meetings and contract renegotiations</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">Supplier list from ERP — company name, registration number, country, spend category, annual spend. One-time import to Supabase.</span></div>
+        <div class="tech-row"><span class="tech-label">Financial monitoring</span><span class="tech-val"><strong>Companies House API (free)</strong> — monitors all UK-registered suppliers. Flags accounts overdue, director resignations, CCJs. Non-UK suppliers monitored via Apify scraping of public registries.</span></div>
+        <div class="tech-row"><span class="tech-label">News monitoring</span><span class="tech-val">Apify scrapes Google News, industry publications, and relevant social channels for supplier name mentions weekly. Claude analyses sentiment and flags risk signals.</span></div>
+        <div class="tech-row"><span class="tech-label">Risk scoring</span><span class="tech-val">Claude builds composite risk score combining financial, delivery, news, and geopolitical signals. Weights configurable by client based on their risk tolerance.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React supplier intelligence dashboard — risk map, RAG table with sort/filter, supplier profile pages, alert feed, concentration risk heat map.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Procurement / Supply Chain</div>
+            <div class="mkt-headline">"You have 150 suppliers. Which 3 are about to cause you a serious problem?"</div>
+            <div class="mkt-copy">Post-COVID, supply chain risk has become a board-level agenda item. But most procurement teams still find out about supplier problems when it's too late — when the delivery doesn't arrive. Our Supplier Intelligence Platform monitors every supplier continuously and tells you weeks in advance when something is wrong.</div>
+            <div class="mkt-hook">"One client received an alert about a key supplier's deteriorating financial position 6 weeks before they went into administration. They had sourced an alternative and pre-ordered stock before the crisis hit."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Board / Executive Risk</div>
+            <div class="mkt-headline">"Your supply chain is your biggest unmonitored risk. We fix that."</div>
+            <div class="mkt-copy">Supply chain failure is now the number one operational risk for most manufacturers. Boards are asking for supply chain risk reports that most teams can't produce without days of manual work. Our platform generates them automatically, every week, for every supplier in your network.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Post-COVID supply chain anxiety makes this a boardroom-level priority</li><li>Companies House API is free — low ongoing data cost</li><li>Highly automated — runs with minimal ongoing input</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Non-UK supplier monitoring is less comprehensive than Companies House data</li><li>News monitoring for smaller suppliers has limited public data</li><li>Risk scoring is probabilistic — can't guarantee it catches every issue</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Add credit score data (Creditsafe) for deeper financial risk assessment</li><li>ESG/sustainability scoring of suppliers for net-zero reporting</li><li>Industry-wide supplier benchmark database across all FactoryOS clients</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Companies House data quality (directors sometimes slow to file)</li><li>False positives creating "boy who cried wolf" dynamic if alert system not well calibrated</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 100 suppliers</span><span class="price-val">£1,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">100–500 suppliers</span><span class="price-val">£2,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">500+ suppliers</span><span class="price-val">Custom</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Risk events detected in advance of disruption</li>
+          <li>Supplier Red alerts actioned within 48 hours</li>
+          <li>Supply chain disruptions prevented (tracked)</li>
+          <li>Concentration risk score improvement over time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 05 -->
+<section id="m05">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 05 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">AI Energy <em>Optimiser</em></div>
+      <div class="module-tagline">Monitors energy consumption across the entire facility, identifies inefficiencies and waste, recommends load-shifting to off-peak tariff windows, and generates the carbon and sustainability reporting now required by UK regulation and supply chain customers.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">5–15%</div><div class="mh-stat-label">Reduction in energy costs</div></div>
+        <div><div class="mh-stat-val">~£400</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£100–180</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Half-hourly consumption monitoring</strong> — connects to smart meter data (available from UK energy suppliers via API) to track consumption at 30-minute intervals across the site</li>
+          <li><strong>Consumption breakdown</strong> — where sub-metering exists, breaks consumption down by production area, machine, or process — identifying the biggest energy users</li>
+          <li><strong>Baseline and deviation alerting</strong> — establishes normal consumption profile for each time period; alerts when consumption deviates significantly (indicating waste, equipment fault, or inefficiency)</li>
+          <li><strong>Load-shifting recommendations</strong> — identifies high-consumption processes that can be shifted to off-peak tariff windows (typically 11pm–7am) without disrupting production</li>
+          <li><strong>Cost optimisation modelling</strong> — models different production scheduling scenarios to show energy cost implications of each, enabling energy-aware planning</li>
+          <li><strong>Carbon footprint tracking</strong> — calculates Scope 2 carbon emissions from electricity consumption using grid carbon intensity data. Auto-generates SECR reporting.</li>
+          <li><strong>Renewable energy optimisation</strong> — for facilities with solar or wind generation, optimises own-use vs export decisions based on real-time prices</li>
+          <li><strong>Monthly energy intelligence report</strong> — auto-generated executive summary of energy performance, savings achieved, and recommendations for the following month</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data source</span><span class="tech-val"><strong>Smart meter API (free from UK energy suppliers)</strong> — half-hourly consumption data available via SMETS2 meters. Most modern commercial meters have this. Claude integrates the API.</span></div>
+        <div class="tech-row"><span class="tech-label">Carbon data</span><span class="tech-val">National Grid ESO publishes real-time grid carbon intensity data via free API. Claude integrates for automatic carbon footprint calculation.</span></div>
+        <div class="tech-row"><span class="tech-label">Analysis</span><span class="tech-val">Claude builds consumption pattern analysis — establishes baselines, detects anomalies, calculates load-shift savings potential for each schedulable process.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React energy dashboard — consumption timeline, cost breakdown, carbon trajectory chart, load-shift opportunity calculator, SECR report generator.</span></div>
+        <div class="tech-row"><span class="tech-label">Reporting</span><span class="tech-val">Auto-generates SECR (Streamlined Energy and Carbon Reporting) report — now mandatory for large UK companies — saving significant compliance time.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">CFO / Energy Cost</div>
+            <div class="mkt-headline">"UK industrial energy costs doubled between 2021 and 2023. Most manufacturers still don't know where the waste is."</div>
+            <div class="mkt-copy">Energy is now one of the top 3 cost lines for most manufacturers. Our AI Energy Optimiser shows you exactly where every kilowatt is going, identifies waste, and finds the load-shifting opportunities that can reduce your bill by 5–15% without any capital investment or production disruption.</div>
+            <div class="mkt-hook">"On a £500k annual energy bill, a 10% saving is £50,000/year. At £1,500/month, this module pays for itself 2.8x over."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Sustainability / ESG Compliance</div>
+            <div class="mkt-headline">"Your customers are asking for your carbon data. SECR says you have to report it anyway. We make both automatic."</div>
+            <div class="mkt-copy">UK SECR reporting is mandatory for large companies and increasingly required by procurement teams of their suppliers. Our Energy Optimiser calculates your carbon footprint automatically from consumption data and generates SECR-compliant reports without your team spending a day on a spreadsheet.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Smart meter data is free — near-zero data cost</li><li>Post-energy-crisis urgency — every manufacturer is looking to cut energy costs</li><li>SECR compliance creates non-discretionary demand for the reporting element</li><li>Carbon data is a growing supply chain requirement</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Sub-metering needed for granular machine-level insights — older facilities may lack this</li><li>Load-shifting savings depend on flexible production scheduling — batch manufacturers have more opportunity than continuous process</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>UK Government energy efficiency grants — can fund the module deployment</li><li>Power Purchase Agreement optimisation for facilities with renewable contracts</li><li>ISO 50001 energy management certification support</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Energy prices normalising removes urgency (but efficiency case remains)</li><li>Smart meter API availability varies — some older commercial meters not SMETS2 compatible</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Single site retainer</span><span class="price-val">£1,500–2,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">Performance option</span><span class="price-val">20% of energy savings</span></div>
+        <div class="price-row"><span class="price-tier">SECR report (standalone)</span><span class="price-val">£800/report</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Monthly energy cost vs baseline (£ and %)</li>
+          <li>kWh per unit of output (energy intensity)</li>
+          <li>Load-shift savings achieved</li>
+          <li>Carbon footprint (tCO2e) vs previous year</li>
+          <li>SECR compliance status</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 06 -->
+<section id="m06">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 06 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Workforce <em>Intelligence Platform</em></div>
+      <div class="module-tagline">Optimises shift scheduling against production demand, maps the skills available in the workforce against requirements, predicts absenteeism patterns, and ensures the right people are always in the right place — without the hours of manual rota building.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">10–15%</div><div class="mh-stat-label">Labour cost reduction potential</div></div>
+        <div><div class="mh-stat-val">~£380</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£90–160</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Demand-driven shift generation</strong> — inputs production plan → calculates headcount required per shift, per skill, per area → generates optimised rota that meets demand without over-staffing</li>
+          <li><strong>Skills matrix tracking</strong> — maps every employee's certified skills, qualifications, and competencies against the skills required for each production role and machine type</li>
+          <li><strong>Skills gap alerting</strong> — flags when planned production requires skills that are not available in the scheduled workforce — before the shift, not during it</li>
+          <li><strong>Absenteeism prediction</strong> — machine learning model predicts absenteeism probability by day of week, season, team, and individual history — enabling proactive cover planning</li>
+          <li><strong>Agency staff optimisation</strong> — when cover is needed, AI recommends optimal agency call-out sequence based on skill match, cost, and availability history</li>
+          <li><strong>Working Time Regulations compliance</strong> — all generated rotas automatically comply with WTR requirements (48-hour week, rest period rules, night shift limits)</li>
+          <li><strong>Training needs identification</strong> — identifies individual and team skill gaps and generates prioritised training plans to address them</li>
+          <li><strong>Labour cost modelling</strong> — models different shift configurations against labour cost, showing the financial impact of scheduling decisions before they're made</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">HR system export (Sage HR, Fourth, or spreadsheet rotas) — employee records, skills certifications, contract types, absence history. One-time migration to Supabase.</span></div>
+        <div class="tech-row"><span class="tech-label">Skills framework</span><span class="tech-val">Claude helps build competency framework from client's job descriptions. Stored in Supabase with skill-to-role mapping matrix.</span></div>
+        <div class="tech-row"><span class="tech-label">Scheduling algorithm</span><span class="tech-val">Claude builds constraint-based optimisation algorithm in Python — balances production demand, skill requirements, WTR compliance, and cost constraints simultaneously.</span></div>
+        <div class="tech-row"><span class="tech-label">Absenteeism model</span><span class="tech-val">Logistic regression model trained on historical absence data — predicts absence probability by person, day, and context. Improves with 6+ months of data.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React workforce dashboard — rota builder, skills matrix heat map, absence prediction calendar, training needs tracker, labour cost modeller.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">HR / Operations</div>
+            <div class="mkt-headline">"Your rota manager spends 6 hours every week building a schedule. Our AI does it in 6 minutes."</div>
+            <div class="mkt-copy">Manual rota building is one of the most time-consuming and error-prone tasks in manufacturing. Our AI generates a WTR-compliant, skill-matched, cost-optimised rota from your production plan automatically — then alerts you to any coverage gaps before they become problems on the shop floor.</div>
+            <div class="mkt-hook">"One client had three production stops in a month because they didn't have the right certified operator in the right place. Our skills gap alerting eliminated all three within the first quarter."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Managing Director / Labour Cost</div>
+            <div class="mkt-headline">"Labour is your biggest cost. You're probably over-staffing 3 shifts a week and under-staffing 2 others."</div>
+            <div class="mkt-copy">Without demand-driven scheduling, manufacturers over-staff quiet periods and scramble during busy ones. Our AI matches headcount to production demand — reducing unnecessary overtime and agency costs during quiet periods while ensuring coverage where it actually matters.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Labour is typically 30–40% of manufacturing cost — any optimisation has massive impact</li><li>WTR compliance automation removes significant legal risk</li><li>Skills gap prevention is a safety and quality issue — high urgency</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Skills matrix data must be maintained — requires ongoing HR input</li><li>Unionised workforces may have scheduling constraints that override AI recommendations</li><li>Absenteeism model needs 6+ months of data before meaningful predictions</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Integrate with payroll systems for automated timesheet generation from approved rotas</li><li>Add employee self-service portal for shift preferences and swap requests</li><li>Multi-site workforce optimisation for manufacturers with multiple facilities</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Workforce management software (Deputy, Rotacloud) adding manufacturing-specific features</li><li>IR35 and agency worker regulation changes affecting the agency optimisation element</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 100 employees</span><span class="price-val">£1,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">100–500 employees</span><span class="price-val">£2,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">500+ employees</span><span class="price-val">Custom</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Agency spend per month (should reduce)</li>
+          <li>Overtime hours vs baseline</li>
+          <li>Production stops caused by skills gaps</li>
+          <li>Rota build time (hours saved)</li>
+          <li>WTR compliance violations (target: zero)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 07 -->
+<section id="m07">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 07 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">AI Production <em>Scheduler</em></div>
+      <div class="module-tagline">Generates optimised production schedules from demand forecasts, machine availability, material stock, and workforce capacity — replacing static weekly plans with dynamic, real-time sequencing that adapts automatically when circumstances change.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">15–25%</div><div class="mh-stat-label">Improvement in OEE (Overall Equipment Effectiveness)</div></div>
+        <div><div class="mh-stat-val">£800–1.5k</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">6–8 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£180–300</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Constraint-based scheduling</strong> — generates production schedule considering machine capacities, tooling changeover times, material availability, workforce skills, and customer delivery commitments simultaneously</li>
+          <li><strong>Dynamic rescheduling</strong> — when a machine breaks down, a material is delayed, or an urgent order arrives, AI regenerates the optimal schedule in minutes rather than hours of manual re-planning</li>
+          <li><strong>Scenario modelling</strong> — "what if" analysis — shows impact of accepting a new order, losing a machine, or changing a material spec on the production plan and delivery commitments</li>
+          <li><strong>OEE improvement identification</strong> — analyses production data to identify sources of lost OEE (availability losses, performance losses, quality losses) and prioritises highest-impact improvement actions</li>
+          <li><strong>Changeover optimisation</strong> — sequences production runs to minimise changeover time and cost — particularly valuable for manufacturers with high-SKU product portfolios</li>
+          <li><strong>Gantt visualisation</strong> — interactive production Gantt chart showing all scheduled work across all machines and work centres with drag-and-drop adjustment capability</li>
+          <li><strong>Customer commitment tracking</strong> — highlights which customer orders are at risk of missing due date based on current schedule, enabling proactive customer communication</li>
+          <li><strong>Shift-level production targets</strong> — breaks the weekly production plan into shift-level targets, enabling real-time tracking of output against plan throughout the day</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">ERP data — open sales orders, work orders, BOM (Bill of Materials), routing data, machine capacities. Start with CSV export; upgrade to live API sync after initial deployment.</span></div>
+        <div class="tech-row"><span class="tech-label">Scheduling engine</span><span class="tech-val">Claude builds constraint satisfaction algorithm in Python — finite capacity scheduling with priority rules and bottleneck analysis. Most complex algorithmic build in Stage 2.</span></div>
+        <div class="tech-row"><span class="tech-label">Gantt interface</span><span class="tech-val">React Gantt chart with drag-and-drop — built using react-gantt-chart or custom SVG implementation by Claude. Machine-level and shift-level views.</span></div>
+        <div class="tech-row"><span class="tech-label">Integration</span><span class="tech-val">ERP API integration for live order updates is the upgrade path. Start with daily CSV sync — still delivers 80% of value. Each ERP has different API structure (SAP vs Epicor etc.).</span></div>
+        <div class="tech-row"><span class="tech-label">Complexity note</span><span class="tech-val">Most complex Stage 2 module. Budget for 4–6 Claude debugging sessions during build. Every manufacturer's production environment is different — significant configuration per client.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Production Planning / Operations</div>
+            <div class="mkt-headline">"Your production planner rebuilds the schedule 3 times a week. Our AI does it in real time."</div>
+            <div class="mkt-copy">Every unplanned breakdown, urgent order, or material delay triggers a manual re-planning exercise that takes hours and produces a plan that's already out of date. Our AI reschedules automatically — in minutes — optimising across all constraints simultaneously and telling you which customer commitments are at risk before you need to make a call.</div>
+            <div class="mkt-hook">"OEE improvement from 68% to 82% in 6 months — driven primarily by better scheduling decisions and faster recovery from unplanned events."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">MD / Commercial Focus</div>
+            <div class="mkt-headline">"How many times last quarter did you deliver late because your production plan fell apart mid-week?"</div>
+            <div class="mkt-copy">Late deliveries cost customer relationships. Our Production Scheduler gives you the ability to see — 48 hours in advance — which orders are going to be late, so you can take action before the customer is let down rather than making an embarrassing call afterwards.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>OEE improvement is directly measurable — % point improvements worth £100k–£1M+ per facility</li><li>Customer delivery performance improvement is commercially critical</li><li>Dynamic rescheduling is genuinely transformative vs manual replanning</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Complex to build — every manufacturer's production environment is different</li><li>ERP data quality (routing data, cycle times) varies significantly</li><li>Production planners may resist AI-generated schedules — change management required</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>MES (Manufacturing Execution System) integration for real-time shop floor data</li><li>Customer portal integration — real-time delivery status visible to customers directly</li><li>Multi-plant scheduling optimisation for manufacturers with multiple sites</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Advanced Planning and Scheduling (APS) specialist vendors (Preactor, Siemens Opcenter)</li><li>ERP vendors enhancing built-in scheduling capability with AI</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Single facility</span><span class="price-val">£3,000–6,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Multi-facility</span><span class="price-val">Custom</span></div>
+        <div class="price-row"><span class="price-tier">OEE performance option</span><span class="price-val">% of OEE improvement value</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>OEE % before and after deployment</li>
+          <li>On-time delivery rate to customers</li>
+          <li>Schedule adherence % (plan vs actual)</li>
+          <li>Time to reschedule after unplanned event</li>
+          <li>Changeover time reduction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 08 -->
+<section id="m08">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 08 · <span class="stage-badge s3">Stage 3 — Build When Established</span></div>
+      <div class="module-name">AI Predictive <em>Maintenance Platform</em></div>
+      <div class="module-tagline">Analyses machine sensor data in real time to predict equipment failures days or weeks before they happen — automatically scheduling preventative maintenance at optimal times, eliminating unplanned downtime, and preserving the accumulated knowledge of experienced engineers in a system that never retires.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">50–70%</div><div class="mh-stat-label">Reduction in unplanned downtime</div></div>
+        <div><div class="mh-stat-val">£8k–20k</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">10–14 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£300–600</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Real-time sensor monitoring</strong> — connects to machine PLCs via OPC-UA protocol to stream vibration, temperature, current, pressure, and cycle time data continuously</li>
+          <li><strong>Anomaly detection</strong> — AI models establish normal operating patterns for each machine and flag deviations that historically precede failures — days or weeks before failure occurs</li>
+          <li><strong>Failure prediction with confidence intervals</strong> — predicts which machine is most likely to fail, when, and with what confidence level — enabling prioritised maintenance scheduling</li>
+          <li><strong>Automated maintenance scheduling</strong> — when a failure is predicted, AI automatically drafts a maintenance work order, identifies the earliest optimal maintenance window in the production schedule, and notifies the maintenance team</li>
+          <li><strong>Root cause analysis</strong> — post-failure analysis identifies which sensor patterns preceded the failure, improving future prediction models</li>
+          <li><strong>Knowledge capture</strong> — maintenance engineers document repair actions and observations; AI learns from these to improve pattern recognition and build institutional knowledge that doesn't retire with the engineer</li>
+          <li><strong>Spare parts intelligence</strong> — tracks which spare parts are associated with which failure types, ensuring high-probability failure parts are always in stock</li>
+          <li><strong>Maintenance dashboard</strong> — real-time machine health status, predicted failure queue, maintenance work order tracker, downtime cost calculator</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Hardware layer</span><span class="tech-val"><strong>Industrial automation specialist required — £5k–£15k.</strong> Connects factory PLCs to OPC-UA gateway. Older machines may need additional IoT gateway hardware (£500–2k per machine). This is the only external specialist cost in FactoryOS.</span></div>
+        <div class="tech-row"><span class="tech-label">Data pipeline</span><span class="tech-val">OPC-UA gateway streams sensor data to cloud. Claude builds ingestion pipeline using InfluxDB Cloud (time-series database, £80/mo) for efficient storage and querying of high-frequency sensor data.</span></div>
+        <div class="tech-row"><span class="tech-label">ML model</span><span class="tech-val">Claude builds anomaly detection model using Isolation Forest and LSTM neural network approaches (Python/TensorFlow). Trained on client's historical failure data — needs minimum 6 months of pre-failure sensor patterns.</span></div>
+        <div class="tech-row"><span class="tech-label">Prediction engine</span><span class="tech-val">Predictive model scores each machine's failure probability hourly. Claude builds alert logic — thresholds trigger maintenance work orders and notify maintenance manager via Slack/email.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React machine health dashboard — real-time sensor gauges, machine health timeline, predicted failure queue ranked by probability and downtime cost, maintenance calendar.</span></div>
+        <div class="tech-row"><span class="tech-label">Funding model</span><span class="tech-val">Client pays for audit (£5k) → audit documents the cost of current unplanned downtime → Si presents ROI case → client signs retainer. Industrial specialist cost covered by client as part of deployment package.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Plant Manager</div>
+            <div class="mkt-headline">"Your best maintenance engineer retires in 3 years. His 30 years of machine knowledge walks out the door with him. We prevent that."</div>
+            <div class="mkt-copy">The most experienced maintenance engineers carry decades of pattern recognition in their heads — they can hear when a machine is about to fail before any instrument shows it. Our AI learns those same patterns from sensor data and preserves that institutional knowledge permanently, regardless of team changes.</div>
+            <div class="mkt-hook">"An automotive components manufacturer was losing £180,000 per unplanned machine stop — with 8–12 stops per year. Predictive maintenance reduced stops to 2 in the first year. £1.2M saved."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">CFO / Downtime Cost</div>
+            <div class="mkt-headline">"What does one hour of unplanned downtime cost your business? Multiply that by 200 and that's your annual problem."</div>
+            <div class="mkt-copy">The typical mid-market manufacturer experiences 100–300 hours of unplanned downtime per year. At £500–£2,000 per hour of lost production, that's £50k–£600k of preventable annual loss. Our Predictive Maintenance Platform eliminates 50–70% of that. The ROI case writes itself.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Highest single-module ROI in FactoryOS — downtime savings are immediate and massive</li><li>Si's engineering background gives him credibility to sell this at board level</li><li>Knowledge preservation narrative is emotionally resonant (engineer retirement)</li><li>Proprietary failure pattern data compounds into an unreplicable asset</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>External specialist required for PLC/OPC-UA layer — real cash cost</li><li>Model accuracy requires 3–6 months of failure pattern data before predictions are reliable</li><li>Very different per machine type — high customisation burden</li><li>Older machines may not have modern PLCs capable of OPC-UA connectivity</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Partner with industrial automation firms — they bring the hardware expertise, FactoryOS brings the AI intelligence layer</li><li>Government Made Smarter grants specifically fund predictive maintenance deployments</li><li>Failure pattern database across multiple FactoryOS clients becomes an industry-leading asset</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Well-funded specialist competitors (Sight Machine, Aspentech, SparkCognition) in the predictive maintenance space</li><li>Machine vendors embedding their own predictive maintenance in their equipment</li><li>OT cybersecurity concerns — connecting production systems to cloud raises legitimate industrial security issues</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 10 machines</span><span class="price-val">£5,000–10,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">10–50 machines</span><span class="price-val">£10,000–25,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Performance option</span><span class="price-val">15% of documented downtime savings</span></div>
+        <div class="price-row"><span class="price-tier">Deployment setup (client-funded)</span><span class="price-val">£15,000–40,000 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Unplanned downtime hours/year (primary KPI)</li>
+          <li>Unplanned vs planned maintenance ratio</li>
+          <li>Prediction accuracy rate (true positives vs false alarms)</li>
+          <li>Mean Time Between Failures improvement</li>
+          <li>Annual downtime cost avoided (£)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 09 -->
+<section id="m09">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 09 · <span class="stage-badge s3">Stage 3 — Build When Established</span></div>
+      <div class="module-name">Computer Vision <em>Quality Control</em></div>
+      <div class="module-tagline">Deploys cameras on production lines to inspect every single unit produced in real time — detecting defects, dimensional deviations, and cosmetic failures at a speed, consistency, and accuracy that human inspection cannot match — and automatically quarantining non-conforming product before it ships.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">80–95%</div><div class="mh-stat-label">Reduction in quality escape rate</div></div>
+        <div><div class="mh-stat-val">£15k–35k</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">14–20 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£400–800</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>100% inspection coverage</strong> — every unit inspected, not sample-based. Eliminates the statistical risk inherent in manual sampling inspection</li>
+          <li><strong>Multi-defect detection</strong> — trained to identify all defect types relevant to the product — surface defects, dimensional deviations, assembly errors, label/marking errors, and packaging faults</li>
+          <li><strong>Real-time rejection</strong> — non-conforming units automatically flagged for rejection and physically diverted (if connected to rejection mechanism) or clearly marked for manual removal</li>
+          <li><strong>Defect classification and trending</strong> — categorises every defect detected and trends defect rates over time — enabling root cause analysis and process improvement</li>
+          <li><strong>SPC (Statistical Process Control) integration</strong> — feeds quality data into SPC charts, enabling real-time process control and early detection of process drift before it causes major quality issues</li>
+          <li><strong>Customer-facing quality reporting</strong> — auto-generates PPAP, ISIR, and quality audit reports from inspection data — eliminating days of manual quality documentation</li>
+          <li><strong>Traceability</strong> — links every inspection result to production batch, shift, machine, and operator — enabling rapid investigation when customer complaints are received</li>
+          <li><strong>Quality dashboard</strong> — real-time defect rate by line/shift/product, defect type breakdown, rejection cost tracker, customer complaint correlation</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Hardware</span><span class="tech-val"><strong>Machine vision specialist required (£3–8k)</strong> for camera selection, positioning, and lighting design. Industrial cameras (£500–3k each) plus LED lighting system. Edge compute device per line (£300–800).</span></div>
+        <div class="tech-row"><span class="tech-label">Training data</span><span class="tech-val">500–2,000 labelled defect images required per defect type for model training. Client provides product samples and defect examples. Image labelling service: £1–3k.</span></div>
+        <div class="tech-row"><span class="tech-label">CV model</span><span class="tech-val">Claude builds YOLOv10-based object detection pipeline for defect detection. GPU cloud (AWS) used for training (£200–500). Edge device runs inference at production line speed.</span></div>
+        <div class="tech-row"><span class="tech-label">Integration</span><span class="tech-val">Inspection results logged to Supabase. SPC charts built by Claude in React. Customer quality report templates built by Claude — auto-populated from inspection database.</span></div>
+        <div class="tech-row"><span class="tech-label">Commercial model</span><span class="tech-val"><strong>Always consulting-based. Get contract and 50% deposit before spending on hardware.</strong> Price the deployment package (hardware + training + setup) separately from the monthly AI platform fee.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Quality Manager / Director</div>
+            <div class="mkt-headline">"Human inspection misses approximately 20% of defects. Every one of those missed defects is a customer complaint waiting to happen."</div>
+            <div class="mkt-copy">Research consistently shows that manual visual inspection has a defect detection rate of 70–85% under optimal conditions. Our computer vision system inspects every unit at line speed with 95%+ accuracy — eliminating the gap between what leaves your factory and what your customer receives.</div>
+            <div class="mkt-hook">"A precision components manufacturer had 12 customer complaints per quarter from escaped defects. After deployment: zero in 9 months. One avoided contract cancellation paid for the entire system."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Cost of Quality</div>
+            <div class="mkt-headline">"Your cost of quality is probably 5–10% of revenue. We can cut that significantly."</div>
+            <div class="mkt-copy">Cost of poor quality (COPQ) — rework, scrap, warranty claims, customer complaints, recall costs — typically represents 5–10% of revenue for manufacturers. Our Computer Vision QC system eliminates the customer-facing portion of that cost by stopping defects at source rather than finding them at the customer.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Highest impact quality improvement available to manufacturers</li><li>100% inspection vs sampling is a genuinely transformative step change</li><li>Customer complaint elimination has major commercial and relationship value</li><li>Automotive and aerospace supply chain requirements increasingly demand automated inspection</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Highest capital cost of any FactoryOS module — hardware is real spend</li><li>Highly bespoke — different model training required for each product and defect type</li><li>Challenging for products with natural variation (organic materials, cast products)</li><li>Long deployment timeline — 14–20 weeks to full operation</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Automotive OEM supply chains increasingly mandating automated inspection — regulatory push</li><li>3D inspection using structured light for dimensional measurement — premium tier</li><li>X-ray and CT inspection for internal defects in castings and composites</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Machine vision specialist firms (Cognex, Keyence) with decades of industrial experience</li><li>Product portfolio changes require retraining — ongoing model management burden</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Deployment package (client pays)</span><span class="price-val">£25,000–60,000</span></div>
+        <div class="price-row"><span class="price-tier">Monthly AI platform fee</span><span class="price-val">£3,000–8,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Per additional production line</span><span class="price-val">£800–2,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Model retraining (new products)</span><span class="price-val">£2,000–5,000/model</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Quality escape rate (defects reaching customer)</li>
+          <li>In-line defect detection rate (%)</li>
+          <li>False positive rate (good product rejected)</li>
+          <li>Customer complaints per quarter</li>
+          <li>Cost of poor quality (COPQ) before vs after</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE 10 -->
+<section id="m10">
+  <div class="module-card">
+    <div class="module-header">
+      <div class="module-header-glow"></div>
+      <div class="module-num">Module 10 · <span class="stage-badge s3">Stage 3 — The Full Product</span></div>
+      <div class="module-name">Factory<em>OS</em> — The Full Operating System</div>
+      <div class="module-tagline">All 9 modules unified into a single AI operating system — one intelligence layer that monitors, predicts, optimises, and automates every major operational function in the factory simultaneously. The product Si presents to the board after the audit. The system that becomes unreplaceable.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£8–40k/mo</div><div class="mh-stat-label">Full FactoryOS pricing range by facility size</div></div>
+        <div><div class="mh-stat-val">6–12 months</div><div class="mh-stat-label">Full deployment timeline</div></div>
+        <div><div class="mh-stat-val">£500k–3M</div><div class="mh-stat-label">Annual cost saving per facility</div></div>
+        <div><div class="mh-stat-val">6 months</div><div class="mh-stat-label">Typical payback period</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">What the Full OS Delivers</div>
+        <ul class="feature-list">
+          <li><strong>Unified operations dashboard</strong> — all KPIs from all modules in one executive view: OEE, downtime, quality, inventory health, energy cost, procurement savings, workforce utilisation</li>
+          <li><strong>AI daily operations briefing</strong> — plant manager and ops director receive automated morning briefing: what happened yesterday, what needs attention today, what the week looks like</li>
+          <li><strong>Autonomous agent layer</strong> — 7 agents running in background: Maintenance Agent, Quality Agent, Procurement Agent, Scheduling Agent, Energy Agent, Inventory Agent, Workforce Agent</li>
+          <li><strong>Cross-module intelligence</strong> — forecast triggers inventory reorder triggers procurement PO triggers schedule update. Single connected intelligence loop.</li>
+          <li><strong>Factory health score</strong> — 0–100 operational health score benchmarked against FactoryOS network and manufacturing industry standards</li>
+          <li><strong>Board reporting automation</strong> — monthly operational performance report auto-generated for board/investor pack, including financial impact of all AI-driven improvements</li>
+          <li><strong>Continuous improvement engine</strong> — AI identifies highest-impact improvement opportunities across all operational dimensions, prioritised by financial impact</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Build Roadmap</div>
+        <div class="tech-row"><span class="tech-label">Weeks 1–6</span><span class="tech-val"><strong>Stage 1 MVP</strong> — Demand Forecasting + Inventory Optimiser + Procurement Intelligence. ERP exports only. ~£850 cash. First audit clients engaged.</span></div>
+        <div class="tech-row"><span class="tech-label">Month 2–3</span><span class="tech-val"><strong>Stage 2 expansion</strong> — Supplier Intelligence + Energy Optimiser + Workforce Intelligence. Funded by first audit and retainer revenues.</span></div>
+        <div class="tech-row"><span class="tech-label">Month 3–4</span><span class="tech-val">Production Scheduler deployed. Most complex Stage 2 build — requires dedicated Claude sessions and ERP API exploration.</span></div>
+        <div class="tech-row"><span class="tech-label">Month 5–8</span><span class="tech-val"><strong>Stage 3</strong> — Predictive Maintenance. Industrial specialist engaged. Client deployment funded by audit revenue and module retainer contracts.</span></div>
+        <div class="tech-row"><span class="tech-label">Month 8–12</span><span class="tech-val">Computer Vision QC. Always client-funded deployment package. Bespoke per manufacturer — Si's consulting model, not standard SaaS.</span></div>
+        <div class="tech-row"><span class="tech-label">Month 6+</span><span class="tech-val">Unified FactoryOS dashboard — Claude builds unified intelligence layer once 3+ modules are live. Agents orchestrated via LangGraph/CrewAI.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Full FactoryOS SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>No comparable integrated AI platform exists for mid-market manufacturers</li><li>Each module independently valuable — modular adoption path reduces risk for client</li><li>Si's domain expertise is irreplaceable by any pure technology company</li><li>Audit-first model means every client has documented ROI before they sign</li><li>Data moat compounds — failure patterns, benchmark data, and intelligence improve with every client and every month</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Longest and most expensive build of the three verticals</li><li>Requires external specialist for Stage 3 — breaks the "near-zero cash" model</li><li>Complex deployments require significant ongoing technical management</li><li>Sales cycles are 3–6 months — slower to revenue than DentalOS or HealthOS</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>UK manufacturing renaissance — defence, energy, reshoring driving new investment</li><li>Government Made Smarter grants fund AI and digital technology deployment</li><li>Industrial management consultancies as channel partners</li><li>Private equity portfolio manufacturing companies as clients — PE firms increasingly value operational AI across portfolio</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Well-funded industrial AI startups with deeper technical teams</li><li>ERP vendors (SAP, Oracle, Microsoft) building comprehensive AI modules into their platforms</li><li>UK manufacturing recession reducing capital investment appetite</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Full OS Pricing</div>
+        <div class="price-row"><span class="price-tier">Manufacturing Audit (entry)</span><span class="price-val">£2,500–5,000</span></div>
+        <div class="price-row"><span class="price-tier">Stage 1 Bundle (3 modules)</span><span class="price-val">£5,000–8,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Stage 1+2 (7 modules)</span><span class="price-val">£10,000–18,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Full FactoryOS (all modules)</span><span class="price-val">£15,000–40,000/mo</span></div>
+        <div class="price-row"><span class="price-tier">Outcome pricing option</span><span class="price-val">10–15% of documented savings</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Year 1 Revenue Targets</div>
+        <ul class="feature-list">
+          <li>Month 1–2: First 2 paid audits = £5,000–10,000</li>
+          <li>Month 2–4: 2 clients on Stage 1 retainer = £10,000–16,000 MRR</li>
+          <li>Month 4–6: 4 clients avg £6,000/mo = £24,000 MRR</li>
+          <li>Month 6–9: 6 clients avg £8,000/mo = £48,000 MRR</li>
+          <li>Month 9–12: First Stage 3 client = £15,000+ MRR from one client</li>
+          <li><strong>Year 1 ARR target: £400k–£700k</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="callout gold" style="margin-bottom:80px;">
+  <div class="callout-title">The Strategic Reminder — FactoryOS</div>
+  <p>The audit is not just the sales process — <strong>it is the product itself for the first 12 months.</strong> Each audit generates cash, identifies the highest-value module for that client, and documents the ROI case that funds the retainer. Si's 30 years of credibility means those audit doors open. The technology follows. Build the data-only Stage 1 modules first, start taking audit clients immediately, and let the consulting revenue fund everything that follows. <strong>This is a £1M ARR business within 24 months if executed with discipline.</strong></p>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">FactoryOS</div>
+  <div class="footer-note">Product Intelligence Document · AI Systems Co. · 2025</div>
+  <div class="footer-note">10 Modules · Built by Si · Confidential</div>
+</footer>
+<a href="#top" class="scroll-top">↑</a>
+</body>
+</html>

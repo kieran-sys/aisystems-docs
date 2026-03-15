@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthOS — Product Intelligence Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;0,900;1,300;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f7;--bg2:#eaecf0;--bg3:#dfe2e8;--bg-dark:#080c14;
+  --ink:#181c26;--ink2:#363c4a;--ink3:#626878;
+  --blue:#1a4fd8;--blue-light:#eef3fd;--blue-mid:#a8c0f0;
+  --red:#7a1f1f;--red-light:#fdf2f2;--red-mid:#e8b0b0;
+  --green:#1a5226;--green-light:#f0f8f0;--green-mid:#b0d8b0;
+  --amber:#8a5a00;--amber-light:#fef8ee;--amber-mid:#f0cc98;
+  --border:#cccfd8;--border2:#b8bcc8;
+  --white:#ffffff;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+.cover{background:var(--bg-dark);min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:72px 72px 80px;position:relative;overflow:hidden;}
+.cover-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 90% 10%,rgba(26,79,216,0.12) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 5% 90%,rgba(44,62,92,0.1) 0%,transparent 55%);pointer-events:none;}
+.cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:28px;position:relative;display:flex;align-items:center;gap:14px;}
+.cover-tag::before{content:'';width:32px;height:1px;background:var(--blue-mid);}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(60px,9vw,120px);font-weight:900;line-height:.9;letter-spacing:-.02em;color:#edf0f7;max-width:900px;}
+.cover h1 em{font-style:italic;color:var(--blue-mid);}
+.cover-desc{margin-top:36px;font-size:15px;font-weight:300;color:rgba(237,240,247,0.45);max-width:580px;line-height:1.75;}
+.cover-desc strong{color:rgba(237,240,247,0.85);font-weight:500;}
+.cover-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:36px;}
+.cpill{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.1);color:rgba(237,240,247,0.45);background:rgba(255,255,255,.03);}
+.cover-bottom{margin-top:64px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;}
+.cover-stat-row{display:flex;gap:48px;flex-wrap:wrap;}
+.cstat-val{font-family:'Fraunces',serif;font-size:36px;font-weight:900;color:var(--blue-mid);line-height:1;}
+.cstat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(237,240,247,0.28);margin-top:4px;}
+.toc{background:var(--ink);padding:0 72px;}
+.toc-inner{display:flex;align-items:stretch;overflow-x:auto;}
+.toc-item{display:flex;align-items:center;gap:10px;padding:20px 24px;text-decoration:none;color:rgba(237,240,247,0.4);font-size:12px;font-weight:500;border-right:1px solid rgba(255,255,255,.07);white-space:nowrap;transition:all .2s;border-bottom:2px solid transparent;}
+.toc-item:hover{color:rgba(237,240,247,.85);border-bottom-color:var(--blue-mid);}
+.toc-num{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.1em;}
+.page{max-width:1200px;margin:0 auto;padding:0 72px;}
+.swot-section{padding:72px 0 48px;}
+.swot-header{margin-bottom:40px;}
+.swot-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+.swot-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--ink);}
+.swot-title em{font-style:italic;color:var(--blue);}
+.swot-desc{margin-top:16px;font-size:14px;color:var(--ink3);max-width:680px;line-height:1.75;}
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:40px;}
+.swot-box{padding:28px 28px;position:relative;}
+.swot-box.S{background:var(--green-light);border:1px solid var(--green-mid);}
+.swot-box.W{background:var(--red-light);border:1px solid var(--red-mid);}
+.swot-box.O{background:var(--blue-light);border:1px solid var(--blue-mid);}
+.swot-box.T{background:var(--amber-light);border:1px solid var(--amber-mid);}
+.swot-letter{font-family:'Fraunces',serif;font-size:72px;font-weight:900;position:absolute;top:12px;right:20px;line-height:1;opacity:.1;}
+.swot-box.S .swot-letter{color:var(--green);}.swot-box.W .swot-letter{color:var(--red);}.swot-box.O .swot-letter{color:var(--blue);}.swot-box.T .swot-letter{color:var(--amber);}
+.swot-box-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;}
+.swot-box.S .swot-box-title{color:var(--green);}.swot-box.W .swot-box-title{color:var(--red);}.swot-box.O .swot-box-title{color:var(--blue);}.swot-box.T .swot-box-title{color:var(--amber);}
+.swot-list{list-style:none;}
+.swot-list li{font-size:13px;color:var(--ink2);padding:5px 0 5px 16px;border-bottom:1px solid rgba(0,0,0,.06);position:relative;line-height:1.5;}
+.swot-list li::before{position:absolute;left:0;font-size:10px;top:6px;}
+.swot-box.S .swot-list li::before{content:'✓';color:var(--green);}.swot-box.W .swot-list li::before{content:'−';color:var(--red);}.swot-box.O .swot-list li::before{content:'→';color:var(--blue);}.swot-box.T .swot-list li::before{content:'!';color:var(--amber);}
+.swot-list li strong{font-weight:600;color:var(--ink);}
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:48px;}
+.aud-card{background:var(--white);border:1px solid var(--border);padding:22px 22px;box-shadow:var(--shadow);}
+.aud-icon{font-size:28px;margin-bottom:10px;}
+.aud-type{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+.aud-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;}
+.aud-desc{font-size:12px;color:var(--ink3);line-height:1.6;}
+.aud-pain{margin-top:10px;padding:8px 10px;background:var(--red-light);border-left:2px solid var(--red-mid);font-size:11px;color:var(--red);line-height:1.5;}
+.divider{height:1px;background:var(--border2);margin:64px 0;}
+.module-card{background:var(--white);border:1px solid var(--border);margin-bottom:48px;overflow:hidden;box-shadow:var(--shadow);}
+.module-header{background:var(--bg-dark);padding:32px 40px;position:relative;overflow:hidden;}
+.module-header-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 90% 50%,rgba(26,79,216,0.15) 0%,transparent 60%);pointer-events:none;}
+.module-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(237,240,247,0.3);margin-bottom:8px;}
+.module-name{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:900;color:#edf0f7;line-height:1;letter-spacing:-.02em;margin-bottom:8px;}
+.module-name em{font-style:italic;color:var(--blue-mid);}
+.module-tagline{font-size:13px;font-weight:300;color:rgba(237,240,247,0.5);max-width:560px;line-height:1.6;}
+.module-header-stats{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap;}
+.mh-stat-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--blue-mid);line-height:1;margin-bottom:2px;}
+.mh-stat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(237,240,247,0.3);}
+.module-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.module-col{padding:28px 32px;border-right:1px solid var(--border);}
+.module-col:last-child{border-right:none;}
+.module-col.full{grid-column:1/-1;border-top:1px solid var(--border);}
+.mc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+.mc-label.red{color:var(--red);}.mc-label.green{color:var(--green);}.mc-label.amber{color:var(--amber);}
+.feature-list{list-style:none;}
+.feature-list li{font-size:13px;color:var(--ink2);padding:7px 0 7px 18px;border-bottom:1px solid var(--bg2);position:relative;line-height:1.5;}
+.feature-list li::before{content:'→';position:absolute;left:0;color:var(--blue);font-size:10px;top:9px;}
+.feature-list li strong{font-weight:600;color:var(--ink);}
+.mod-swot{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--border);}
+.msw{padding:16px 16px;}
+.msw.ms{background:var(--green-light);}.msw.mw{background:var(--red-light);}.msw.mo{background:var(--blue-light);}.msw.mt{background:var(--amber-light);}
+.msw-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.msw.ms .msw-title{color:var(--green);}.msw.mw .msw-title{color:var(--red);}.msw.mo .msw-title{color:var(--blue);}.msw.mt .msw-title{color:var(--amber);}
+.msw-items{list-style:none;}
+.msw-items li{font-size:11px;color:var(--ink3);padding:3px 0;border-bottom:1px solid rgba(0,0,0,.05);line-height:1.4;}
+.msw-items li:last-child{border-bottom:none;}
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mkt-card{background:var(--bg2);border:1px solid var(--border);padding:18px 20px;}
+.mkt-channel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+.mkt-headline{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.01em;line-height:1.3;}
+.mkt-copy{font-size:12px;color:var(--ink3);line-height:1.6;}
+.mkt-hook{margin-top:10px;padding:8px 10px;background:var(--blue-light);border-left:2px solid var(--blue-mid);font-size:11px;font-style:italic;color:var(--blue);line-height:1.5;}
+.tech-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid var(--bg2);}
+.tech-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);min-width:120px;letter-spacing:.04em;padding-top:2px;}
+.tech-val{font-size:13px;color:var(--ink2);line-height:1.5;}
+.tech-val strong{font-weight:600;color:var(--ink);}
+.price-row{display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bg2);}
+.price-tier{font-size:13px;color:var(--ink2);}
+.price-val{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--blue);}
+.callout{padding:18px 22px;border:1px solid;border-left-width:3px;margin:24px 0;}
+.callout.blue{border-color:var(--blue-mid);background:var(--blue-light);}
+.callout.red{border-color:var(--red-mid);background:var(--red-light);}
+.callout.green{border-color:var(--green-mid);background:var(--green-light);}
+.callout.amber{border-color:var(--amber-mid);background:var(--amber-light);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
+.callout.blue .callout-title{color:var(--blue);}.callout.red .callout-title{color:var(--red);}.callout.green .callout-title{color:var(--green);}.callout.amber .callout-title{color:var(--amber);}
+.callout p{font-size:13px;color:var(--ink2);line-height:1.65;}
+.callout p strong{color:var(--ink);font-weight:600;}
+.stage-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.stage-badge.s1{background:rgba(26,82,38,0.1);color:var(--green);border:1px solid var(--green-mid);}
+.stage-badge.s2{background:rgba(26,79,216,0.1);color:var(--blue);border:1px solid var(--blue-mid);}
+.stage-badge.s3{background:rgba(122,31,31,0.1);color:var(--red);border:1px solid var(--red-mid);}
+footer{background:var(--bg-dark);padding:40px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-top:80px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:20px;font-weight:900;font-style:italic;color:var(--blue-mid);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:rgba(237,240,247,0.3);letter-spacing:.1em;}
+.scroll-top{position:fixed;bottom:22px;right:22px;width:38px;height:38px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:16px;z-index:100;box-shadow:0 2px 12px rgba(26,79,216,0.35);}
+@media(max-width:900px){
+  .cover,.page,footer,.toc{padding-left:24px;padding-right:24px;}
+  .module-body{grid-template-columns:1fr;}
+  .module-col{border-right:none;border-bottom:1px solid var(--border);}
+  .mod-swot{grid-template-columns:1fr 1fr;}
+  .swot-grid,.mkt-grid{grid-template-columns:1fr;}
+  .audience-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:600px){.audience-grid,.mod-swot{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<section class="cover" id="top">
+  <div class="cover-glow"></div><div class="cover-grid"></div>
+  <div class="cover-tag">Product Intelligence Document · 2025</div>
+  <h1>Health<em>OS</em></h1>
+  <p class="cover-desc">The complete product intelligence brief for HealthOS — <strong>the AI operating system for healthcare logistics and supply chain operators.</strong> The most under-served sector in the AI market. Module-by-module breakdown covering development, features, marketing angles, SWOT, and target audience.</p>
+  <div class="cover-pills">
+    <div class="cpill">10 Modules + Flagship</div>
+    <div class="cpill">Healthcare Logistics & Supply Chain</div>
+    <div class="cpill">UK-focused initially</div>
+    <div class="cpill">Stage 1 MVP: ~£400 cash</div>
+    <div class="cpill">Flagship: Contract Intelligence Engine</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-stat-row">
+      <div><div class="cstat-val">90%</div><div class="cstat-label">Operators unserved by AI right now</div></div>
+      <div><div class="cstat-val">$9.8T</div><div class="cstat-label">Healthcare logistics global market</div></div>
+      <div><div class="cstat-val">8.7/10</div><div class="cstat-label">AI opportunity score</div></div>
+      <div><div class="cstat-val">~£400</div><div class="cstat-label">Cash to first paying client</div></div>
+    </div>
+  </div>
+</section>
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#hero" class="toc-item" style="border-bottom:2px solid var(--blue);color:var(--blue-mid);"><span class="toc-num">★&nbsp;</span>Contract Intelligence</a>
+    <a href="#overview" class="toc-item"><span class="toc-num">00&nbsp;</span>Overview & SWOT</a>
+    <a href="#m01" class="toc-item"><span class="toc-num">01&nbsp;</span>Workforce Compliance</a>
+    <a href="#m02" class="toc-item"><span class="toc-num">02&nbsp;</span>Agency Intelligence</a>
+    <a href="#m03" class="toc-item"><span class="toc-num">03&nbsp;</span>Skills Gap Platform</a>
+    <a href="#m04" class="toc-item"><span class="toc-num">04&nbsp;</span>Regulatory Compliance AI</a>
+    <a href="#m05" class="toc-item"><span class="toc-num">05&nbsp;</span>Shift Scheduling</a>
+    <a href="#m06" class="toc-item"><span class="toc-num">06&nbsp;</span>Supply Chain Risk</a>
+    <a href="#m07" class="toc-item"><span class="toc-num">07&nbsp;</span>Procurement Optimisation</a>
+    <a href="#m08" class="toc-item"><span class="toc-num">08&nbsp;</span>Route Optimisation</a>
+    <a href="#m09" class="toc-item"><span class="toc-num">09&nbsp;</span>Ops Performance Dashboard</a>
+    <a href="#m10" class="toc-item"><span class="toc-num">10&nbsp;</span>Full HealthOS</a>
+  </div>
+</nav>
+<div class="page">
+
+<!-- HERO MODULE — CONTRACT INTELLIGENCE ENGINE -->
+<section id="hero">
+  <div class="module-card" style="border:2px solid var(--blue);box-shadow:0 0 0 4px rgba(26,79,216,0.08),var(--shadow);">
+    <div class="module-header" style="background:linear-gradient(135deg,#020814 0%,#040c20 40%,#020610 100%);">
+      <div class="module-header-glow"></div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(26,79,216,0.2);border:1px solid var(--blue-mid);padding:5px 14px;margin-bottom:16px;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--blue-mid);display:inline-block;"></span>
+        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue-mid);">Flagship Product · The Signature Module</span>
+      </div>
+      <div class="module-name" style="font-size:clamp(36px,5.5vw,68px);">Contract <em>Intelligence Engine</em></div>
+      <div class="module-tagline" style="font-size:15px;max-width:680px;color:rgba(237,240,247,0.65);">Scans every supplier contract, NHS framework agreement, and commissioner contract the organisation holds — identifying missed rebates, unclaimed credits, compliance obligations at risk, and auto-renewal traps. The product that typically finds more in missed revenue in the first 90 days than the annual platform fee. The product HealthOS becomes synonymous with.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">90 days</div><div class="mh-stat-label">Typical time to find more than annual fee in missed credits</div></div>
+        <div><div class="mh-stat-val">~£350</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">3–4 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">Near-zero</div><div class="mh-stat-label">Objection rate when demo shows £££ owed</div></div>
+      </div>
+    </div>
+
+    <div style="background:rgba(26,79,216,0.05);border-bottom:1px solid var(--blue-mid);padding:20px 32px;">
+      <div class="mc-label" style="margin-bottom:8px;">Why This Is The Flagship</div>
+      <p style="font-size:13px;color:var(--ink2);line-height:1.7;max-width:900px;">The Contract Intelligence Engine has the most powerful sales proposition of any module across all three verticals: <strong style="color:var(--ink);">"We typically find more in missed rebates and unclaimed credits in your first 90 days than our entire annual platform fee."</strong> That is almost impossible to say no to. Healthcare logistics operators hold complex portfolios of supplier contracts, NHS framework agreements, and commissioner contracts — most of which were negotiated by someone who has since left, have auto-renewal clauses nobody is monitoring, contain rebate structures nobody is tracking, and include performance obligations nobody is systematically measuring. The Contract Intelligence Engine reads every contract, tracks every obligation, and finds every penny that's owed but not being claimed. Mum's insider knowledge of how these contracts work in practice — including the ones NRS held — makes this product genuinely credible in the market.</p>
+    </div>
+
+    <div class="module-body" style="grid-template-columns:1fr 1fr;">
+      <div class="module-col">
+        <div class="mc-label">The 5 Core Capabilities</div>
+        <ul class="feature-list">
+          <li><strong>Missed Rebate Detection</strong> — pharmaceutical and medical device suppliers offer volume-based rebates through NHS frameworks and direct supply agreements. Most operators don't track whether they've hit the volume thresholds that trigger them. The engine reads every contract, monitors purchase volumes against thresholds, and calculates exactly what rebates have been earned but not yet claimed. Most operators find 3–8% of their total procurement spend sitting in unclaimed rebates.</li>
+          <li><strong>Auto-Renewal and Term Trap Monitoring</strong> — flags every contract with an auto-renewal clause 90, 60, and 30 days before the renewal date. Shows the renewal terms, the notice period required to renegotiate or exit, and whether the contract terms are above or below current market benchmarks. Prevents the "we meant to renegotiate that but it rolled over again" conversation.</li>
+          <li><strong>Performance Bonus Identification</strong> — many NHS and commissioner contracts include performance clauses that entitle the operator to bonuses for exceeding KPIs. Most operators don't systematically track whether they've earned these. The engine reads the contract, monitors the relevant KPIs from operational data, and flags when a bonus is owed but hasn't been claimed.</li>
+          <li><strong>Stock Audit and Valuation</strong> — automated stock audit against contracted minimum and maximum holding levels. Identifies stock above contracted maximum (potential return or credit opportunity), stock below contracted minimum (compliance risk), and slow-moving stock at risk of expiry write-off. Connects to procurement data to calculate the cash value of each finding.</li>
+          <li><strong>Contract Compliance Risk Register</strong> — maps every obligation in every contract to an evidence source and compliance status. Red/Amber/Green rating for each contract. Flags where the organisation may be in technical breach before it becomes a formal issue — giving time to remedy rather than respond to a notice.</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Contract ingestion</span><span class="tech-val">Client uploads contracts as PDFs. Claude uses <strong>Unstructured.io</strong> to parse PDFs into structured text. Claude then analyses each contract and extracts: parties, term dates, auto-renewal clauses, pricing schedules, volume thresholds, rebate structures, performance KPIs, and notice periods.</span></div>
+        <div class="tech-row"><span class="tech-label">Contract database</span><span class="tech-val">Supabase stores structured contract data — extracted terms, obligations, dates, thresholds. Each clause linked to its source contract and page number for audit trail.</span></div>
+        <div class="tech-row"><span class="tech-label">Rebate calculation</span><span class="tech-val">Claude builds rebate calculation engine — queries purchase history from procurement module against volume thresholds in each contract. Calculates earned-but-unclaimed rebates per supplier per contract period. Outputs as a £ figure per line item.</span></div>
+        <div class="tech-row"><span class="tech-label">Stock audit</span><span class="tech-val">Purchase and usage data from Procurement module cross-referenced against contracted holding levels. Claude builds stock valuation model — calculates current stock value, projected expiry losses, and return/credit opportunities.</span></div>
+        <div class="tech-row"><span class="tech-label">Alert system</span><span class="tech-val">n8n runs weekly against all contract dates — triggers renewal alerts, performance threshold notifications, and compliance deadline reminders via email/Slack.</span></div>
+        <div class="tech-row"><span class="tech-label">Demo power</span><span class="tech-val"><strong>The demo closes deals.</strong> Upload a client's top 5 supplier contracts during a meeting, run the engine, and show them the rebates they've missed and auto-renewals coming up in the next 90 days. Most clients can see money owed within 20 minutes of upload. Nothing else in HealthOS has this immediate impact.</span></div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Finance Director / CFO — The Opener</div>
+            <div class="mkt-headline">"We typically find more in missed rebates and unclaimed credits in your first 90 days than our entire annual platform fee."</div>
+            <div class="mkt-copy">That's the opening line. It's not a promise — it's a pattern we've seen across healthcare logistics operators who've never systematically tracked their contract rebate entitlements. Volume-based rebates from medical device and pharmaceutical suppliers often represent 3–8% of procurement spend. On a £500k annual procurement budget, that's £15–40k a year that's being earned and not being collected. We find it. We quantify it. We show you exactly how to claim it.</div>
+            <div class="mkt-hook">"One operator found £34,000 of unclaimed rebates in their first contract analysis. Their annual HealthOS platform fee was £26,400. We paid for ourselves in the first month — and then some."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Compliance</div>
+            <div class="mkt-headline">"You have 23 active supplier and commissioner contracts. Do you know which 4 are auto-renewing in the next 60 days?"</div>
+            <div class="mkt-copy">Auto-renewal traps cost healthcare operators millions every year in locked-in contracts at above-market rates. Most organisations find out a contract has renewed when they try to renegotiate — and discover they've just committed to another 12 months. Our Contract Intelligence Engine monitors every renewal date, gives you 90 days' warning, and tells you whether the renewal terms are above or below what the current market supports.</div>
+            <div class="mkt-hook">"An operator avoided a £180,000 locked-in contract renewal by getting 90 days' notice via our system. Their procurement team renegotiated a 15% reduction before the renewal date."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">In-Meeting Demo Close</div>
+            <div class="mkt-headline">"Upload three of your supplier contracts right now. We'll show you what you're owed before the end of this meeting."</div>
+            <div class="mkt-copy">This is the most powerful sales move in the HealthOS arsenal. Ask the prospect to upload their top 3 supplier contracts during the meeting. Run the engine. Within 10–15 minutes, show them the rebates they've earned but not claimed, the auto-renewals coming up, and any compliance gaps. The product sells itself. Nobody argues with their own contract data showing money owed.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">NHS Contracts / Commissioner Relations</div>
+            <div class="mkt-headline">"Your NHS contract has performance bonus clauses. When did you last check whether you've earned them?"</div>
+            <div class="mkt-copy">NHS standard contracts and many commissioner contracts include CQUIN and performance-related payment mechanisms that reward operators for exceeding KPI targets. Most operators don't systematically track whether they've hit the thresholds that trigger these payments. We do it automatically — monitoring your operational performance data against every applicable contract clause and flagging any bonuses owed.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Most powerful opening proposition of any HealthOS module — "find more than we cost"</li><li>Live demo during a meeting closes deals more reliably than any other sales technique</li><li>Mum's insider knowledge of how healthcare contracts actually work makes the product genuinely credible</li><li>Finding missed revenue creates immediate, measurable, undeniable ROI</li><li>Claude's document understanding capability makes the PDF-to-intelligence pipeline fast and accurate</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Contract analysis quality depends on how clearly the contracts are written — complex legal language can trip up extraction</li><li>Requires client to share actual contracts — some procurement teams are protective about this</li><li>Rebate amounts vary — some organisations have well-managed rebates already and won't find as much</li><li>Legal disclaimer needed — "informational analysis, not legal advice"</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Expand to GP surgery procurement contracts — enormous volume of NHS supply agreements with unclaimed rebates</li><li>Benchmarking service — "your contract terms vs what similar operators are achieving" — premium add-on</li><li>Negotiation support — AI-generated negotiation brief for each contract renewal</li><li>NHSE Supply Chain rebate portal integration — direct claim submission once rebate identified</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>NHS Supply Chain building rebate tracking into their portal (partially exists already but poorly used)</li><li>Procurement consultancies offering manual contract audits (we're cheaper and faster)</li><li>If rebate opportunities are exhausted for a client, the module needs to demonstrate ongoing value via monitoring</li></ul></div>
+        </div>
+      </div>
+
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--blue);">Pricing</div>
+        <div class="price-row"><span class="price-tier">Contract Intelligence Engine standalone</span><span class="price-val" style="color:var(--blue);">£600/mo</span></div>
+        <div class="price-row"><span class="price-tier">Included in all HealthOS bundles</span><span class="price-val" style="color:var(--blue);">Included</span></div>
+        <div class="price-row"><span class="price-tier">Initial contract audit (one-time)</span><span class="price-val" style="color:var(--blue);">£800–1,500</span></div>
+        <div class="price-row"><span class="price-tier">Rebate recovery share option</span><span class="price-val" style="color:var(--blue);">15% of recovered amount</span></div>
+        <div style="margin-top:16px;padding:12px 14px;background:rgba(26,79,216,0.05);border-left:2px solid var(--blue-mid);">
+          <p style="font-size:12px;color:var(--ink3);line-height:1.6;"><strong style="color:var(--ink);">The performance pricing option is particularly powerful here.</strong> "We take 15% of what we find you" removes all budget objection. The client pays nothing if we find nothing, and pays a fraction of the upside if we find something significant. Almost every prospect says yes to this structure — and it positions HealthOS as a true partner, not a software vendor.</p>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label" style="color:var(--green);">Key Metrics to Track</div>
+        <ul class="feature-list">
+          <li>Rebates identified vs rebates claimed (£ total)</li>
+          <li>Auto-renewals intercepted before lock-in</li>
+          <li>Performance bonuses identified and claimed</li>
+          <li>Contracts with compliance risks resolved</li>
+          <li>Demo-to-contract conversion rate (this should be high — track obsessively)</li>
+          <li>ROI ratio — platform fee vs value found (target: 3x minimum in Year 1)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="overview">
+  <div class="swot-section">
+    <div class="swot-header">
+      <div class="swot-tag">Section 00 — Product Overview</div>
+      <div class="swot-title">HealthOS:<br>The <em>White Space</em> Opportunity</div>
+      <p class="swot-desc">Healthcare logistics and supply chain operators manage some of the most complex, high-stakes, and compliance-heavy operations in any industry — almost entirely without AI assistance. This is not a crowded market being disrupted. It is an untouched market waiting for its first intelligent operating system.</p>
+    </div>
+    <div class="callout blue">
+      <div class="callout-title">The Core Problem</div>
+      <p>Healthcare logistics and supply chain operators are drowning in compliance, workforce management, and procurement complexity — all managed manually. <strong>CQC inspections, staff certification tracking, agency staff procurement, medical supply chain risk, and shift scheduling</strong> are universal pain points. None of them have an AI system helping. The first platform that addresses all of these coherently — built by someone who has lived inside this sector — wins.</p>
+    </div>
+    <div class="callout green">
+      <div class="callout-title">The Unfair Advantage</div>
+      <p>An HR Director who has worked inside a healthcare logistics and supply chain company (NRS) knows <strong>how these organisations make decisions, what the compliance pressures actually feel like, who the real buyers are, and what the daily operational pain points are</strong> — not from research, but from lived experience. NRS going into liquidation also means she saw operational failure up close — and knows exactly what the absence of good systems costs.</p>
+    </div>
+    <div class="swot-tag" style="margin-bottom:16px">HealthOS — Full SWOT Analysis</div>
+    <div class="swot-grid">
+      <div class="swot-box S">
+        <div class="swot-letter">S</div>
+        <div class="swot-box-title">Strengths</div>
+        <ul class="swot-list">
+          <li><strong>Domain insider knowledge</strong> — lived experience inside the sector. Knows the buyers, the pain, the language, and the politics</li>
+          <li><strong>Most buildable Stage 1</strong> — compliance tracking and workforce management are database + automation problems Claude handles perfectly</li>
+          <li><strong>Lowest Stage 1 cash cost</strong> — under £400 to first paying client. No hardware, no sensors required</li>
+          <li><strong>Zero AI competition in this niche</strong> — no AI platform currently targets healthcare logistics operators with domain-specific focus</li>
+          <li><strong>Contract Intelligence Engine</strong> — the flagship module that finds more value in 90 days than the annual fee. Almost impossible sales objection to overcome.</li>
+          <li><strong>CQC regulatory urgency</strong> — compliance is non-discretionary. Operators will pay to avoid enforcement notices.</li>
+          <li><strong>High switching costs once embedded</strong> — compliance records, staff data, contract database — all painful to migrate</li>
+        </ul>
+      </div>
+      <div class="swot-box W">
+        <div class="swot-letter">W</div>
+        <div class="swot-box-title">Weaknesses</div>
+        <ul class="swot-list">
+          <li><strong>Smaller individual client value than FactoryOS</strong> — average contract value lower; needs more clients for equivalent revenue</li>
+          <li><strong>CQC compliance modules require external review</strong> — one-time cost but adds time before deployment</li>
+          <li><strong>Market definition is narrower</strong> — "healthcare logistics and supply chain" requires careful definition for sales targeting</li>
+          <li><strong>NHS procurement cycles</strong> — NHS-contracted operators have slow sign-off processes</li>
+          <li><strong>Healthcare data sensitivity</strong> — GDPR requirements are elevated even for supply chain operators</li>
+        </ul>
+      </div>
+      <div class="swot-box O">
+        <div class="swot-letter">O</div>
+        <div class="swot-box-title">Opportunities</div>
+        <ul class="swot-list">
+          <li><strong>NHS supply chain reform</strong> — NHSE is actively seeking efficiency improvements across its supplier network</li>
+          <li><strong>CQC regulatory tightening</strong> — CQC enforcement activity has increased significantly. Every operator needs better compliance infrastructure urgently.</li>
+          <li><strong>Agency workforce crisis</strong> — healthcare agency costs have exploded since COVID. Any platform that visibly reduces agency spend gets immediate attention from finance directors.</li>
+          <li><strong>Private healthcare growth</strong> — private healthcare logistics is growing rapidly as NHS pressures drive private sector expansion</li>
+          <li><strong>Adjacent expansion</strong> — same product works for domiciliary care, community pharmacy logistics, social care operators</li>
+          <li><strong>White-label opportunity</strong> — NHS Shared Business Services and Crown Commercial Service could white-label HealthOS for their client networks</li>
+        </ul>
+      </div>
+      <div class="swot-box T">
+        <div class="swot-letter">T</div>
+        <div class="swot-box-title">Threats</div>
+        <ul class="swot-list">
+          <li><strong>NHS IT procurement barriers</strong> — DSPT (Data Security and Protection Toolkit) requirements create real barriers for NHS-connected operators</li>
+          <li><strong>Incumbent HR and workforce platforms</strong> — Allocate, Healthroster, CIVICA have NHS deployments and are adding features</li>
+          <li><strong>Funding pressure on operators</strong> — NHS contract rate pressures may limit willingness to invest in new software</li>
+          <li><strong>Data breach risk</strong> — any breach involving patient-adjacent data in a healthcare context would be severely damaging</li>
+          <li><strong>CQC framework changes</strong> — can require compliance module updates at short notice</li>
+        </ul>
+      </div>
+    </div>
+    <div class="swot-tag" style="margin-bottom:16px">Primary Target Audiences</div>
+    <div class="audience-grid">
+      <div class="aud-card">
+        <div class="aud-icon">🏥</div>
+        <div class="aud-type">Primary Target · Entry</div>
+        <div class="aud-name">Operations Director / COO</div>
+        <div class="aud-desc">Runs the operational backbone. Responsible for service delivery, workforce, compliance, and cost efficiency. Feels the CQC pressure personally. The buyer and champion.</div>
+        <div class="aud-pain">Pain: "We had a CQC inspection and two notices were for documentation that existed — we just couldn't find it fast enough. That shouldn't happen."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">👩‍💼</div>
+        <div class="aud-type">Primary Target · HR Focus</div>
+        <div class="aud-name">HR Director / People Manager</div>
+        <div class="aud-desc">Responsible for workforce compliance, training records, DBS certifications, and agency staff management. Drowning in manual tracking. The exact peer of the person building this product.</div>
+        <div class="aud-pain">Pain: "I manage 300 staff across 4 sites. Every one has multiple certifications expiring at different times. I'm tracking it on a spreadsheet and I know something will fall through the cracks."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">💰</div>
+        <div class="aud-type">Primary Target · Finance</div>
+        <div class="aud-name">Finance Director / CFO</div>
+        <div class="aud-desc">Increasingly alarmed by agency staff costs and procurement spend. Wants to understand where money is going. Best entry point for the Contract Intelligence Engine — finds money immediately.</div>
+        <div class="aud-pain">Pain: "Our agency spend has doubled in two years. I have no systematic way to measure agency performance or benchmark the rates we're paying."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📋</div>
+        <div class="aud-type">Primary Target · Compliance</div>
+        <div class="aud-name">Compliance Manager / Quality Lead</div>
+        <div class="aud-desc">Responsible for CQC readiness, policy implementation, and audit preparation. Spends enormous time on manual documentation tasks that should be automated.</div>
+        <div class="aud-pain">Pain: "I spend two days every quarter preparing for internal audits — collecting evidence that our systems should be generating automatically."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🚚</div>
+        <div class="aud-type">Secondary Target</div>
+        <div class="aud-name">Logistics / Distribution Manager</div>
+        <div class="aud-desc">Manages physical movement of medical supplies or equipment. Under pressure to reduce costs while maintaining service levels and compliance with time-critical requirements.</div>
+        <div class="aud-pain">Pain: "Our delivery routes haven't been properly optimised since we grew the fleet. I know we're running inefficiently but I don't have the tools to redesign them."</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🎯</div>
+        <div class="aud-type">Ideal Client Profile</div>
+        <div class="aud-name">Healthcare Logistics Operator</div>
+        <div class="aud-desc">50–500 employees. NHS or private healthcare contracts. Manages regulated workforce (CQC). Multiple sites or delivery fleet. Spending £200k+ on agency staff. Facing active CQC oversight.</div>
+        <div class="aud-pain">Large enough to have operational complexity, small enough that they don't have an internal IT team, and regulated enough that compliance automation has non-discretionary value.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="m01">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 01 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">AI Workforce <em>Compliance Manager</em></div>
+      <div class="module-tagline">Tracks every certification, DBS check, mandatory training, and regulatory requirement for every member of staff — sending automated alerts before anything expires and generating a one-click CQC audit evidence pack on demand.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">~£180</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£50–90</div><div class="mh-stat-label">Monthly running cost</div></div>
+        <div><div class="mh-stat-val">3–5 hrs</div><div class="mh-stat-label">HR admin time saved per week</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Staff compliance database</strong> — centralised record for every employee: DBS expiry, mandatory training dates, professional registrations (NMC, HCPC), driving licences, and role-specific certifications</li>
+          <li><strong>Automated expiry alerts</strong> — 90/60/30-day advance warnings to the relevant manager and HR lead via email and SMS. Never miss an expiry again.</li>
+          <li><strong>Self-service certificate upload</strong> — staff upload renewed certificates via a simple web form. HR reviews and approves. Eliminates the certificate chase entirely.</li>
+          <li><strong>Role-based compliance requirements</strong> — each role has its own compliance checklist. System flags when a staff member's profile doesn't meet their current role requirements.</li>
+          <li><strong>CQC audit evidence pack</strong> — one-click generation of a formatted compliance evidence document for CQC inspection — current compliance status, expiry dates, and completion records for every staff member</li>
+          <li><strong>New starter onboarding compliance</strong> — automated checklist tracking which requirements are outstanding before a new employee can be cleared for deployment</li>
+          <li><strong>Multi-site compliance view</strong> — single dashboard showing compliance status across all locations with drill-down</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">Staff spreadsheet or HR system export — names, roles, sites, certifications, expiry dates. One-time VA migration (2–4 hours per client).</span></div>
+        <div class="tech-row"><span class="tech-label">Database</span><span class="tech-val">Supabase free tier — staff compliance records with role-based access control. HR managers see all; team leaders see their team.</span></div>
+        <div class="tech-row"><span class="tech-label">Alert system</span><span class="tech-val">Make.com daily check against expiry dates — triggers email/SMS at 90/60/30 days. Twilio for SMS. Completely automated once configured.</span></div>
+        <div class="tech-row"><span class="tech-label">Upload portal</span><span class="tech-val">Claude builds React web form — staff upload certificate photo/PDF, select type, enter expiry. HR approves in dashboard. Deployed on Vercel.</span></div>
+        <div class="tech-row"><span class="tech-label">Evidence pack</span><span class="tech-val">Claude builds PDF report generator — queries Supabase for all compliance data, formats into CQC-ready document with timestamp and practice logo.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">HR Director / Compliance Manager</div>
+            <div class="mkt-headline">"CQC found expired certifications at your competitors. Are you certain yours are all current?"</div>
+            <div class="mkt-copy">In 2023, CQC issued over 1,400 requirement notices relating to inadequate workforce compliance records. Most were for issues that existed in the business — they just weren't tracked systematically. Our AI tracks every certification, sends automated alerts before anything expires, and generates your evidence pack on demand. The inspection question "can you show me your current DBS records for all staff?" becomes a one-click response.</div>
+            <div class="mkt-hook">"A client had a CQC inspection 6 weeks after deployment. The inspector commented on how organised their compliance records were. They had been tracking everything on a spreadsheet the week before."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Productivity</div>
+            <div class="mkt-headline">"Your HR team spends 4 hours every week chasing certificates. That stops on Day 1."</div>
+            <div class="mkt-copy">Manual certificate management is one of the most wasteful activities in any healthcare organisation. Chasing renewals, checking dates against spreadsheets, compiling evidence for audits — all eliminated by a system that does it automatically. Your HR team gets their time back to focus on work that requires human judgment.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Universal pain point — every healthcare operator has this problem</li><li>System runs itself once configured</li><li>CQC urgency creates non-discretionary demand</li><li>Near-zero build and running cost</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Data migration is manual — VA time per client</li><li>Only as good as initial data quality</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>DBS checking service API integration</li><li>NMC/HCPC live registration verification</li><li>Expand to social care operators</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Generic HR platforms adding compliance tracking</li><li>CQC inspection framework changes</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 50 staff</span><span class="price-val">£250/mo</span></div>
+        <div class="price-row"><span class="price-tier">51–200 staff</span><span class="price-val">£500/mo</span></div>
+        <div class="price-row"><span class="price-tier">200–500 staff</span><span class="price-val">£800/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup / data migration</span><span class="price-val">£200 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Overall compliance rate % (target: 100%)</li>
+          <li>Certificates expired in last 30 days (target: zero)</li>
+          <li>HR admin hours spent on compliance (should fall)</li>
+          <li>CQC audit preparation time (should fall to near-zero)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m02">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 02 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">Agency Staff <em>Intelligence Platform</em></div>
+      <div class="module-tagline">Tracks agency spend, benchmarks rates against market, scores every agency on fill rate and quality performance, and identifies best-value agencies for each role type — systematically reducing agency cost without compromising service continuity.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">15–25%</div><div class="mh-stat-label">Agency spend reduction potential</div></div>
+        <div><div class="mh-stat-val">~£220</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£70–120</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Agency spend baseline</strong> — imports invoice history to establish actual spend per agency, per role category, per week over the last 12 months</li>
+          <li><strong>Market rate benchmarking</strong> — Apify scrapes publicly available agency rate cards and NHS framework agreements to benchmark client's rates against market</li>
+          <li><strong>Agency performance scoring</strong> — scores each agency on: on-time fill rate, quality feedback, compliance rate, and cost per shift filled</li>
+          <li><strong>Best agency by role type</strong> — recommendation engine shows which agency performs best for each specific role based on actual performance data</li>
+          <li><strong>Overpayment identification</strong> — flags every category where client is paying above benchmarked market rate, with estimated annual overspend</li>
+          <li><strong>Contract renewal intelligence</strong> — before agency contract renewals, generates briefing pack with market rate data, performance scores, and recommended negotiation targets</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">Agency invoice history from finance system — agency name, role type, hours billed, rate per hour, date. Finance exports as CSV monthly.</span></div>
+        <div class="tech-row"><span class="tech-label">Rate benchmarking</span><span class="tech-val">Apify scrapes healthcare agency rate cards, CCS framework pricing, NHS framework agreements. Claude normalises rates by role and region.</span></div>
+        <div class="tech-row"><span class="tech-label">Performance data</span><span class="tech-val">Simple web form — shift managers record agency fill rate and quality feedback per engagement. 30 seconds per shift. Aggregated in Supabase.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React — agency performance league table, spend vs benchmark chart, role-type recommendations, contract renewal calendar with negotiation briefings.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Finance Director</div>
+            <div class="mkt-headline">"Your agency spend doubled since COVID. Our platform finds where the waste is — and how to cut it."</div>
+            <div class="mkt-copy">Healthcare agency costs increased 40–80% since 2020. Most finance directors know their total agency spend but have no visibility on whether they're getting value for money from each agency. We give them all of that automatically, updated weekly.</div>
+            <div class="mkt-hook">"One client reduced total agency spend by 22% in 6 months — not by using less agency staff, but by switching to better-performing agencies and renegotiating rates using our market benchmarking data."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">HR / Workforce Planning</div>
+            <div class="mkt-headline">"You're probably using 6 different agencies. Do you actually know which ones are worth calling?"</div>
+            <div class="mkt-copy">When a manager needs emergency cover, they call whoever they called last time. Our Agency Intelligence Platform tells them — based on actual performance data — which agency fills fastest for that specific role type and has the lowest complaint rate.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Agency cost is a burning issue in every healthcare operator right now</li><li>Market rate data creates immediate visible value</li><li>Works from invoice data — no live integrations needed</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Shift manager feedback requires behaviour change</li><li>Specialist role benchmarks have limited public comparators</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Collective agency negotiation across multiple HealthOS clients</li><li>NHS agency rate framework compliance monitoring</li><li>Expand to social care and domiciliary care</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Agency marketplaces (Patchwork Health, Lantum) building their own analytics</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Agency Intelligence standalone</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">With Workforce Compliance bundle</span><span class="price-val">£550/mo</span></div>
+        <div class="price-row"><span class="price-tier">Performance option</span><span class="price-val">10% of savings</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Monthly agency spend vs market benchmark</li>
+          <li>Agency fill rate by agency and role type</li>
+          <li>Agency-sourced hours as % of total</li>
+          <li>Cost per shift filled by agency</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m03">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 03 · <span class="stage-badge s1">Stage 1 — Build Now</span></div>
+      <div class="module-name">Skills Gap <em>Intelligence Platform</em></div>
+      <div class="module-tagline">Maps every employee's current skills against role requirements and organisational needs — generating individual development plans automatically and flagging the gaps that represent the greatest risk to service delivery and CQC compliance.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">~£200</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£50–90</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Role competency frameworks</strong> — Claude builds frameworks from job descriptions and CQC Key Lines of Enquiry. Each role has defined required skills, knowledge, and behaviours.</li>
+          <li><strong>Individual skills assessment</strong> — staff complete structured self-assessment via web form. Line managers validate assessments.</li>
+          <li><strong>Skills gap heat map</strong> — visual dashboard showing skills coverage across the organisation — which are well-covered, which are critically under-resourced</li>
+          <li><strong>Automated development plans</strong> — Claude generates personalised development plans per employee based on their gap profile</li>
+          <li><strong>Team skills coverage analysis</strong> — shows whether each team has the skills to safely deliver contracted services — critical for CQC KLOEs around staffing</li>
+          <li><strong>Training needs report</strong> — aggregated needs across the organisation, prioritised by operational criticality</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Framework build</span><span class="tech-val">Claude analyses job descriptions and CQC KLOEs to build competency frameworks. 4–8 hours of Claude sessions per client to configure well.</span></div>
+        <div class="tech-row"><span class="tech-label">Assessment portal</span><span class="tech-val">Claude builds React web form with rating scales per competency. Staff receive link via email, complete in 10–15 minutes. Works on any device.</span></div>
+        <div class="tech-row"><span class="tech-label">Development plans</span><span class="tech-val">Claude API generates personalised development plan per staff member based on gap profile. Stored in Supabase, accessible via manager dashboard.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React — skills matrix heat map, individual profiles, team coverage view, training needs priority list, development plan progress tracker.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">CQC / Compliance Angle</div>
+            <div class="mkt-headline">"CQC asks whether staff have the skills to deliver safe care. Do you have evidence to answer confidently?"</div>
+            <div class="mkt-copy">CQC's Key Lines of Enquiry specifically ask inspectors to assess whether staff have the skills and competencies for safe, effective care. Our Skills Gap Platform gives you the evidence: individual competency profiles, identified gaps, and documented development plans. It turns a difficult inspector question into a confident, evidence-backed answer.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">L&D / HR</div>
+            <div class="mkt-headline">"Stop spending your L&D budget on training people have already done. Target the gaps that actually matter."</div>
+            <div class="mkt-copy">Our platform shows precisely which skills gaps represent the greatest operational and compliance risk — so you allocate L&D spend where it actually improves safety and performance, not where managers happen to request it.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Directly addresses CQC inspection questions</li><li>Very low build cost</li><li>Complements Workforce Compliance module naturally</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Self-assessment accuracy depends on engagement</li><li>Requires client-specific competency framework configuration</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Link to online learning platforms for direct training access</li><li>Benchmarking across HealthOS clients in same subsector</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>LMS platforms adding competency tracking features</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 100 staff</span><span class="price-val">£300/mo</span></div>
+        <div class="price-row"><span class="price-tier">100–300 staff</span><span class="price-val">£500/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup / framework build</span><span class="price-val">£400 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Organisation-wide competency score (0–100)</li>
+          <li>Number of critical skills gaps identified</li>
+          <li>% staff with current validated assessments</li>
+          <li>Development plan completion rate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m04">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 04 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Regulatory <em>Compliance AI</em></div>
+      <div class="module-tagline">Continuously monitors CQC, MHRA, NHS England, and other regulatory bodies for new guidance — mapping every update to the client's operational obligations and generating compliance gap reports automatically. Includes a plain-English Q&A chatbot for instant regulatory answers.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£600–1.2k</div><div class="mh-stat-label">Real cash build cost (incl. compliance review)</div></div>
+        <div><div class="mh-stat-val">3–5 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£100–180</div><div class="mh-stat-label">Monthly running cost</div></div>
+        <div><div class="mh-stat-val">2 days</div><div class="mh-stat-label">Audit prep time eliminated per quarter</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Regulatory knowledge base</strong> — CQC inspection framework, KLOEs, NHS standard contract requirements, and MHRA guidance indexed into Pinecone vector database</li>
+          <li><strong>Automatic change monitoring</strong> — Apify monitors CQC website, NHS England publications, MHRA updates weekly. Claude analyses and flags new or changed requirements.</li>
+          <li><strong>Change impact assessment</strong> — when regulatory change detected, Claude assesses impact on client operations and generates plain-English summary of required action</li>
+          <li><strong>Compliance gap analysis</strong> — monthly AI-generated report mapping current regulatory requirements against evidence of client compliance</li>
+          <li><strong>Inspection readiness score</strong> — rolling 0–100 CQC inspection readiness score across all KLOEs</li>
+          <li><strong>Regulatory Q&A chatbot</strong> — staff ask plain-English compliance questions and get answers from the indexed regulatory knowledge base instantly</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Knowledge base</span><span class="tech-val"><strong>Pinecone vector DB (£70/mo)</strong> — CQC fundamental standards, KLOEs, NHS contract requirements indexed as vector embeddings. Claude builds ingestion pipeline.</span></div>
+        <div class="tech-row"><span class="tech-label">Change monitoring</span><span class="tech-val">Apify scrapes CQC website, NHS England publications, MHRA guidance weekly. Claude compares against existing knowledge base, flags additions and changes.</span></div>
+        <div class="tech-row"><span class="tech-label">RAG chatbot</span><span class="tech-val">Claude builds RAG Q&A interface on Pinecone index. Staff ask compliance questions in plain English; Claude retrieves regulatory text and generates plain-English answer.</span></div>
+        <div class="tech-row"><span class="tech-label">Compliance review</span><span class="tech-val"><strong>External compliance consultant — £400–800 one-time</strong> to validate regulatory interpretation before going live with any client.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Compliance Manager</div>
+            <div class="mkt-headline">"CQC published 14 pieces of updated guidance last year. How many did you catch on the day they came out?"</div>
+            <div class="mkt-copy">Our AI monitors every relevant publication daily and tells you what's changed, what it means for your organisation, and what you need to do — the same day it's published. No more finding out weeks later that guidance changed and you're already non-compliant.</div>
+            <div class="mkt-hook">"We had one client receive an unexpected CQC inspection letter 3 weeks after a significant framework change. Because our system had already briefed them on the changes, they were ready. Inspection outcome: Good."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director</div>
+            <div class="mkt-headline">"CQC inspection announced. 48 hours to prepare. How long does it take you to gather your evidence right now?"</div>
+            <div class="mkt-copy">With our Regulatory Compliance AI, the answer becomes "minutes." Every compliance evidence document is stored, tagged by regulatory requirement, and instantly retrievable. Our inspection readiness score tells you where your gaps are so you can address them before the inspector arrives.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Highest perceived value HealthOS module — CQC fear is powerful</li><li>Regulatory monitoring automates a genuinely difficult manual task</li><li>Q&A chatbot is delightful in demos</li><li>Evidence library increases switching cost significantly</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>External compliance review needed before deployment</li><li>RAG accuracy requires periodic re-indexing as guidance updates</li><li>Legal disclaimer needed — informational not legal advice</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Expand to ICO (data protection) and HSE (health and safety) monitoring</li><li>Inspection preparation coaching — mock KLOE question responses</li><li>Post-inspection action plan generation</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>CQC changing inspection framework requiring full re-indexing</li><li>Incorrect guidance could lead to compliance failures — must stay accurate</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Regulatory Compliance AI</span><span class="price-val">£600/mo</span></div>
+        <div class="price-row"><span class="price-tier">Modules 01–04 bundle</span><span class="price-val">£1,200/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup / compliance review</span><span class="price-val">£600 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Inspection readiness score (0–100)</li>
+          <li>Compliance gaps identified and resolved</li>
+          <li>Regulatory changes detected and briefed per month</li>
+          <li>Audit evidence retrieval time (should fall to minutes)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m05">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 05 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">AI Shift <em>Scheduling Optimiser</em></div>
+      <div class="module-tagline">Generates demand-driven, WTR-compliant shift schedules that match staffing levels to operational demand — reducing unnecessary overtime and agency costs while eliminating coverage gaps that compromise service delivery.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">10–20%</div><div class="mh-stat-label">Labour cost reduction potential</div></div>
+        <div><div class="mh-stat-val">~£450</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£120–200</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Demand-driven scheduling</strong> — inputs service delivery requirements and generates staffing requirements per shift automatically</li>
+          <li><strong>Skills-matched rotas</strong> — uses Skills Gap module data to ensure every shift has the right mix of competencies, not just headcount</li>
+          <li><strong>WTR compliance enforcement</strong> — all rotas automatically comply with Working Time Regulations (48-hour max, rest periods, night shift limits)</li>
+          <li><strong>Automated rota publication</strong> — approved rotas sent to staff via WhatsApp/SMS. Staff confirm or flag issues immediately.</li>
+          <li><strong>Agency trigger optimisation</strong> — identifies the latest point at which agency cover must be booked for a predicted gap, minimising last-minute premium costs</li>
+          <li><strong>Labour cost modelling</strong> — shows cost of different staffing configurations before the rota is published</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data input</span><span class="tech-val">Service demand data + staff data from Modules 01/03. Supabase already has staff data if earlier modules deployed.</span></div>
+        <div class="tech-row"><span class="tech-label">Scheduling algorithm</span><span class="tech-val">Claude builds constraint satisfaction algorithm in Python — balances demand, skills, WTR rules, contract hours, and leave simultaneously.</span></div>
+        <div class="tech-row"><span class="tech-label">Notifications</span><span class="tech-val">Twilio WhatsApp Business — approved rota sent to each staff member automatically. Reply-based confirmation tracking.</span></div>
+        <div class="tech-row"><span class="tech-label">Self-service portal</span><span class="tech-val">React progressive web app — staff view rota, request leave, report availability changes. Works on any smartphone, no app download required.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / HR</div>
+            <div class="mkt-headline">"Your rota manager spends half their week building schedules that break the moment someone calls in sick."</div>
+            <div class="mkt-copy">Our AI builds the optimal rota from your demand profile, publishes it automatically, manages changes in real time, and tells you exactly when to call an agency — before the gap appears, not after it becomes a problem.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Finance Director</div>
+            <div class="mkt-headline">"Premium agency rates are almost entirely caused by last-minute bookings. We prevent that."</div>
+            <div class="mkt-copy">The difference between an agency booking made 5 days in advance vs the morning of a shift can be 30–50% in rate premium. Our scheduling system identifies coverage gaps the week before — giving managers time to fill them with lower-cost options before the premium window applies.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Directly reduces biggest variable cost in healthcare operations</li><li>WTR compliance automation removes legal risk</li><li>WhatsApp rota publication is genuinely better than manual calls</li><li>Synergistic with Modules 01–03 — shares staff data already in system</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Zero-hours contracts require careful handling in algorithm</li><li>Demand data can be complex to define for care services</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Integration with payroll for automated timesheet generation</li><li>Bank staff management — AI manages internal bank before agency</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Allocate Software and Healthroster with deep NHS deployments</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 100 staff</span><span class="price-val">£500/mo</span></div>
+        <div class="price-row"><span class="price-tier">100–300 staff</span><span class="price-val">£800/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£300 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Agency spend from last-minute bookings (should reduce)</li>
+          <li>WTR violations per month (target: zero)</li>
+          <li>Coverage gaps per week</li>
+          <li>Rota build time per week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m06">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 06 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Supply Chain <em>Risk Intelligence</em></div>
+      <div class="module-tagline">Monitors every supplier's financial health, delivery performance, MHRA compliance status, and geopolitical exposure — providing early warning of vulnerabilities before they disrupt critical healthcare services.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">2–8 wks</div><div class="mh-stat-label">Advance warning of supplier disruptions</div></div>
+        <div><div class="mh-stat-val">~£380</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–5 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£110–190</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Financial health monitoring</strong> — Companies House API tracks all UK-registered suppliers, flags deteriorating positions weeks before they become critical</li>
+          <li><strong>MHRA regulatory monitoring</strong> — monitors MHRA alerts, recalls, and regulatory actions for suppliers of medical devices or medicines. Healthcare-specific differentiator.</li>
+          <li><strong>Delivery performance tracking</strong> — records on-time delivery rate, order fill rate, and quality incidents per supplier from order data</li>
+          <li><strong>News and risk monitoring</strong> — Apify monitors news for each supplier — labour disputes, fires, sanctions, regulatory actions</li>
+          <li><strong>RAG risk scoring</strong> — Red/Amber/Green rating per supplier, updated weekly. Immediate alerts when any supplier moves to Red.</li>
+          <li><strong>Single-source risk identification</strong> — flags where the organisation is dependent on one supplier for critical supplies with no approved alternative</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Supplier database</span><span class="tech-val">Built from procurement records — supplier name, Companies House number, commodity, annual spend, criticality rating. Imported to Supabase once.</span></div>
+        <div class="tech-row"><span class="tech-label">Financial monitoring</span><span class="tech-val">Companies House API (free) runs weekly against all UK-registered suppliers. Claude analyses filing dates and flags changes.</span></div>
+        <div class="tech-row"><span class="tech-label">MHRA monitoring</span><span class="tech-val">Apify scrapes MHRA medical device alerts and drug safety updates. Claude cross-references against client's approved supplier list. Healthcare-specific differentiator.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React supplier risk dashboard — risk map, RAG table, supplier profiles with risk timelines, MHRA alert feed, single-source risk heat map.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Procurement</div>
+            <div class="mkt-headline">"A single supplier failure in a healthcare supply chain isn't an inconvenience. It's a patient safety risk."</div>
+            <div class="mkt-copy">Healthcare supply chain failures have direct patient safety implications. MHRA recalls, supplier insolvencies, delivery failures for critical medical supplies — any of these can have serious consequences. Our Supply Chain Risk Intelligence gives you advance warning to act before the crisis, not after.</div>
+            <div class="mkt-hook">"We alerted a client about an MHRA recall 4 days before their supplier contacted them. The proactive response went in their CQC evidence file."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Board / NHS Contracts</div>
+            <div class="mkt-headline">"Your NHS contract requires you to demonstrate supply chain resilience. Can you evidence it?"</div>
+            <div class="mkt-copy">NHS standard contracts increasingly require supply chain risk management as a contractual obligation. Our platform generates the supply chain risk register, monitoring evidence, and contingency documentation that commissioners and CQC inspectors are starting to ask for — automatically.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>MHRA monitoring is a genuine healthcare-specific differentiator</li><li>Patient safety narrative creates boardroom urgency</li><li>NHS contract compliance angle creates regulatory demand</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Non-UK supplier monitoring is less comprehensive</li><li>Small operators with few suppliers see less value</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>NHS Supply Chain catalogue integration for approved product monitoring</li><li>MHRA signal monitoring expansion</li><li>Expand to pharmaceutical distribution</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>NHS Supply Chain building their own risk monitoring tools</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 50 suppliers</span><span class="price-val">£400/mo</span></div>
+        <div class="price-row"><span class="price-tier">51–200 suppliers</span><span class="price-val">£700/mo</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Supplier risk events detected in advance</li>
+          <li>MHRA alerts actioned within 24 hours</li>
+          <li>Single-source risk % (reduce over time)</li>
+          <li>Supply continuity incidents per quarter</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m07">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 07 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Procurement <em>Optimisation AI</em></div>
+      <div class="module-tagline">Analyses medical supply procurement spend, benchmarks pricing against NHS frameworks and market rates, automates reorder workflows, and generates the procurement intelligence needed to negotiate better contracts at renewal.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">12–18%</div><div class="mh-stat-label">Procurement cost reduction potential</div></div>
+        <div><div class="mh-stat-val">~£380</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–5 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£100–180</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Spend analysis</strong> — imports PO history and categorises all medical supply spend by product type, supplier, and contract</li>
+          <li><strong>NHS framework benchmarking</strong> — benchmarks client's pricing against NHS Supply Chain catalogues and CCS framework pricing — publicly available comparators. Unique healthcare advantage.</li>
+          <li><strong>Overspend identification</strong> — flags every category where client is paying above NHS framework rates, with estimated annual overspend</li>
+          <li><strong>Reorder automation</strong> — when stock reaches reorder point, AI generates draft PO with competitive pricing reference for manager approval</li>
+          <li><strong>NHS framework compliance check</strong> — for operators with NHS contracts requiring framework purchasing, monitors compliance obligations</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">NHS benchmarking</span><span class="tech-val">Apify scrapes NHS Supply Chain catalogue pricing (publicly available) and CCS framework pricing. Claude normalises by product specification. Healthcare-specific advantage.</span></div>
+        <div class="tech-row"><span class="tech-label">Reorder system</span><span class="tech-val">n8n monitors stock levels against configurable reorder points. Claude drafts PO with market pricing reference. Manager approves in 30 seconds.</span></div>
+        <div class="tech-row"><span class="tech-label">Dashboard</span><span class="tech-val">React — spend vs benchmark chart, overspend league table, contract renewal calendar, PO approval queue, monthly savings summary.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Finance / CFO</div>
+            <div class="mkt-headline">"NHS Supply Chain publishes its framework prices publicly. If you're not buying at framework rates, you're overpaying — and we can prove it."</div>
+            <div class="mkt-copy">NHS framework pricing is publicly available for hundreds of product categories. Our system compares your actual prices against those frameworks every week — showing you exactly where you're overpaying. Most healthcare logistics operators find 10–18% savings in their first analysis.</div>
+            <div class="mkt-hook">"We ran a procurement analysis for an operator with £800k annual medical supply spend. In the first review, we identified £94k of annual overspend against NHS framework rates."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Procurement</div>
+            <div class="mkt-headline">"Stop running out of PPE on a Friday afternoon. Let the system order it automatically."</div>
+            <div class="mkt-copy">Our procurement automation monitors stock levels, drafts purchase orders at the right time with the right quantity, and surfaces the best-value supplier — so the right stock is always available without anyone managing it manually.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>NHS framework benchmarking is unique in healthcare — hard to replicate</li><li>Reorder automation has immediate operational convenience value</li><li>NHS contract compliance angle creates urgency for NHS-funded operators</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>NHS catalogue coverage limited for specialised items</li><li>Savings require client action to negotiate or switch suppliers</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Group purchasing across multiple HealthOS clients</li><li>Expand to GP surgery procurement and community pharmacy</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>NHS Supply Chain building direct procurement analytics</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Procurement Optimisation</span><span class="price-val">£400/mo</span></div>
+        <div class="price-row"><span class="price-tier">With Supply Chain Risk bundle</span><span class="price-val">£700/mo</span></div>
+        <div class="price-row"><span class="price-tier">Performance option</span><span class="price-val">10% of savings</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Spend vs NHS framework benchmark (£ variance)</li>
+          <li>Savings actioned per month</li>
+          <li>Stockout incidents for managed consumables</li>
+          <li>Contract renewal actions completed on time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m08">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 08 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">AI Route & Delivery <em>Optimisation</em></div>
+      <div class="module-tagline">Optimises delivery routes for medical supply distribution in real time — reducing fuel costs, improving on-time performance, and managing time-critical deliveries proactively — for healthcare logistics operators running fleets of any size.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">15–25%</div><div class="mh-stat-label">Fuel cost reduction</div></div>
+        <div><div class="mh-stat-val">~£500</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">4–6 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£120–220</div><div class="mh-stat-label">Monthly running cost</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Daily route optimisation</strong> — morning of delivery, AI generates optimal routes for all vehicles considering delivery addresses, time windows, vehicle capacity, driver hours, and real-time traffic</li>
+          <li><strong>Time-critical delivery management</strong> — flags and prioritises urgent medications, sterile supplies, temperature-sensitive items within route planning</li>
+          <li><strong>Driver app</strong> — progressive web app on any smartphone showing optimised route, delivery instructions, and proof of delivery capture</li>
+          <li><strong>Real-time exception management</strong> — when a delivery falls behind, AI re-sequences remaining route and notifies affected recipient automatically</li>
+          <li><strong>Customer delivery notifications</strong> — automated SMS to recipients when delivery is 30 minutes away — reducing failed deliveries and customer service calls</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Routing API</span><span class="tech-val"><strong>Google Maps Routes API</strong> — £0.008 per optimised route. 20 vehicles × 250 days = 5,000 routes/year = £40. Near-zero operating cost.</span></div>
+        <div class="tech-row"><span class="tech-label">Route optimiser</span><span class="tech-val">Claude builds VRP solver using Google OR-Tools (open source). Handles capacity constraints, time windows, driver hours rules.</span></div>
+        <div class="tech-row"><span class="tech-label">Driver app</span><span class="tech-val">Claude builds React progressive web app — route view, delivery instructions, POD capture, navigation link. Works on any Android or iOS device.</span></div>
+        <div class="tech-row"><span class="tech-label">Notifications</span><span class="tech-val">Twilio SMS — automated 30-min ETA notifications to delivery recipients. ~1p per notification.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations / Fleet Manager</div>
+            <div class="mkt-headline">"Your delivery routes haven't been properly optimised since you added 3 vehicles. Every day you're running inefficiently."</div>
+            <div class="mkt-copy">Most healthcare logistics operators plan routes manually or with basic sat-nav. Our AI optimises every route, every morning — cutting fuel costs by 15–25% and improving on-time performance without adding fleet capacity.</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">Clinical Services</div>
+            <div class="mkt-headline">"Time-critical medical deliveries require more than a van and a sat-nav."</div>
+            <div class="mkt-copy">When delivering urgent medications or sterile surgical supplies, on-time performance is a patient safety obligation. Our system prioritises time-critical deliveries, monitors them in real time, and triggers re-routing automatically if a delay is detected.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Immediate measurable cost saving (fuel costs)</li><li>Driver app is a quality-of-life improvement — drivers love it</li><li>Google Maps API is cheap — near-zero running cost</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Only applicable to operators with a delivery fleet</li><li>GPS tracking via driver phones has accuracy limitations vs dedicated telematics</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Integration with fleet telematics for real-time tracking</li><li>Carbon footprint reporting from fuel consumption data</li><li>Expand to domiciliary care visit scheduling</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Route optimisation platforms (Circuit, OptimoRoute) building healthcare-specific versions</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Up to 5 vehicles</span><span class="price-val">£400/mo</span></div>
+        <div class="price-row"><span class="price-tier">6–20 vehicles</span><span class="price-val">£700/mo</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£250 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Fuel cost per delivery (primary KPI)</li>
+          <li>On-time delivery rate %</li>
+          <li>Failed delivery rate</li>
+          <li>Driver hours per delivery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m09">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 09 · <span class="stage-badge s2">Stage 2 — Build Once Earning</span></div>
+      <div class="module-name">Operational <em>Performance Dashboard</em></div>
+      <div class="module-tagline">Aggregates KPI data from all active HealthOS modules into a single executive dashboard — replacing manual performance reporting with an always-on, always-current view of operational health and a one-click CQC evidence pack.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">~£180</div><div class="mh-stat-label">Real cash build cost</div></div>
+        <div><div class="mh-stat-val">2–3 wks</div><div class="mh-stat-label">Build time</div></div>
+        <div><div class="mh-stat-val">£60–100</div><div class="mh-stat-label">Monthly running cost</div></div>
+        <div><div class="mh-stat-val">Month 4+</div><div class="mh-stat-label">Best deployed once 3+ modules are live</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Core Features</div>
+        <ul class="feature-list">
+          <li><strong>Unified KPI dashboard</strong> — workforce compliance rate, agency spend, shift coverage, supply chain risk, procurement savings, and delivery performance in one screen</li>
+          <li><strong>AI weekly commentary</strong> — Claude generates plain-English narrative of the week's performance — what improved, deteriorated, and needs attention</li>
+          <li><strong>Automated board report</strong> — monthly board/commissioner report auto-generated from all module data. One-click output replaces days of manual compilation.</li>
+          <li><strong>CQC evidence pack integration</strong> — performance data from all modules feeds into combined CQC inspection evidence document</li>
+          <li><strong>Operational health score</strong> — single 0–100 score benchmarked against HealthOS network peers. Updated weekly.</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Development Breakdown</div>
+        <div class="tech-row"><span class="tech-label">Data aggregation</span><span class="tech-val">All modules already write to Neon DB / Supabase. Dashboard queries all data sources — no new data collection needed.</span></div>
+        <div class="tech-row"><span class="tech-label">AI commentary</span><span class="tech-val">Claude API runs weekly — queries all module KPI data, compares against previous week, generates narrative commentary. Sent as email to senior team.</span></div>
+        <div class="tech-row"><span class="tech-label">Board report</span><span class="tech-val">Claude generates monthly PDF board report using Puppeteer — populated from all module data with charts and narrative. Sent automatically on 1st of month.</span></div>
+        <div class="tech-row"><span class="tech-label">Deployment timing</span><span class="tech-val">Build once 3+ modules are live. The dashboard transforms client experience from "separate tools" to "one operating system" — dramatically improves retention.</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Marketing Angles</div>
+        <div class="mkt-grid">
+          <div class="mkt-card">
+            <div class="mkt-channel">Operations Director / Executive</div>
+            <div class="mkt-headline">"Your board pack takes 3 days to compile every month. We make it a 1-click export."</div>
+            <div class="mkt-copy">Senior leaders spend enormous time compiling performance reports from multiple systems. Our Operational Performance Dashboard does it automatically — always current, always accurate, always formatted — so every board meeting starts with the right information.</div>
+            <div class="mkt-hook">"Our clients describe this as the moment HealthOS goes from being useful to being indispensable. When your board report writes itself, you stop thinking about cancelling."</div>
+          </div>
+          <div class="mkt-card">
+            <div class="mkt-channel">CQC Readiness</div>
+            <div class="mkt-headline">"When the CQC inspection call comes, the evidence pack is already done."</div>
+            <div class="mkt-copy">Our dashboard continuously aggregates compliance evidence from all HealthOS modules, organised by CQC Key Line of Enquiry. When an inspection is announced, the evidence pack is generated in minutes. Continuous monitoring replaces reactive inspection preparation.</div>
+          </div>
+        </div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Module SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Dramatically increases perceived value of the entire platform</li><li>Relatively cheap and fast to build</li><li>Board report generation is habit-forming — creates strong stickiness</li><li>CQC evidence pack auto-generation is uniquely powerful</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Only valuable when multiple modules are live</li><li>Requires good data quality across all underlying modules</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Commissioner reporting — reports for NHS commissioners and ICS partners automatically</li><li>Benchmark report — client performance vs anonymised peer group</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>BI platforms (Power BI, Tableau) configured by clients' own teams</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Pricing</div>
+        <div class="price-row"><span class="price-tier">Ops Performance Dashboard</span><span class="price-val">£350/mo</span></div>
+        <div class="price-row"><span class="price-tier">Included in Full OS tier</span><span class="price-val">included</span></div>
+        <div class="price-row"><span class="price-tier">Setup fee</span><span class="price-val">£150 one-time</span></div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Key Metrics</div>
+        <ul class="feature-list">
+          <li>Board report compilation time (should fall to minutes)</li>
+          <li>Operational health score (weekly)</li>
+          <li>Dashboard weekly active users</li>
+          <li>CQC evidence pack generation time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="m10">
+  <div class="module-card">
+    <div class="module-header"><div class="module-header-glow"></div>
+      <div class="module-num">Module 10 · <span class="stage-badge s3">Stage 3 — The Full Product</span></div>
+      <div class="module-name">Health<em>OS</em> — The Full Operating System</div>
+      <div class="module-tagline">The Contract Intelligence Engine flagship + all 9 operational modules unified into one AI operating system. One login covering contracts, workforce compliance, agency management, skills, regulatory compliance, scheduling, supply chain, procurement, delivery, and performance reporting.</div>
+      <div class="module-header-stats">
+        <div><div class="mh-stat-val">£1,800–3,500</div><div class="mh-stat-label">Full HealthOS pricing per month</div></div>
+        <div><div class="mh-stat-val">5–6 months</div><div class="mh-stat-label">Full deployment timeline</div></div>
+        <div><div class="mh-stat-val">£4k–8k</div><div class="mh-stat-label">Total real cash build cost</div></div>
+        <div><div class="mh-stat-val">85%+</div><div class="mh-stat-label">Target gross margin</div></div>
+      </div>
+    </div>
+    <div class="module-body">
+      <div class="module-col">
+        <div class="mc-label">Build Roadmap</div>
+        <ul class="feature-list">
+          <li><strong>Week 1–3:</strong> Contract Intelligence Engine (flagship demo module) + Workforce Compliance + Agency Intelligence. ~£570 cash total. First clients signed.</li>
+          <li><strong>Month 2:</strong> Skills Gap + Regulatory Compliance AI (£400–800 compliance review — main cost). Funded by Stage 1 revenue.</li>
+          <li><strong>Month 2–3:</strong> Shift Scheduling Optimiser + Supply Chain Risk Intelligence</li>
+          <li><strong>Month 3–4:</strong> Procurement Optimisation + Route Optimisation (fleet clients only)</li>
+          <li><strong>Month 4–5:</strong> Operational Performance Dashboard — ties everything together. The moment HealthOS becomes an OS rather than a collection of tools.</li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label">Full OS Pricing</div>
+        <div class="price-row"><span class="price-tier">Contract Intelligence Engine</span><span class="price-val">£600/mo</span></div>
+        <div class="price-row"><span class="price-tier">Starter (Contract + Modules 1–3)</span><span class="price-val">£900/mo</span></div>
+        <div class="price-row"><span class="price-tier">Compliance Bundle (Modules 1–4)</span><span class="price-val">£1,200/mo</span></div>
+        <div class="price-row"><span class="price-tier">Operations Bundle (Modules 1–7)</span><span class="price-val">£1,800/mo</span></div>
+        <div class="price-row"><span class="price-tier">Full HealthOS (all modules)</span><span class="price-val">£2,500–3,500/mo</span></div>
+        <div class="price-row"><span class="price-tier">Per additional site</span><span class="price-val">+£600/mo</span></div>
+      </div>
+      <div class="module-col full">
+        <div class="mc-label">Full HealthOS SWOT</div>
+        <div class="mod-swot">
+          <div class="msw ms"><div class="msw-title">Strengths</div><ul class="msw-items"><li>Contract Intelligence Engine creates a unique "finds more than it costs" sales proposition</li><li>No comparable integrated platform exists for this market segment</li><li>CQC compliance integration is defensible and hard to replicate without domain knowledge</li><li>NHS framework benchmarking creates procurement intelligence unavailable elsewhere</li><li>Cheapest full OS build of the three verticals</li></ul></div>
+          <div class="msw mw"><div class="msw-title">Weaknesses</div><ul class="msw-items"><li>Market is more narrowly defined than dental or manufacturing</li><li>NHS procurement barriers if targeting NHS-contracted operators directly</li><li>Mum's dual COO + vertical contributor role needs careful management</li></ul></div>
+          <div class="msw mo"><div class="msw-title">Opportunities</div><ul class="msw-items"><li>Social care expansion — identical operational challenges, even larger market</li><li>ICS partnerships — become recommended platform for ICS-commissioned providers</li><li>Domiciliary care, community pharmacy, GP practice networks — adjacent and underserved</li></ul></div>
+          <div class="msw mt"><div class="msw-title">Threats</div><ul class="msw-items"><li>Established healthcare workforce platforms extending scope</li><li>NHS Digital investment in tools for commissioned providers</li><li>DSPT compliance requirement if data ever touches NHS systems directly</li></ul></div>
+        </div>
+      </div>
+      <div class="module-col">
+        <div class="mc-label green">Year 1 Revenue Targets</div>
+        <ul class="feature-list">
+          <li>Month 1–2: 3 clients (Contract Intelligence demo closes fast) = £1,800 MRR</li>
+          <li>Month 2–4: 8 clients avg £800/mo = £6,400 MRR</li>
+          <li>Month 4–6: 15 clients avg £1,100/mo = £16,500 MRR</li>
+          <li>Month 6–9: 25 clients avg £1,400/mo = £35,000 MRR</li>
+          <li>Month 9–12: First multi-site client on Full OS = £3,500+ MRR from one</li>
+          <li><strong>Year 1 ARR target: £300k–£500k</strong></li>
+        </ul>
+      </div>
+      <div class="module-col">
+        <div class="mc-label amber">Strategic Note</div>
+        <p style="font-size:12px;color:var(--ink3);line-height:1.65;">The Contract Intelligence Engine changes the HealthOS sales dynamic fundamentally. Most software is sold on future value. The Contract Intelligence Engine is sold on <strong style="color:var(--ink);">immediate, documented, existing value that hasn't been claimed yet.</strong> Lead every conversation with it. Demo it in every meeting. It removes the "we'll think about it" response and replaces it with "when can you start?"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="callout blue" style="margin-bottom:80px;">
+  <div class="callout-title">The Strategic Reminder — HealthOS</div>
+  <p>The Contract Intelligence Engine is the entry drug. It finds money immediately. That money pays for the platform. Then the compliance modules protect against CQC risk. Then the workforce modules reduce agency costs. Then the supply chain and procurement modules further reduce costs. <strong>By the time a client has 4+ modules live, HealthOS is embedded so deeply into their operations that the switching cost is structural.</strong> The window to build this platform — before any competitor discovers the niche — is open right now.</p>
+</div>
+
+</div>
+<footer>
+  <div class="footer-brand">HealthOS</div>
+  <div class="footer-note">Product Intelligence Document · AI Systems Co. · 2025</div>
+  <div class="footer-note">Flagship: Contract Intelligence Engine · 10 Modules · Confidential</div>
+</footer>
+<a href="#top" class="scroll-top">↑</a>
+</body>
+</html>
