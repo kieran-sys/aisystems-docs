@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Moat — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080b;--bg2:#0a0d12;--bg3:#0e1218;--bg4:#131820;
+  --white:#edf0f7;--dim:#3a4050;--dim2:#1e2530;--dim3:#262d38;
+  --border:rgba(255,255,255,0.07);--brt:rgba(255,255,255,0.13);
+  --teal:#15c4b0;--teal2:rgba(21,196,176,0.12);
+  --gold:#c4820a;--gold2:#e8c870;--gold3:rgba(196,130,10,0.12);
+  --blue:#1a4fd8;--blue2:rgba(26,79,216,0.12);
+  --red:#c94535;--green:#1a7c3a;--amber:#d48a1a;
+  --brain:#9b6dff;--brain2:rgba(155,109,255,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+/* NAV */
+.topnav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Fraunces',serif;font-size:18px;font-weight:900;font-style:italic;color:var(--white);text-decoration:none;padding:18px 0;}
+.nav-back{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--white);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 64px 80px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 60% 40%,rgba(155,109,255,0.08) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 10% 80%,rgba(21,196,176,0.05) 0%,transparent 55%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:64px 64px;}
+.hero-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--brain);margin-bottom:24px;position:relative;display:flex;align-items:center;gap:14px;}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--brain);}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(56px,9vw,120px);font-weight:900;line-height:.88;letter-spacing:-.03em;position:relative;max-width:1000px;}
+.hero h1 em{font-style:italic;color:rgba(155,109,255,0.5);}
+.hero-sub{margin-top:28px;font-size:16px;font-weight:300;color:var(--dim);max-width:640px;line-height:1.8;position:relative;}
+.hero-sub strong{color:var(--white);font-weight:500;}
+.hero-stats{display:flex;gap:48px;margin-top:48px;position:relative;flex-wrap:wrap;}
+.hs-val{font-family:'Fraunces',serif;font-size:40px;font-weight:900;color:var(--brain);line-height:1;letter-spacing:-.03em;}
+.hs-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+/* TOOL VS BRAIN */
+.tvb{background:var(--bg2);border-bottom:1px solid var(--border);padding:80px 64px;}
+.tvb-inner{max-width:1200px;margin:0 auto;}
+.tvb-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brain);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.tvb-tag::before{content:'';width:24px;height:1px;background:var(--brain);}
+.tvb-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:40px;}
+.tvb-title em{font-style:italic;color:rgba(155,109,255,0.5);}
+.tvb-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.tvb-col{padding:36px 36px;}
+.tvb-col.tool{background:rgba(255,255,255,0.02);border:1px solid var(--border);}
+.tvb-col.brain{background:rgba(155,109,255,0.05);border:1px solid rgba(155,109,255,0.2);position:relative;overflow:hidden;}
+.tvb-col.brain::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--brain);}
+.tvb-col-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px;}
+.tvb-col.tool .tvb-col-label{color:var(--dim);}
+.tvb-col.brain .tvb-col-label{color:var(--brain);}
+.tvb-col-title{font-family:'Fraunces',serif;font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:20px;line-height:1;}
+.tvb-col.tool .tvb-col-title{color:rgba(237,240,247,0.3);}
+.tvb-col.brain .tvb-col-title{color:var(--white);}
+.tvb-list{list-style:none;}
+.tvb-list li{font-size:13px;padding:8px 0 8px 18px;border-bottom:1px solid rgba(255,255,255,.04);position:relative;line-height:1.55;}
+.tvb-col.tool .tvb-list li{color:var(--dim);}
+.tvb-col.tool .tvb-list li::before{content:'—';position:absolute;left:0;color:var(--dim);font-size:10px;top:10px;}
+.tvb-col.brain .tvb-list li{color:rgba(237,240,247,0.65);}
+.tvb-col.brain .tvb-list li::before{content:'→';position:absolute;left:0;color:var(--brain);font-size:10px;top:10px;}
+.tvb-list li strong{font-weight:600;color:var(--white);}
+
+/* COMPOUND VISUAL */
+.compound{padding:80px 64px;border-bottom:1px solid var(--border);max-width:1200px;margin:0 auto;}
+.compound-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brain);margin-bottom:12px;}
+.compound-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
+.compound-title em{font-style:italic;color:rgba(155,109,255,0.4);}
+.compound-desc{font-size:14px;color:var(--dim);max-width:680px;line-height:1.75;margin-bottom:48px;}
+.compound-desc strong{color:var(--white);}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:32px;margin-bottom:64px;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--brain),rgba(155,109,255,0.1));}
+.tl-item{position:relative;margin-bottom:40px;}
+.tl-dot{position:absolute;left:-39px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--brain);background:var(--bg);}
+.tl-dot.filled{background:var(--brain);}
+.tl-month{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--brain);margin-bottom:6px;}
+.tl-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:-.01em;}
+.tl-body{font-size:13px;color:var(--dim);line-height:1.65;}
+.tl-body strong{color:var(--white);}
+.tl-gap{display:inline-block;margin-top:10px;padding:5px 12px;background:rgba(155,109,255,0.1);border:1px solid rgba(155,109,255,0.25);font-family:'DM Mono',monospace;font-size:10px;color:var(--brain);letter-spacing:.08em;}
+
+/* MODULE MOAT CARDS */
+.page-inner{max-width:1200px;margin:0 auto;padding:0 64px;}
+.section{padding:64px 0 48px;}
+.sec-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
+.sec-title em{font-style:italic;}
+.sec-title .t{color:var(--teal);}.sec-title .g{color:var(--gold2);}.sec-title .b{color:#7ab8f0;}
+.sec-desc{font-size:14px;color:var(--dim);max-width:700px;line-height:1.75;margin-bottom:36px;}
+.sec-desc strong{color:var(--white);}
+
+/* MOAT CARD */
+.moat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2px;margin-bottom:48px;}
+.moat-card{background:var(--bg2);border:1px solid var(--border);overflow:hidden;}
+.mc-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);}
+.mc-module{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;}
+.mc-name{font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.2;}
+.mc-body{padding:18px 24px;}
+.mc-row{margin-bottom:14px;}
+.mc-row-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;}
+.mc-row-val{font-size:12px;color:rgba(237,240,247,0.6);line-height:1.55;}
+.mc-row-val strong{color:var(--white);font-weight:600;}
+.mc-moat{padding:12px 14px;border-top:1px solid var(--border);margin-top:4px;}
+.mc-moat-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px;}
+.mc-moat-val{font-size:12px;font-style:italic;line-height:1.5;}
+.mc-gap{display:inline-block;margin-top:8px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;font-weight:600;}
+
+/* Vertical colour system */
+.v-teal .mc-module{color:var(--teal);}
+.v-teal .mc-moat{background:rgba(21,196,176,0.05);border-top-color:rgba(21,196,176,0.15);}
+.v-teal .mc-moat-label{color:var(--teal);}
+.v-teal .mc-moat-val{color:rgba(21,196,176,0.7);}
+.v-teal .mc-gap{background:rgba(21,196,176,0.08);color:var(--teal);border:1px solid rgba(21,196,176,0.2);}
+
+.v-gold .mc-module{color:var(--gold2);}
+.v-gold .mc-moat{background:rgba(232,200,112,0.04);border-top-color:rgba(232,200,112,0.12);}
+.v-gold .mc-moat-label{color:var(--gold2);}
+.v-gold .mc-moat-val{color:rgba(232,200,112,0.6);}
+.v-gold .mc-gap{background:rgba(196,130,10,0.08);color:var(--gold2);border:1px solid rgba(232,200,112,0.2);}
+
+.v-blue .mc-module{color:#7ab8f0;}
+.v-blue .mc-moat{background:rgba(122,184,240,0.04);border-top-color:rgba(122,184,240,0.12);}
+.v-blue .mc-moat-label{color:#7ab8f0;}
+.v-blue .mc-moat-val{color:rgba(122,184,240,0.65);}
+.v-blue .mc-gap{background:rgba(26,79,216,0.08);color:#7ab8f0;border:1px solid rgba(122,184,240,0.2);}
+
+/* GAP SCOREBOARD */
+.gap-board{background:var(--bg2);border:1px solid var(--border);margin-bottom:48px;}
+.gb-header{display:grid;grid-template-columns:1fr 160px 160px 160px;background:var(--bg3);border-bottom:1px solid var(--brt);}
+.gbh{padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);border-right:1px solid var(--border);}
+.gbh:last-child{border-right:none;}
+.gb-row{display:grid;grid-template-columns:1fr 160px 160px 160px;border-bottom:1px solid var(--border);}
+.gb-row:last-child{border-bottom:none;}
+.gbc{padding:12px 16px;font-size:12px;color:var(--white);border-right:1px solid var(--border);display:flex;align-items:center;}
+.gbc:last-child{border-right:none;}
+.gbc.label{font-weight:500;}
+.gbc.sub{font-size:11px;color:var(--dim);}
+.gap-pill{display:inline-block;padding:3px 10px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.04em;}
+.gap-pill.short{background:rgba(212,138,26,0.12);color:var(--amber);border:1px solid rgba(212,138,26,0.25);}
+.gap-pill.mid{background:rgba(21,196,176,0.1);color:var(--teal);border:1px solid rgba(21,196,176,0.2);}
+.gap-pill.long{background:rgba(155,109,255,0.1);color:var(--brain);border:1px solid rgba(155,109,255,0.25);}
+.gap-pill.permanent{background:rgba(26,124,58,0.1);color:#4ac870;border:1px solid rgba(74,200,112,0.2);}
+
+/* BRAIN DIAGRAM */
+.brain-diagram{padding:80px 64px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);}
+.bd-inner{max-width:1200px;margin:0 auto;}
+.bd-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brain);margin-bottom:12px;}
+.bd-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
+.bd-title em{font-style:italic;color:rgba(155,109,255,0.4);}
+.bd-desc{font-size:14px;color:var(--dim);max-width:700px;line-height:1.75;margin-bottom:48px;}
+.bd-desc strong{color:var(--white);}
+
+/* BRAIN VISUAL — concentric rings */
+.brain-visual{position:relative;height:480px;display:flex;align-items:center;justify-content:center;margin-bottom:48px;}
+.ring{position:absolute;border-radius:50%;border:1px solid;display:flex;align-items:center;justify-content:center;}
+.ring-1{width:120px;height:120px;background:rgba(155,109,255,0.2);border-color:rgba(155,109,255,0.5);}
+.ring-2{width:220px;height:220px;background:rgba(155,109,255,0.08);border-color:rgba(155,109,255,0.25);}
+.ring-3{width:340px;height:340px;background:rgba(155,109,255,0.04);border-color:rgba(155,109,255,0.15);}
+.ring-4{width:460px;height:460px;background:transparent;border-color:rgba(155,109,255,0.07);border-style:dashed;}
+.ring-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(155,109,255,0.9);text-align:center;line-height:1.4;}
+.ring-1 .ring-label{font-size:10px;font-weight:600;}
+
+/* Orbit nodes */
+.orbit-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.on-dot{width:8px;height:8px;border-radius:50%;}
+.on-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+.on-teal .on-dot{background:var(--teal);}.on-teal .on-label{color:var(--teal);}
+.on-gold .on-dot{background:var(--gold2);}.on-gold .on-label{color:var(--gold2);}
+.on-blue .on-dot{background:#7ab8f0;}.on-blue .on-label{color:#7ab8f0);}
+
+/* CALLOUT */
+.callout{padding:18px 22px;border:1px solid var(--border);border-left:3px solid;margin-bottom:28px;background:var(--bg3);}
+.callout.brain{border-left-color:var(--brain);}
+.callout.teal{border-left-color:var(--teal);}
+.callout.gold{border-left-color:var(--gold);}
+.callout.blue{border-left-color:var(--blue);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;}
+.callout.brain .callout-title{color:var(--brain);}
+.callout.teal .callout-title{color:var(--teal);}
+.callout.gold .callout-title{color:var(--gold2);}
+.callout.blue .callout-title{color:#7ab8f0;}
+.callout p{font-size:13px;color:var(--dim);line-height:1.65;}
+.callout p strong{color:var(--white);}
+
+.divider{height:1px;background:linear-gradient(90deg,var(--brt),transparent);margin:48px 0;}
+
+footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--bg2);margin-top:64px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:14px;font-weight:900;font-style:italic;color:var(--white);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;}
+
+@media(max-width:900px){
+  .topnav,.hero,.tvb,.brain-diagram,.page-inner,footer{padding-left:24px;padding-right:24px;}
+  .tvb-grid{grid-template-columns:1fr;}
+  .moat-grid{grid-template-columns:1fr;}
+  .gb-header,.gb-row{grid-template-columns:1fr 100px;}
+  .gbh:nth-child(3),.gbh:nth-child(4),.gbc:nth-child(3),.gbc:nth-child(4){display:none;}
+  .brain-visual{height:320px;}
+  .ring-4{width:300px;height:300px;}
+  .ring-3{width:220px;height:220px;}
+  .ring-2{width:150px;height:150px;}
+  .ring-1{width:80px;height:80px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">AI Systems Co.</a>
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div><div class="hero-grid"></div>
+  <div class="hero-tag">Competitive Defensibility · Why This Can't Be Copied</div>
+  <h1>Not a Tool.<br>A <em>Brain.</em></h1>
+  <p class="hero-sub">Every module we deploy collects data that makes every other module smarter. Every client we sign makes every insight more accurate. Every month that passes <strong>widens the gap between us and anyone who tries to replicate what we've built.</strong> This is not a software business. It is an intelligence business.</p>
+  <div class="hero-stats">
+    <div><div class="hs-val">3</div><div class="hs-label">Proprietary data moats</div></div>
+    <div><div class="hs-val">30</div><div class="hs-label">Modules feeding the brain</div></div>
+    <div><div class="hs-val">∞</div><div class="hs-label">Compounds over time</div></div>
+    <div><div class="hs-val">5yrs+</div><div class="hs-label">Time gap at full scale</div></div>
+  </div>
+</section>
+
+<!-- TOOL VS BRAIN -->
+<div class="tvb">
+  <div class="tvb-inner">
+    <div class="tvb-tag">The Fundamental Distinction</div>
+    <div class="tvb-title">Most AI Companies<br>Build <em>Tools</em></div>
+    <div class="tvb-grid">
+      <div class="tvb-col tool">
+        <div class="tvb-col-label">A Tool Does This</div>
+        <div class="tvb-col-title">Same on Day 1 as Day 1,000</div>
+        <ul class="tvb-list">
+          <li>Automates a task. Does it exactly the same way every time.</li>
+          <li>Has zero memory of what it processed before. Each interaction is cold.</li>
+          <li>Is equally useful to your competitor the day they buy it as it was to you on your first day.</li>
+          <li>Gets commoditised when the next version comes out or a cheaper alternative appears.</li>
+          <li>Produces outputs. Never produces <strong>intelligence</strong> — because it has no context.</li>
+          <li>Any competitor can buy the same tool tomorrow. The barrier is zero.</li>
+          <li>Solves one problem. Stays in its lane. Never connects to anything else.</li>
+        </ul>
+      </div>
+      <div class="tvb-col brain">
+        <div class="tvb-col-label">A Brain Does This</div>
+        <div class="tvb-col-title">Smarter Every Single Day</div>
+        <ul class="tvb-list">
+          <li><strong>Learns from every interaction.</strong> Month 12 is fundamentally more intelligent than Month 1.</li>
+          <li><strong>Remembers everything.</strong> Two years of patient patterns, machine failures, supplier risks — all live.</li>
+          <li>Is <strong>worthless to a competitor</strong> — because the intelligence is in the accumulated data, not the software.</li>
+          <li>Gets more valuable as more clients join — each new client teaches the system what it didn't know before.</li>
+          <li>Produces <strong>intelligence nobody else has.</strong> What does a £2M dental practice look like vs a £1M one? We know.</li>
+          <li>Cannot be copied. The data is proprietary, specific, and years deep. There is no shortcut to replicating it.</li>
+          <li><strong>Connects everything.</strong> Demand forecasting feeds scheduling. Scheduling feeds procurement. Every module talks to every module.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPOUND TIMELINE -->
+<div class="compound">
+  <div class="compound-tag">How the Brain Develops Over Time</div>
+  <div class="compound-title">The <em>Compounding</em> Curve</div>
+  <p class="compound-desc">A competitor starting today faces a different challenge to a competitor starting in 12 months. A competitor starting in 36 months faces something close to impossible. <strong>Data moats compound. The longer we operate, the further ahead we get — not just by the time elapsed, but by every insight extracted from it.</strong></p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-month">Month 1–3 · First Clients</div>
+      <div class="tl-title">The Brain Is Born</div>
+      <div class="tl-body">The first client data lands. Patient reactivation patterns. Competitor pricing in a postcode. Machine ERP order cycles. Healthcare agency rates. <strong>Every piece of data is new intelligence that nobody else has.</strong> The brain is tiny but real. We can already make better recommendations than a generic AI tool.</div>
+      <div class="tl-gap">Competitor gap: 0 months — anyone can start here</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-month">Month 6–9 · First Patterns</div>
+      <div class="tl-title">Patterns Emerge That Weren't Visible Before</div>
+      <div class="tl-body">Across 20+ dental clients, a pattern emerges: practices in market towns with 2+ nearby competitors have 40% higher reactivation rates if SMS is sent on Tuesday. <strong>Nobody published this. It exists nowhere in the world except in our database.</strong> This is the beginning of the proprietary intelligence layer that cannot be replicated by reading research papers. The only way to know this is to have the data. We have the data.</div>
+      <div class="tl-gap">Competitor gap: 6–9 months of data collection — if they started when we did</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-month">Month 12–18 · The Network Effect Begins</div>
+      <div class="tl-title">Each New Client Makes Every Existing Client Smarter</div>
+      <div class="tl-body">Client 50 joins DentalOS. The moment their data lands, they immediately benefit from the patterns we learned from clients 1–49. Their DNA rate prediction model starts at 70% accuracy — not the 45% that Client 1 started at. <strong>The product is already better for a new client than it ever was for our first.</strong> A competitor starting today can sign a client tomorrow. But they start at 45% accuracy. We're at 70%. That gap widens every month.</div>
+      <div class="tl-gap">Competitor gap: 12 months of data — assuming equivalent client acquisition</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-month">Year 2–3 · The Benchmark Moat</div>
+      <div class="tl-title">We Publish What Nobody Else Can Know</div>
+      <div class="tl-body">With 200+ dental practices in the database, we can tell a new client their cost per new patient vs the national average. We can tell a manufacturer their OEE vs industry benchmark. We can tell a healthcare operator their agency dependency score vs sector norm. <strong>These benchmarks exist nowhere else.</strong> No consultant has them. No trade body has them. Only we have them — because only we have the data from that many real, operating businesses in these specific niches.</div>
+      <div class="tl-gap">Competitor gap: 2+ years and 200+ clients — an almost impossible mountain</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-month">Year 4–5 · Structural Impossibility</div>
+      <div class="tl-title">The Gap Becomes Permanent</div>
+      <div class="tl-body"><strong>A competitor emerging at Year 4 faces the following:</strong> They need to acquire 500+ clients across three specialised industries simultaneously. They need to operate long enough to accumulate the pattern recognition we've spent 4 years building. They need to do it while competing with a platform that already has benchmark data, proven ROI cases, industry referrals, and intelligence that improves every week. This is not a time gap anymore. It is a structural competitive advantage that cannot be purchased, copied, or reverse-engineered. The data is ours. The intelligence is ours. <strong>The moat is real.</strong></div>
+      <div class="tl-gap" style="background:rgba(26,124,58,0.1);color:#4ac870;border-color:rgba(74,200,112,0.2);">Competitor gap: Effectively permanent at this stage</div>
+    </div>
+  </div>
+</div>
+
+<!-- DENTAL MOATS -->
+<div class="page-inner">
+<div class="section">
+  <div class="sec-tag">Vertical 01 · DentalOS</div>
+  <div class="sec-title">The <span class="t">Dental</span> Brain</div>
+  <p class="sec-desc">10 modules. Each one collects a different type of proprietary intelligence. Together they build an understanding of what makes a dental practice succeed or fail that <strong>no dental school, no consultant, and no competitor will ever be able to replicate.</strong></p>
+
+  <div class="callout teal">
+    <div class="callout-title">What The Dental Brain Knows That Nobody Else Does</div>
+    <p>After 3 years and 500+ practices: which reactivation message performs best by demographic and postcode. Which treatment types have the highest case acceptance by dentist communication style. Which competitor pricing moves correlate with patient attrition. Which seasonal patterns predict demand 90 days out with 85%+ accuracy. <strong>This intelligence doesn't exist anywhere in the world except in our database.</strong></p>
+  </div>
+
+  <div class="moat-grid">
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Module 01 · Reactivation Engine</div>
+        <div class="mc-name">Lapsed Patient Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Every patient contact point, response rate, booking conversion, treatment value of reactivated patients, message timing, channel preference by demographic, seasonal patterns of lapse and re-engagement.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>The exact message, channel, timing, and offer that reactivates each demographic segment in each type of practice.</strong> A rural practice with 60% NHS-converted patients vs an urban cosmetic practice require completely different approaches. After 100 practices, we know exactly what works for each.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"Our reactivation model learns from every campaign across every client. A competitor starting today has zero historical conversion data. Their messages are guesses. Ours are informed by millions of patient interactions."</div>
+          <div class="mc-gap">Time gap to replicate: 18–24 months minimum</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Module 02 · Competitor Intelligence</div>
+        <div class="mc-name">Local Market Memory</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Competitor pricing history in every UK dental market. Every ad creative running in every postcode. Every pricing move and its timing. Every new patient offer launched across 1,000+ monitored practices. Review trajectory patterns.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A real-time map of UK private dental pricing, competitive intensity, and market dynamics by geography.</strong> We know which postcodes are oversupplied, which are underserved, which competitors are growing, and which are struggling — before anyone else does.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"This data doesn't exist anywhere else. It can only be built by monitoring every market continuously over years. Nobody has done it. We're doing it now."</div>
+          <div class="mc-gap">Time gap to replicate: 2+ years of continuous monitoring</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Module 03 · Appointment Optimiser</div>
+        <div class="mc-name">Attendance Pattern Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">DNA rates by treatment type, time slot, day of week, patient age bracket, appointment lead time, reminder cadence, channel used, weather patterns, local events correlation.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A predictive DNA model accurate enough to identify 80%+ of non-attenders 48 hours in advance</strong> — across different practice types and demographics. This model starts at 45% accuracy and reaches 82%+ after 18 months of data. No competitor can buy that accuracy. It can only be learned.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"Every appointment outcome we record improves the model for every future client. The network effect is direct and measurable. A new client gets better predictions on Day 1 than we could have delivered 18 months ago."</div>
+          <div class="mc-gap">Time gap to replicate: 12–18 months of outcomes data</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Module 04 · Treatment Plan Conversion AI</div>
+        <div class="mc-name">Case Acceptance Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Every treatment plan presented: treatment type, value, presenting dentist, acceptance/decline, decline reason (where captured), follow-up sequence used, finance option taken, eventual outcome.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>The specific follow-up sequence, messaging, and timing that converts each treatment type at maximum rate.</strong> Implant decline patterns differ from orthodontic decline patterns. Our model knows the difference. It also identifies which dentists convert at above-average rates and what they do differently.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"What works for treatment plan conversion is not in any textbook. It's in the outcomes data. We collect it from every practice. Nobody else does."</div>
+          <div class="mc-gap">Time gap to replicate: 18–24 months + 200+ practices</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Module 05 · Marketing Attribution</div>
+        <div class="mc-name">Patient Acquisition Cost Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">True cost per new patient by channel, campaign, creative type, and geography — linked all the way to treatment revenue. What channel produces the highest-value patients. Which ad types work for implants vs hygiene vs general check-ups.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A proprietary database of dental marketing ROI by channel, geography, and treatment type</strong> that no marketing agency in the UK has assembled. We can tell a new client — on Day 1 — what their likely cost per new patient will be on Google vs Meta, before they spend a pound on ads.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"The marketing benchmark is the crown jewel. Every agency charges dental practices to discover what we already know from 300+ campaigns. We already know the answer before the question is asked."</div>
+          <div class="mc-gap">Time gap to replicate: 3+ years and 300+ campaign datasets</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-teal">
+      <div class="mc-header">
+        <div class="mc-module">Modules 06–09 · Clinical + Operations</div>
+        <div class="mc-name">Practice Health Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Combined Data Collected</div><div class="mc-row-val">Clinical documentation patterns and compliance gap frequency. Demand seasonality by region and practice type. Scheduling efficiency benchmarks. Revenue cycle performance. All normalised across practice size, location, and model.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A complete benchmark of what a healthy, high-performing dental practice looks like at every scale.</strong> Walk into any new client conversation and tell them — with data — exactly where they sit vs the market. Which metric to fix first. What the expected improvement looks like. This is not estimation. This is evidence.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Compounding Moat</div>
+          <div class="mc-moat-val">"The Practice Health Score we publish after Year 2 becomes the industry standard that every dental practice uses to benchmark themselves. We wrote the benchmark because we have the data. Nobody else has the data."</div>
+          <div class="mc-gap">Time gap to replicate: 3–5 years at equivalent scale</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FACTORY MOATS -->
+<div class="section">
+  <div class="sec-tag">Vertical 02 · FactoryOS</div>
+  <div class="sec-title">The <span class="g">Factory</span> Brain</div>
+  <p class="sec-desc">Manufacturing generates more structured data than almost any other industry. Machine sensors, ERP systems, energy meters, quality logs — millions of data points per day per facility. <strong>Nobody has ever assembled this data across multiple facilities with AI intelligence on top. We are doing it first.</strong></p>
+
+  <div class="callout gold">
+    <div class="callout-title">What The Factory Brain Knows That Nobody Else Does</div>
+    <p>After 3 years and 80+ facilities: the specific vibration signature pattern that precedes a bearing failure on a Haas CNC machine 12 days in advance. The procurement price benchmark for 3,000+ industrial commodities in real time. The OEE distribution across UK mid-market manufacturers by sector. The demand seasonality patterns for 200+ product categories. <strong>This intelligence cannot be purchased. It can only be accumulated.</strong></p>
+  </div>
+
+  <div class="moat-grid">
+    <div class="moat-card v-gold">
+      <div class="mc-header">
+        <div class="mc-module">Modules 01–02 · Demand & Inventory</div>
+        <div class="mc-name">Supply Chain Pattern Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Order history patterns by product type, customer, and season. Inventory holding profiles — what stock levels actually prevent stockouts vs what theory says. Lead time actuals vs supplier commitments across hundreds of suppliers.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>Demand forecasting models trained on real UK manufacturing data — not US academic datasets.</strong> After 50 clients, our Prophet model knows the seasonal patterns for UK automotive components, packaging, electronics, and food manufacturing. A new client's forecast improves from Day 1 because of what every previous client taught the model.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"Generic forecasting tools use historical data from the client's own ERP. We use their data plus everything we learned from 50 similar manufacturers. Our baseline accuracy is higher before we've seen a single data point from a new client."</div>
+          <div class="mc-gap">Time gap to replicate: 18 months + 50 comparable facilities</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-gold">
+      <div class="mc-header">
+        <div class="mc-module">Module 03 · Procurement Intelligence</div>
+        <div class="mc-name">Industrial Pricing Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Actual transacted prices for industrial components and raw materials across 80+ manufacturers. What different suppliers charge for the same commodity. Volume discount thresholds that are actually achievable. Supplier reliability scores from real delivery data.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A real-time industrial procurement price benchmark built from actual purchase orders — not published price lists.</strong> Published lists are fantasy. Actual transacted prices across 80 buyers are reality. We know what steel actually costs a £50M manufacturer in the Midlands. No procurement consultant has this data. We do.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"The collective buying intelligence of 80 manufacturers in one database. Every new client walks into negotiations knowing what the market actually pays. This is worth more than any consultancy engagement."</div>
+          <div class="mc-gap">Time gap to replicate: 3+ years + 80 manufacturer PO datasets</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-gold">
+      <div class="mc-header">
+        <div class="mc-module">Module 08 · Predictive Maintenance</div>
+        <div class="mc-name">Failure Pattern Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Machine sensor readings (vibration, temperature, current, pressure) paired with actual failure events and root cause data. Every failure across every machine type across every client — timestamped, categorised, and linked to the sensor signature that preceded it.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A library of machine failure signatures that is the most valuable maintenance dataset in UK manufacturing.</strong> The pattern that precedes a spindle bearing failure on a Mazak lathe. The current draw anomaly that signals an imminent hydraulic pump failure. These patterns are not in any manual. They exist only in our failure database. Every machine we monitor makes every other machine's model more accurate.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Crown Jewel Moat</div>
+          <div class="mc-moat-val">"Machine failure pattern data is the hardest data in the world to collect — because you have to wait for failures to learn from them. Every failure we observe is a lesson our competitors have not learned. The more facilities we monitor, the faster we learn. This moat compounds faster than any other."</div>
+          <div class="mc-gap">Time gap to replicate: 5+ years and hundreds of machine failures</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- HEALTH MOATS -->
+<div class="section">
+  <div class="sec-tag">Vertical 03 · HealthOS</div>
+  <div class="sec-title">The <span class="b">Health</span> Brain</div>
+  <p class="sec-desc">Healthcare logistics is the most data-rich and most data-neglected sector in the economy. Compliance records, workforce patterns, supply chain performance, contract data — all sitting in spreadsheets and email threads. <strong>We are the first to assemble this into a single intelligence layer.</strong></p>
+
+  <div class="callout blue">
+    <div class="callout-title">What The Health Brain Knows That Nobody Else Does</div>
+    <p>After 3 years and 300+ operators: which agency fills healthcare worker shifts fastest by role type and region. What NHS contract rebate structures are most commonly underutilised. The compliance gap patterns that appear 6 months before a CQC enforcement notice. The supply chain risk signals that precede a medical device supplier failure. <strong>Not available anywhere. Only in our database.</strong></p>
+  </div>
+
+  <div class="moat-grid">
+    <div class="moat-card v-blue">
+      <div class="mc-header">
+        <div class="mc-module">Module 01 · Workforce Compliance</div>
+        <div class="mc-name">Compliance Pattern Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Every certification type across every role across every organisation. Expiry patterns. Which certification types are most commonly allowed to lapse. How long before expiry most organisations act. What compliance gaps are most often cited in CQC enforcement notices.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A predictive model of CQC inspection risk based on compliance profile patterns.</strong> After 200 clients, we know that operators with 15%+ of DBS checks expiring within 90 days are 3x more likely to receive a compliance notice within 12 months. We flag this risk before it materialises. No other system in the market does this.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"The CQC risk prediction model requires compliance outcome data linked to compliance profile data. You only get that by operating for years across hundreds of organisations. We're building it. Nobody else is."</div>
+          <div class="mc-gap">Time gap to replicate: 2+ years + 200 organisations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-blue">
+      <div class="mc-header">
+        <div class="mc-module">Module 02 · Agency Intelligence</div>
+        <div class="mc-name">Agency Performance Benchmark</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Agency fill rates by role type and region. Actual billed rates vs framework rates across hundreds of operators. Quality complaint rates per agency. Time-to-fill by agency and urgency. Which agencies perform best for which role types in which geographies.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>The definitive performance benchmark for healthcare agency staff across the UK.</strong> A healthcare operator joining today immediately benefits from the fill rate and quality data we collected from 200 operators before them. We can tell them — on Day 1 — which agencies to call first for a Band 5 nurse in Manchester at 6am on a Monday. This is not general knowledge. It is proprietary intelligence.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Moat</div>
+          <div class="mc-moat-val">"Agency performance benchmarks only exist inside individual organisations. Nobody has ever aggregated them. We are doing it systematically. The aggregate is worth far more than any individual dataset."</div>
+          <div class="mc-gap">Time gap to replicate: 2+ years + 200 operators</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card v-blue">
+      <div class="mc-header">
+        <div class="mc-module">Flagship · Contract Intelligence Engine</div>
+        <div class="mc-name">NHS Contract Intelligence</div>
+      </div>
+      <div class="mc-body">
+        <div class="mc-row"><div class="mc-row-label">Data Collected</div><div class="mc-row-val">Every contract clause across hundreds of NHS and private healthcare contracts. Which rebate structures are most commonly missed. Which auto-renewal terms are most harmful. Which performance bonus thresholds are most commonly triggered but not claimed. Contract term benchmarks by contract type.</div></div>
+        <div class="mc-row"><div class="mc-row-label">What It Teaches The Brain</div><div class="mc-row-val"><strong>A map of what healthcare operators are systematically leaving on the table in their contract portfolios.</strong> When a new client uploads their contracts, the Brain already knows — from 300 similar contracts — exactly where to look first. The first analysis takes 20 minutes. The intelligence behind it took 3 years to build.</div></div>
+        <div class="mc-moat">
+          <div class="mc-moat-label">The Crown Jewel Moat</div>
+          <div class="mc-moat-val">"NHS contract intelligence is the most locked-up data in UK healthcare. Nobody shares it. Nobody aggregates it. We are building the only database that tells operators what their contracts are actually worth — built from hundreds of real contract analyses. It becomes more valuable with every contract we read."</div>
+          <div class="mc-gap">Time gap to replicate: 3+ years + 300 contract analyses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- GAP SCOREBOARD -->
+<div class="section">
+  <div class="sec-tag">The Competitive Time Gap</div>
+  <div class="sec-title">How Far <em>Ahead</em> We Get</div>
+  <p class="sec-desc">Every month we operate, a competitor starting fresh falls further behind. This table shows the estimated time gap a well-funded competitor would face at each stage — assuming they started on the same day we did and acquired clients at the same rate.</p>
+
+  <div class="gap-board">
+    <div class="gb-header">
+      <div class="gbh">Intelligence / Data Asset</div>
+      <div class="gbh">Gap at Month 12</div>
+      <div class="gbh">Gap at Year 3</div>
+      <div class="gbh">Gap at Year 5</div>
+    </div>
+    <div class="gb-row"><div class="gbc label">DNA prediction model accuracy<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Appointment non-attendance forecasting</div></div><div class="gbc"><span class="gap-pill short">6 months</span></div><div class="gbc"><span class="gap-pill mid">18 months</span></div><div class="gbc"><span class="gap-pill long">3+ years</span></div></div>
+    <div class="gb-row"><div class="gbc label">UK dental market pricing map<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Competitor pricing by geography</div></div><div class="gbc"><span class="gap-pill short">9 months</span></div><div class="gbc"><span class="gap-pill long">2+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">Treatment plan conversion benchmarks<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Case acceptance rates by treatment type</div></div><div class="gbc"><span class="gap-pill short">12 months</span></div><div class="gbc"><span class="gap-pill long">2+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">Manufacturing demand patterns<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Sector-specific seasonality models</div></div><div class="gbc"><span class="gap-pill short">12 months</span></div><div class="gbc"><span class="gap-pill mid">18 months</span></div><div class="gbc"><span class="gap-pill long">3 years</span></div></div>
+    <div class="gb-row"><div class="gbc label">Industrial procurement benchmarks<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Actual transacted prices, not list prices</div></div><div class="gbc"><span class="gap-pill mid">12 months</span></div><div class="gbc"><span class="gap-pill long">2+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">Machine failure signature library<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Pre-failure sensor patterns per machine type</div></div><div class="gbc"><span class="gap-pill short">12 months</span></div><div class="gbc"><span class="gap-pill long">3+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">Healthcare agency benchmarks<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Fill rates, quality scores by agency/region/role</div></div><div class="gbc"><span class="gap-pill short">12 months</span></div><div class="gbc"><span class="gap-pill long">2+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">NHS contract intelligence<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Rebate structures, missed credits, auto-renewal traps</div></div><div class="gbc"><span class="gap-pill mid">12 months</span></div><div class="gbc"><span class="gap-pill long">3+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+    <div class="gb-row"><div class="gbc label">CQC risk prediction model<div class="gbc sub" style="display:block;font-size:10px;color:var(--dim);font-weight:400;">Compliance profiles that precede enforcement</div></div><div class="gbc"><span class="gap-pill short">18 months</span></div><div class="gbc"><span class="gap-pill long">3+ years</span></div><div class="gbc"><span class="gap-pill permanent">Permanent</span></div></div>
+  </div>
+
+  <div class="callout brain">
+    <div class="callout-title">The Strategic Conclusion</div>
+    <p>A well-funded competitor who started building on the same day as us, acquired clients at the same rate, and built the same modules would still be <strong>12–18 months behind us at Year 1, 2–3 years behind at Year 3, and permanently behind at Year 5.</strong> Not because of our technology — our technology is replicable. Because of our data. The data cannot be bought, synthesised, or shortcut. It can only be earned by operating. Every day we operate, we earn more of it. <strong>The moat is not a feature. It is the business.</strong></p>
+  </div>
+</div>
+
+</div><!-- /page-inner -->
+
+<!-- BRAIN DIAGRAM -->
+<div class="brain-diagram">
+  <div class="bd-inner">
+    <div class="bd-tag">The Architecture</div>
+    <div class="bd-title">How the <em>Brain</em> Is Structured</div>
+    <p class="bd-desc">Three vertical intelligence layers feeding one central AI core. Every module is both a <strong>product</strong> (delivers immediate value) and an <strong>intelligence collector</strong> (feeds the central brain). The brain's outputs improve every module. The loop compounds indefinitely.</p>
+
+    <div class="brain-visual">
+      <div class="ring ring-4"></div>
+      <div class="ring ring-3"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-1"><div class="ring-label">The<br>Brain</div></div>
+
+      <!-- Dental nodes -->
+      <div class="orbit-node on-teal" style="top:30px;left:50%;transform:translateX(-50%)">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--teal)">Practice Pulse</div>
+      </div>
+      <div class="orbit-node on-teal" style="top:80px;right:60px">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--teal)">Reactivation</div>
+      </div>
+      <div class="orbit-node on-teal" style="top:180px;right:20px">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--teal)">Competitor Intel</div>
+      </div>
+
+      <!-- Factory nodes -->
+      <div class="orbit-node on-gold" style="bottom:30px;left:50%;transform:translateX(-50%)">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--gold2)">The Ops Brief</div>
+      </div>
+      <div class="orbit-node on-gold" style="bottom:80px;left:60px">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--gold2)">Machine Failures</div>
+      </div>
+      <div class="orbit-node on-gold" style="bottom:180px;left:20px">
+        <div class="on-dot"></div><div class="on-label" style="color:var(--gold2)">Procurement Intel</div>
+      </div>
+
+      <!-- Health nodes -->
+      <div class="orbit-node" style="top:80px;left:60px">
+        <div class="on-dot" style="background:#7ab8f0;"></div><div class="on-label" style="color:#7ab8f0">Contract Engine</div>
+      </div>
+      <div class="orbit-node" style="top:200px;left:20px">
+        <div class="on-dot" style="background:#7ab8f0;"></div><div class="on-label" style="color:#7ab8f0">Agency Intel</div>
+      </div>
+      <div class="orbit-node" style="bottom:100px;right:50px">
+        <div class="on-dot" style="background:#7ab8f0;"></div><div class="on-label" style="color:#7ab8f0">CQC Predictor</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+      <div style="background:rgba(21,196,176,0.06);border:1px solid rgba(21,196,176,0.15);padding:20px 22px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;">DentalOS feeds the brain</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Patient behaviour patterns. Competitor pricing intelligence. Treatment acceptance benchmarks. Practice health scores. All flowing into the central model and enriching every dental client's experience.</div>
+      </div>
+      <div style="background:rgba(196,130,10,0.05);border:1px solid rgba(232,200,112,0.15);padding:20px 22px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);margin-bottom:8px;">FactoryOS feeds the brain</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Machine failure signatures. Procurement price actuals. OEE benchmarks. Demand seasonality by sector. All flowing into the central model and making every manufacturer's predictions more accurate.</div>
+      </div>
+      <div style="background:rgba(26,79,216,0.05);border:1px solid rgba(122,184,240,0.15);padding:20px 22px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7ab8f0;margin-bottom:8px;">HealthOS feeds the brain</div>
+        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Contract terms and missed credits. Agency performance scores. Compliance risk patterns. NHS procurement benchmarks. All flowing in and making every healthcare operator's platform smarter from Day 1.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">AI Systems Co. · The Moat</div>
+  <div class="footer-note">Data compounds · Intelligence grows · The gap widens</div>
+  <div class="footer-note">Confidential — Internal Use Only</div>
+</footer>
+</body>
+</html>
