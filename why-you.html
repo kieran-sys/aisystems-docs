@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why You — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080b;--bg2:#0a0d11;--bg3:#0f1318;--bg4:#141920;
+  --white:#edf0f7;--cream:#d8d4cc;--dim:#3a4050;--dim2:#252c38;
+  --border:rgba(255,255,255,0.06);--brt:rgba(255,255,255,0.1);
+  --gold:#c4820a;--gold2:#e8c870;--gold3:rgba(232,200,112,0.15);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+.topnav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Fraunces',serif;font-size:18px;font-weight:900;font-style:italic;color:var(--white);text-decoration:none;padding:18px 0;}
+.nav-back{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--white);}
+
+/* HERO — full cinematic */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 64px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 50%,rgba(196,130,10,0.04) 0%,transparent 65%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.01) 1px,transparent 1px);background-size:64px 64px;}
+.hero-pretitle{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,200,112,0.5);margin-bottom:28px;position:relative;}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(64px,12vw,140px);font-weight:900;line-height:.88;letter-spacing:-.04em;position:relative;color:var(--white);}
+.hero h1 em{font-style:italic;color:var(--gold2);}
+.hero-sub{margin-top:32px;font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2.5vw,24px);font-weight:300;color:rgba(237,240,247,0.35);max-width:680px;line-height:1.5;position:relative;}
+
+/* PULL QUOTE */
+.pullquote{padding:80px 64px;border-bottom:1px solid var(--border);max-width:900px;margin:0 auto;text-align:center;}
+.pq-text{font-family:'Fraunces',serif;font-size:clamp(22px,3.5vw,40px);font-weight:300;font-style:italic;color:var(--cream);line-height:1.4;letter-spacing:-.01em;}
+.pq-text strong{font-style:normal;font-weight:700;color:var(--white);}
+.pq-attr{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:20px;}
+
+/* BODY COPY SECTIONS */
+.body-section{max-width:760px;margin:0 auto;padding:72px 64px;}
+.bs-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.bs-tag::before{content:'';width:24px;height:1px;background:var(--gold);}
+.bs-title{font-family:'Fraunces',serif;font-size:clamp(32px,4.5vw,56px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:28px;}
+.bs-title em{font-style:italic;color:rgba(237,240,247,0.3);}
+.bs-body{font-size:16px;color:rgba(237,240,247,0.55);line-height:1.85;font-weight:300;}
+.bs-body strong{color:var(--white);font-weight:600;}
+.bs-body p{margin-bottom:20px;}
+.bs-body p:last-child{margin-bottom:0;}
+
+/* CROSSROADS BLOCK */
+.crossroads{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px;margin:0;}
+.cr-inner{max-width:760px;margin:0 auto;}
+.cr-list{list-style:none;margin-top:32px;}
+.cr-item{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--border);}
+.cr-item:last-child{border-bottom:none;}
+.cr-num{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:rgba(232,200,112,0.2);flex-shrink:0;line-height:1;padding-top:2px;}
+.cr-text{font-size:15px;color:rgba(237,240,247,0.5);line-height:1.7;font-weight:300;}
+.cr-text strong{color:var(--white);font-weight:600;}
+
+/* FILM MOMENT */
+.film-moment{padding:80px 64px;border-bottom:1px solid var(--border);text-align:center;background:linear-gradient(180deg,transparent,rgba(196,130,10,0.03),transparent);}
+.fm-inner{max-width:680px;margin:0 auto;}
+.fm-icon{font-size:40px;margin-bottom:24px;opacity:.6;}
+.fm-title{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:900;line-height:1;letter-spacing:-.03em;margin-bottom:16px;}
+.fm-title em{font-style:italic;color:var(--gold2);}
+.fm-body{font-size:15px;color:rgba(237,240,247,0.45);line-height:1.8;font-weight:300;}
+.fm-body strong{color:var(--white);font-weight:600;}
+
+/* BRIEF SECTION */
+.brief{background:var(--bg2);border-top:1px solid var(--brt);border-bottom:1px solid var(--brt);padding:80px 64px;}
+.brief-inner{max-width:800px;margin:0 auto;}
+.brief-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.brief-tag::before{content:'';width:24px;height:1px;background:var(--gold2);}
+.brief-title{font-family:'Fraunces',serif;font-size:clamp(32px,5vw,60px);font-weight:900;line-height:.92;letter-spacing:-.03em;margin-bottom:24px;}
+.brief-title em{font-style:italic;color:rgba(237,240,247,0.25);}
+.brief-body{font-size:15px;color:rgba(237,240,247,0.45);line-height:1.8;margin-bottom:40px;font-weight:300;}
+.brief-body strong{color:var(--white);font-weight:600;}
+
+.brief-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px;}
+.bc{padding:24px 22px;border:1px solid;position:relative;}
+.bc:nth-child(1){background:rgba(232,200,112,0.04);border-color:rgba(232,200,112,0.2);}
+.bc:nth-child(2){background:rgba(237,240,247,0.025);border-color:rgba(237,240,247,0.1);}
+.bc:nth-child(3){background:rgba(237,240,247,0.015);border-color:rgba(237,240,247,0.07);}
+.bc-num{font-family:'Fraunces',serif;font-size:52px;font-weight:900;line-height:.9;margin-bottom:10px;opacity:.15;position:absolute;top:14px;right:14px;}
+.bc:nth-child(1) .bc-num{color:var(--gold2);}
+.bc:nth-child(2) .bc-num{color:var(--white);}
+.bc:nth-child(3) .bc-num{color:var(--white);}
+.bc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;}
+.bc:nth-child(1) .bc-label{color:var(--gold2);}
+.bc:nth-child(2) .bc-label{color:rgba(237,240,247,0.4);}
+.bc:nth-child(3) .bc-label{color:rgba(237,240,247,0.3);}
+.bc-title{font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--white);margin-bottom:8px;line-height:1.2;}
+.bc-body{font-size:12px;color:rgba(237,240,247,0.4);line-height:1.6;}
+
+.brief-note{padding:18px 22px;border:1px solid rgba(232,200,112,0.15);background:rgba(232,200,112,0.04);font-size:13px;color:rgba(237,240,247,0.45);line-height:1.65;}
+.brief-note strong{color:var(--white);}
+
+/* CLOSING */
+.closing{padding:100px 64px;text-align:center;border-top:1px solid var(--border);}
+.cl-inner{max-width:620px;margin:0 auto;}
+.cl-title{font-family:'Fraunces',serif;font-size:clamp(40px,6vw,72px);font-weight:900;line-height:.92;letter-spacing:-.04em;margin-bottom:24px;}
+.cl-title em{font-style:italic;color:rgba(237,240,247,0.2);}
+.cl-body{font-size:16px;color:rgba(237,240,247,0.4);line-height:1.85;font-weight:300;}
+.cl-body strong{color:var(--white);font-weight:600;}
+.cl-sig{font-family:'Fraunces',serif;font-size:22px;font-weight:700;font-style:italic;color:var(--gold2);margin-top:40px;}
+
+footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--bg2);}
+.footer-brand{font-family:'Fraunces',serif;font-size:14px;font-weight:900;font-style:italic;color:var(--white);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;}
+
+@media(max-width:768px){
+  .topnav,.hero,.pullquote,.body-section,.crossroads,.film-moment,.brief,.closing,footer{padding-left:24px;padding-right:24px;}
+  .brief-cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">AI Systems Co.</a>
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-pretitle">A Personal Message</div>
+  <h1>Why<br><em>You.</em></h1>
+  <p class="hero-sub">Not a pitch deck. Not a recruitment brochure. A conversation between people who know each other.</p>
+</section>
+
+<!-- PULL QUOTE -->
+<div class="pullquote">
+  <div class="pq-text">"There are plenty of brilliant people in the world. I didn't invite brilliant people. <strong>I invited you.</strong>"</div>
+  <div class="pq-attr">— The reason you're in this room</div>
+</div>
+
+<!-- SECTION 1 — THE CROSSROADS -->
+<div class="body-section">
+  <div class="bs-tag">On Timing</div>
+  <div class="bs-title">Everyone Arrives at a<br><em>Crossroads</em></div>
+  <div class="bs-body">
+    <p>If you're reading this, there's a reason you were invited. Not because of your CV. Not because of your LinkedIn profile. Because somewhere in your life right now, there's a version of you that knows things are shifting.</p>
+    <p>Maybe you can feel it. Maybe you've been feeling it for a while. The career path that made sense at 22 is starting to look different at 32, or 42, or 52. The job title that felt like achievement is starting to feel like a ceiling. The company you work for is starting to feel less certain about its own future than you are about yours.</p>
+    <p>The world is changing at a speed that is making the traditional career script feel outdated. <strong>AI is not going to replace skilled, creative, experienced people. But it is going to make the right team of skilled, creative, experienced people capable of building something that used to require 200 people and £10 million in funding.</strong></p>
+    <p>The crossroads is real. The question is what you do at it.</p>
+  </div>
+</div>
+
+<!-- CROSSROADS LIST -->
+<div class="crossroads">
+  <div class="cr-inner">
+    <div class="bs-tag" style="margin-bottom:0;">What That Crossroads Often Looks Like</div>
+    <ul class="cr-list">
+      <li class="cr-item">
+        <div class="cr-num">01</div>
+        <div class="cr-text">You're <strong>good at what you do</strong> — really good — but the organisation you're doing it for doesn't seem to care as much as you do. You know you're capable of more than they're giving you room for.</div>
+      </li>
+      <li class="cr-item">
+        <div class="cr-num">02</div>
+        <div class="cr-text">You've been thinking about <strong>doing something for yourself</strong> for years. The idea never quite goes away. But the risk always feels too large, the timing never quite right, and you don't know who you'd do it with.</div>
+      </li>
+      <li class="cr-item">
+        <div class="cr-num">03</div>
+        <div class="cr-text">You look at what AI is doing to your industry and you feel one of two things: <strong>threatened or curious.</strong> If you're in this room, you're probably more curious than threatened. That instinct is worth something.</div>
+      </li>
+      <li class="cr-item">
+        <div class="cr-num">04</div>
+        <div class="cr-text">You've got <strong>domain expertise, relationships, or a way of seeing the world</strong> that you know is valuable — but you've been giving it to someone else's company for someone else's benefit for a long time.</div>
+      </li>
+      <li class="cr-item">
+        <div class="cr-num">05</div>
+        <div class="cr-text">You've been waiting for the <strong>right opportunity with the right people.</strong> Not just a job. Not just a project. Something you'd actually want to be remembered for being part of.</div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 2 — WHY YOU SPECIFICALLY -->
+<div class="body-section">
+  <div class="bs-tag">On Why You Specifically</div>
+  <div class="bs-title">I Didn't Open a<br><em>Job Board</em></div>
+  <div class="bs-body">
+    <p>Building a company the conventional way means writing job descriptions, posting them, filtering applications, interviewing strangers, and hoping the person you hire actually cares about what you're building. Most of the time, they don't. Not really. They care about the salary, the title, the commute, and whether the team seems decent enough. That's rational. It's also not enough.</p>
+    <p>What we're building requires a different kind of team. People who <strong>already know what they're worth. Who bring something specific that they've spent years developing. Who don't need managing — they need direction and then room to operate.</strong></p>
+    <p>The people in this room were chosen before a single slide was written. Not because you're the most qualified people on paper. Because I know what you're capable of. Because I've seen it. Because I trust you in a way that takes most companies years to build — and most companies never quite manage.</p>
+    <p><strong>That trust is the foundation of everything we're about to talk about.</strong> The business is compelling. The numbers are real. The timing is right. But none of that matters if the people aren't right. The people in this room are right. That's why you're here.</p>
+  </div>
+</div>
+
+<!-- FILM MOMENT -->
+<div class="film-moment">
+  <div class="fm-inner">
+    <div class="fm-icon">🎥</div>
+    <div class="fm-title">We Are <em>Filming This.</em></div>
+    <div class="fm-body">
+      <p>Because in five years, when people ask how this started — <strong>this is the scene.</strong> A room full of people who said yes before anyone else believed it. The part of the documentary everyone rewinds. The moment before everything changed.</p>
+      <p style="margin-top:16px;">We're not filming it because we're certain it'll be worth watching. We're filming it because <strong>the people who build the things worth watching always wish they had.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3 — WHAT WE'RE ASKING -->
+<div class="body-section">
+  <div class="bs-tag">On Honesty</div>
+  <div class="bs-title">What We Are <em>Not</em> Asking</div>
+  <div class="bs-body">
+    <p>We are not asking you to quit your job tomorrow. We are not asking you to put your mortgage at risk. We are not asking you to bet everything on something you heard about for the first time today.</p>
+    <p>We are asking you to <strong>honestly consider what you could bring to this</strong> — and whether what you could bring would be worth owning a piece of what it becomes.</p>
+    <p>There are different levels of involvement. Full-time. Part-time. Project-based. A few hours a week doing something only you can do. <strong>Every level is real. Every level is valued. Every level gets equity — a genuine piece of ownership in what we're building.</strong></p>
+    <p>And if the answer is no — that's genuinely fine. Not every opportunity is right for every person at every time. The world is full of good opportunities. This happens to be a great one, at a rare moment, with the right people. But you are the only person who can decide whether it's yours.</p>
+    <p><strong>If you're not in, we part as friends and the respect between us doesn't move an inch.</strong> This conversation never happened if you need it to never have happened.</p>
+  </div>
+</div>
+
+<!-- THE BRIEF -->
+<div class="brief">
+  <div class="brief-inner">
+    <div class="brief-tag">One Week From Now</div>
+    <div class="brief-title">Your <em>Opening Chapter</em></div>
+    <div class="brief-body">
+      <p>You have a week. Not to decide yes or no — that pressure isn't on you yet. To <strong>think about what you'd bring to this, if you were in.</strong></p>
+      <p>When you come back, bring three things. Not a CV. Not a formal pitch. Just three honest answers that only you could give. Think of it as the first thing you'd contribute — the opening paragraph of your chapter in this story.</p>
+    </div>
+
+    <div class="brief-cards">
+      <div class="bc">
+        <div class="bc-num">1</div>
+        <div class="bc-label">Your Role</div>
+        <div class="bc-title">What would you build here?</div>
+        <div class="bc-body">Not a job title. The actual thing. The work only you would do, the problems only you'd see, the doors only you could open. Where does your specific combination of experience, relationships, and instinct fit into what you just heard?</div>
+      </div>
+      <div class="bc">
+        <div class="bc-num">2</div>
+        <div class="bc-label">Your Commitment</div>
+        <div class="bc-title">How much of yourself can you give?</div>
+        <div class="bc-body">Honestly. Not what you think sounds impressive — what is actually real right now. Full-time, evenings and weekends, 5 hours a week on a specific thing. The honest answer is the right answer. Everything is structured around reality, not aspiration.</div>
+      </div>
+      <div class="bc">
+        <div class="bc-num">3</div>
+        <div class="bc-label">Your Idea</div>
+        <div class="bc-title">One thing only you'd bring.</div>
+        <div class="bc-body">One idea. One connection. One angle. One thing that occurred to you during this presentation that we haven't thought of yet — or that you'd do differently. The thing that reminds us why we invited you specifically and not someone else.</div>
+      </div>
+    </div>
+
+    <div class="brief-note">
+      <strong>This is not an application process.</strong> There are no right answers and no wrong ones. Nobody is being assessed against a rubric or competing against each other. This is just the beginning of an honest conversation about what you'd contribute — so we can figure out together where you fit and what that's worth. The people who come back are the ones who built the thing. <strong>The ones who come back with something real are the ones who own the most of it.</strong>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="cl-inner">
+    <div class="cl-title">The World Is<br><em>Big.</em></div>
+    <div class="cl-body">
+      <p>There are a thousand paths from here. Most of them are perfectly good paths. This is one path — and it happens to be the one I'm most excited about, with the people I'd most want to walk it with.</p>
+      <p style="margin-top:20px;"><strong>If you're in, we build something worth filming.</strong> If you're not, you'll watch it from the outside and we'll still have dinner occasionally and I'll still think you're brilliant.</p>
+      <p style="margin-top:20px;">But if there's a version of you that felt something in that room today — that recognised something in what you heard — I'd encourage you to listen to that version.</p>
+      <p style="margin-top:20px;">That version usually knows what it's doing.</p>
+    </div>
+    <div class="cl-sig">Take the week. Come back with something real.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">AI Systems Co.</div>
+  <div class="footer-note">For the people in the room · 2025</div>
+  <div class="footer-note">Confidential</div>
+</footer>
+</body>
+</html>

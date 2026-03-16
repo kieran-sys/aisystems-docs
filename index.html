@@ -25,72 +25,104 @@ h1 em{font-style:italic;color:#a8c0f0;}
 .card.slate::before{background:#4a6080;}
 .card.green::before{background:#1a7c3a;}
 .card.purple::before{background:#7c3aad;}
+.card.amber::before{background:#d48a1a;}
+.card.cream::before{background:#c4a87a;}
 .card.team::before{background:linear-gradient(90deg,#15c4b0,#c4820a,#1a4fd8);}
-.card-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#3a4050;}
-.card.teal .card-tag{color:#15c4b0;} .card.gold .card-tag{color:#c4820a;} .card.blue .card-tag{color:#1a4fd8;} .card.slate .card-tag{color:#7a90a8;} .card.green .card-tag{color:#1a7c3a;} .card.purple .card-tag{color:#9a5ad8;} .card.team .card-tag{color:#a8c0f0;}
+.card-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;}
+.card.teal .card-tag{color:#15c4b0;} .card.gold .card-tag{color:#c4820a;} .card.blue .card-tag{color:#1a4fd8;}
+.card.slate .card-tag{color:#7a90a8;} .card.green .card-tag{color:#1a7c3a;} .card.purple .card-tag{color:#9a5ad8;}
+.card.amber .card-tag{color:#d48a1a;} .card.cream .card-tag{color:#c4a87a;} .card.team .card-tag{color:#a8c0f0;}
 .card-title{font-family:'Fraunces',serif;font-size:26px;font-weight:900;line-height:1;letter-spacing:-.02em;color:#e8e4dc;}
 .card-title em{font-style:italic;}
 .card-desc{font-size:12px;color:#4a5060;line-height:1.6;}
 .card-arrow{font-size:18px;color:#2a3040;margin-top:auto;padding-top:16px;transition:color .2s;}
 .card:hover .card-arrow{color:#a8c0f0;}
 .card.featured{grid-column:span 2;}
-@media(max-width:700px){.card.featured{grid-column:span 1;} .hero{padding:48px 24px;} .grid{padding:0;}}
+.section-label{padding:20px 24px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#2a3040;grid-column:1/-1;}
+@media(max-width:700px){.card.featured{grid-column:span 1;}.hero{padding:48px 24px;}.grid{padding:0;}}
 </style>
 </head>
 <body>
 <div class="hero">
   <div class="tag">AI Systems Co. · Internal Documents · 2025</div>
   <h1>The <em>Hub</em></h1>
-  <p class="sub">All strategy documents, product intelligence briefs, and presentation materials in one place.</p>
+  <p class="sub">All strategy documents, product intelligence, financial forecasts, team structure, and presentation materials.</p>
 </div>
 <div class="grid">
 
+  <div class="section-label">★ The Masterplan Presentation</div>
+
   <a href="team.html" class="card team featured">
-    <div class="card-tag">★ Team Presentation · Start Here</div>
-    <div class="card-title">Family <em>Pitch Deck</em></div>
-    <div class="card-desc">The presentation for the founding team meeting. The opportunity, the structure, the three verticals, individual roles, and the prize. Present this first.</div>
+    <div class="card-tag">★ Family Pitch Deck · Start Here</div>
+    <div class="card-title">The <em>Pitch</em></div>
+    <div class="card-desc">The founding team presentation. The opportunity, the three verticals, individual roles, structure, and the prize. Present this first.</div>
     <div class="card-arrow">→</div>
   </a>
 
+  <a href="why-you.html" class="card cream">
+    <div class="card-tag">The Personal Message</div>
+    <div class="card-title">Why <em>You</em></div>
+    <div class="card-desc">Not a pitch. A conversation. The crossroads, why these people specifically, what we're asking, and what to bring back in a week.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="forecast.html" class="card green">
+    <div class="card-tag">VC-Grade · 5 Year Model</div>
+    <div class="card-title">Financial <em>Forecast</em></div>
+    <div class="card-desc">Conservative in assumptions. Unashamed in ambition. DentalOS, FactoryOS, HealthOS, and the consolidated £67M ARR Year 5 picture.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a href="structure.html" class="card amber">
+    <div class="card-tag">Team Structure · Equity Model</div>
+    <div class="card-title">The Three <em>Tiers</em></div>
+    <div class="card-desc">All-Ins, Middles, and Fringe. Every role we need to fill. The share structure. The vesting model. What £10B looks like per tier.</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <div class="section-label">Product Intelligence Documents</div>
+
   <a href="dental.html" class="card teal">
-    <div class="card-tag">Product Intelligence · Kie & Leah</div>
+    <div class="card-tag">Product Intelligence · Dental</div>
     <div class="card-title">Dental<em>OS</em></div>
-    <div class="card-desc">Full product brief. Flagship: Practice Pulse. 10 modules with features, dev breakdown, marketing angles, SWOT, and pricing.</div>
+    <div class="card-desc">Flagship: Practice Pulse. 10 modules with features, dev breakdown, marketing angles, SWOT, and pricing. Year 1 ARR: £580k.</div>
     <div class="card-arrow">→</div>
   </a>
 
   <a href="factory.html" class="card gold">
-    <div class="card-tag">Product Intelligence · Si</div>
+    <div class="card-tag">Product Intelligence · Manufacturing</div>
     <div class="card-title">Factory<em>OS</em></div>
-    <div class="card-desc">Full product brief. Flagship: The Ops Brief. 10 modules including predictive maintenance and computer vision QC. Audit-first model.</div>
+    <div class="card-desc">Flagship: The Ops Brief. 10 modules including predictive maintenance and CV QC. Audit-first model. Year 1 revenue: £365k.</div>
     <div class="card-arrow">→</div>
   </a>
 
   <a href="health.html" class="card blue">
-    <div class="card-tag">Product Intelligence · Mum's Industry</div>
+    <div class="card-tag">Product Intelligence · Health</div>
     <div class="card-title">Health<em>OS</em></div>
-    <div class="card-desc">Full product brief. Flagship: Contract Intelligence Engine — finds more in missed rebates in 90 days than the annual fee. 10 modules.</div>
+    <div class="card-desc">Flagship: Contract Intelligence Engine. Finds more than it costs in 90 days. 10 modules. Year 1 revenue: £195k.</div>
     <div class="card-arrow">→</div>
   </a>
+
+  <div class="section-label">Reference Documents</div>
 
   <a href="build-plan.html" class="card slate">
     <div class="card-tag">Build Plan v2 · All Verticals</div>
     <div class="card-title">Real <em>Build Costs</em></div>
-    <div class="card-desc">Honest cash costs (not developer rates). 30 modules across all three verticals. Stage 1 total across all three: ~£1,750 cash.</div>
+    <div class="card-desc">Honest cash costs. 30 modules across all three verticals. Stage 1 across all three: ~£1,750 total real cash.</div>
     <div class="card-arrow">→</div>
   </a>
 
   <a href="what-we-offer.html" class="card green">
-    <div class="card-tag">Sales Deck · What We Do</div>
+    <div class="card-tag">Sales Deck · Overview</div>
     <div class="card-title">What We <em>Offer</em></div>
-    <div class="card-desc">Client-facing overview of all three verticals. The deck to show a prospect who asks "so what exactly do you do?"</div>
+    <div class="card-desc">Client-facing overview of all three verticals. The deck for prospects who ask "what exactly do you do?"</div>
     <div class="card-arrow">→</div>
   </a>
 
   <a href="strategy.html" class="card purple">
     <div class="card-tag">VC-Grade Strategy Report</div>
     <div class="card-title">Full <em>Strategy</em></div>
-    <div class="card-desc">100+ AI systems analysed, 10 industries ranked, tech stack, business model, GTM. The full macro picture behind this venture.</div>
+    <div class="card-desc">100+ AI systems analysed, 10 industries ranked, tech stack, business model, GTM. The full macro picture.</div>
     <div class="card-arrow">→</div>
   </a>
 

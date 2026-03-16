@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Structure — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c;--bg2:#0c0f13;--bg3:#111518;--bg4:#161c22;
+  --white:#edf0f7;--dim:#4a5060;--dim2:#1e2530;--dim3:#232830;
+  --border:rgba(255,255,255,0.07);--brt:rgba(255,255,255,0.12);
+  --teal:#15c4b0;--gold:#c4820a;--blue:#1a4fd8;--green:#1a7c3a;
+  --red:#c94535;--amber:#d48a1a;--purple:#7c3aad;
+  --a1:#e8c870;--a2:#7ab8f0;--a3:#7acca8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;}
+
+.topnav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Fraunces',serif;font-size:18px;font-weight:900;font-style:italic;color:var(--white);text-decoration:none;padding:18px 0;}
+.nav-back{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--white);}
+
+.cover{background:linear-gradient(135deg,#03060a 0%,#060d14 50%,#030608 100%);padding:80px 64px 72px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.cover-glow{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 85% 25%,rgba(232,200,112,0.07) 0%,transparent 55%);pointer-events:none;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--a1);margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;}
+.cover-tag::before{content:'';width:28px;height:1px;background:var(--a1);}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(52px,8vw,100px);font-weight:900;line-height:.92;letter-spacing:-.03em;position:relative;max-width:800px;}
+.cover h1 em{font-style:italic;color:rgba(237,240,247,0.35);}
+.cover-sub{margin-top:24px;font-size:15px;font-weight:300;color:var(--dim);max-width:620px;line-height:1.75;position:relative;}
+.cover-sub strong{color:var(--white);font-weight:500;}
+
+.page{max-width:1240px;margin:0 auto;padding:0 64px;}
+.section{padding:64px 0 48px;}
+.sec-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
+.sec-title em{font-style:italic;}
+.sec-desc{font-size:14px;color:var(--dim);max-width:680px;line-height:1.75;margin-bottom:36px;}
+.sec-desc strong{color:var(--white);}
+
+/* CALLOUT */
+.callout{padding:18px 22px;border:1px solid var(--border);border-left:3px solid;margin-bottom:28px;background:var(--bg2);}
+.callout.a1{border-left-color:var(--a1);}.callout.a2{border-left-color:var(--a2);}.callout.a3{border-left-color:var(--a3);}
+.callout.amber{border-left-color:var(--amber);}.callout.purple{border-left-color:var(--purple);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;}
+.callout.a1 .callout-title{color:var(--a1);}.callout.a2 .callout-title{color:var(--a2);}.callout.a3 .callout-title{color:var(--a3);}
+.callout.amber .callout-title{color:var(--amber);}.callout.purple .callout-title{color:var(--purple);}
+.callout p{font-size:13px;color:var(--dim);line-height:1.65;}.callout p strong{color:var(--white);}
+
+/* THE THREE TIERS */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px;}
+.tier{border:1px solid;padding:28px 28px 24px;position:relative;overflow:hidden;}
+.tier.all-in{background:rgba(232,200,112,0.05);border-color:rgba(232,200,112,0.25);}
+.tier.middles{background:rgba(122,184,240,0.05);border-color:rgba(122,184,240,0.25);}
+.tier.fringe{background:rgba(122,204,168,0.05);border-color:rgba(122,204,168,0.25);}
+.tier::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.tier.all-in::before{background:var(--a1);}.tier.middles::before{background:var(--a2);}.tier.fringe::before{background:var(--a3);}
+.tier-num{font-family:'Fraunces',serif;font-size:80px;font-weight:900;position:absolute;top:8px;right:16px;line-height:1;opacity:.05;}
+.tier.all-in .tier-num{color:var(--a1);}.tier.middles .tier-num{color:var(--a2);}.tier.fringe .tier-num{color:var(--a3);}
+.tier-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;}
+.tier.all-in .tier-label{color:var(--a1);}.tier.middles .tier-label{color:var(--a2);}.tier.fringe .tier-label{color:var(--a3);}
+.tier-name{font-family:'Fraunces',serif;font-size:30px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px;line-height:1;}
+.tier-tagline{font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:18px;}
+.tier-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:16px;}
+.ts{background:rgba(255,255,255,.04);border:1px solid var(--border);padding:10px 12px;}
+.ts-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+.ts-val{font-size:14px;font-weight:700;color:var(--white);}
+.tier.all-in .ts-val{color:var(--a1);}.tier.middles .ts-val{color:var(--a2);}.tier.fringe .ts-val{color:var(--a3);}
+
+/* ROLES TABLE */
+.roles-section{margin-bottom:48px;}
+.roles-header{display:grid;grid-template-columns:200px 1fr 100px 120px 100px;gap:0;background:var(--bg3);border:1px solid var(--brt);border-bottom:none;}
+.rh{padding:9px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);border-right:1px solid var(--border);}
+.rh:last-child{border-right:none;}
+.role-row{display:grid;grid-template-columns:200px 1fr 100px 120px 100px;gap:0;border:1px solid var(--border);border-top:none;transition:background .15s;}
+.role-row:hover{background:rgba(255,255,255,.015);}
+.rc{padding:12px 14px;font-size:12px;color:var(--white);border-right:1px solid var(--border);display:flex;align-items:center;}
+.rc:last-child{border-right:none;}
+.rc.role-name{font-weight:600;flex-direction:column;align-items:flex-start;gap:2px;}
+.rc.role-sub{font-size:10px;color:var(--dim);font-weight:400;}
+.rc.priority{font-family:'DM Mono',monospace;font-size:10px;}
+.priority.must{color:#e87070;}.priority.want{color:#e8c870;}.priority.nice{color:#7ac8a0;}
+.rc.equity{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;}
+.tier-tag{display:inline-block;padding:2px 8px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;}
+.tt-a{background:rgba(232,200,112,0.12);color:var(--a1);border:1px solid rgba(232,200,112,0.2);}
+.tt-m{background:rgba(122,184,240,0.12);color:var(--a2);border:1px solid rgba(122,184,240,0.2);}
+.tt-f{background:rgba(122,204,168,0.12);color:var(--a3);border:1px solid rgba(122,204,168,0.2);}
+
+/* SHARE STRUCTURE */
+.share-visual{margin-bottom:40px;}
+.sv-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;}
+.sv-bar{display:flex;height:48px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;}
+.sv-seg{display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;}
+.sv-seg.all-in{background:rgba(232,200,112,0.3);color:var(--a1);width:50%;}
+.sv-seg.middles{background:rgba(122,184,240,0.25);color:var(--a2);width:15%;}
+.sv-seg.fringe{background:rgba(122,204,168,0.2);color:var(--a3);width:5%;}
+.sv-seg.esop{background:rgba(255,255,255,0.05);color:var(--dim);width:20%;}
+.sv-seg.reserve{background:rgba(255,255,255,0.03);color:var(--dim2);width:10%;}
+.sv-legend{display:flex;gap:6px;flex-wrap:wrap;}
+.sv-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);}
+.sv-dot{width:10px;height:10px;flex-shrink:0;}
+.sv-dot.all-in{background:rgba(232,200,112,0.6);}
+.sv-dot.middles{background:rgba(122,184,240,0.5);}
+.sv-dot.fringe{background:rgba(122,204,168,0.4);}
+.sv-dot.esop{background:rgba(255,255,255,0.15);}
+.sv-dot.reserve{background:rgba(255,255,255,0.08);}
+
+/* SHARE CARDS */
+.share-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2px;margin-bottom:40px;}
+.share-card{background:var(--bg2);border:1px solid var(--border);padding:18px 20px;}
+.sc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.sc-pool{font-family:'Fraunces',serif;font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;}
+.sc-detail{font-size:11px;color:var(--dim);line-height:1.5;}
+.sc-pool.a1{color:var(--a1);}.sc-pool.a2{color:var(--a2);}.sc-pool.a3{color:var(--a3);}.sc-pool.dim{color:var(--dim);}
+
+/* VEST TABLE */
+.vest-table{margin-bottom:40px;border:1px solid var(--border);}
+.vt-row{display:grid;grid-template-columns:1fr 1fr 1fr 2fr;border-bottom:1px solid var(--border);}
+.vt-row.hdr{background:var(--bg3);border-bottom:1px solid var(--brt);}
+.vt-row:last-child{border-bottom:none;}
+.vc{padding:11px 16px;font-size:12px;color:var(--white);border-right:1px solid var(--border);}
+.vc:last-child{border-right:none;}
+.vc.hc{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+
+/* WHY DIFFERENT */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:40px;}
+.diff-card{background:var(--bg2);border:1px solid var(--border);padding:22px 24px;}
+.diff-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.diff-label.old{color:var(--red);}.diff-label.new{color:var(--a1);}
+.diff-list{list-style:none;}
+.diff-list li{font-size:13px;color:var(--dim);padding:5px 0 5px 16px;border-bottom:1px solid rgba(255,255,255,.04);position:relative;line-height:1.5;}
+.diff-list li::before{position:absolute;left:0;font-size:10px;top:7px;}
+.diff-card.old .diff-list li::before{content:'✕';color:var(--red);}
+.diff-card.new .diff-list li::before{content:'✓';color:var(--a1);}
+.diff-list li strong{color:var(--white);font-weight:600;}
+
+.divider{height:1px;background:linear-gradient(90deg,var(--brt),transparent);margin:48px 0;}
+footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--bg2);margin-top:64px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:14px;font-weight:900;font-style:italic;color:var(--white);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;}
+
+@media(max-width:900px){
+  .tier-grid{grid-template-columns:1fr;}.diff-grid{grid-template-columns:1fr;}
+  .roles-header,.role-row{grid-template-columns:1fr 1fr 80px;}.rh:nth-child(4),.rh:nth-child(5),.rc:nth-child(4),.rc:nth-child(5){display:none;}
+  .cover,.page,footer,.topnav{padding-left:20px;padding-right:20px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">AI Systems Co.</a>
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+</nav>
+
+<section class="cover">
+  <div class="cover-grid"></div><div class="cover-glow"></div>
+  <div class="cover-tag">Team Structure Proposal · AI Systems Co.</div>
+  <h1>A Different<br>Kind of <em>Team</em></h1>
+  <p class="cover-sub">Everyone is becoming an expert at something. The people who matter most to what we're building are not hired employees — they're <strong>co-owners of something they helped build.</strong> This is a model for bringing the right people in, at the right level, in the right way.</p>
+</section>
+
+<div class="page">
+
+<div class="section">
+  <div class="sec-tag">Section 01 · The New Model</div>
+  <div class="sec-title">Why Traditional <em>Hiring Fails</em></div>
+  <p class="sec-desc">Most companies get funding, hire a team, and hope it works. The team is expensive, misaligned, and replaceable. We are doing this differently. <strong>Every person who joins this company early owns a piece of what they're building.</strong> The more you put in, the more you own. Simple. Defensible. Motivating.</p>
+
+  <div class="diff-grid">
+    <div class="diff-card old">
+      <div class="diff-label old">The Old Way</div>
+      <ul class="diff-list">
+        <li><strong>Get funding.</strong> Burn it on salaries. Hope for revenue before cash runs out.</li>
+        <li><strong>Hire based on CV.</strong> Find out after 6 months they don't actually care.</li>
+        <li><strong>Everyone gets a salary.</strong> Nobody feels like an owner. Decisions take forever.</li>
+        <li><strong>Fire people.</strong> When funding runs out or pivots happen, the team dissolves.</li>
+        <li><strong>Founders own everything.</strong> Late employees have no stake. No real alignment.</li>
+        <li><strong>The people who built it</strong> aren't the ones who benefit from what it becomes.</li>
+      </ul>
+    </div>
+    <div class="diff-card new">
+      <div class="diff-label new">Our Way</div>
+      <ul class="diff-list">
+        <li><strong>Revenue before hiring.</strong> Stage 1 clients fund Stage 2. No burn rate panic.</li>
+        <li><strong>Invite people we know.</strong> Trust already exists. Values already aligned.</li>
+        <li><strong>Everyone owns equity.</strong> What you put in determines what you own. Skin in the game.</li>
+        <li><strong>Flexible commitment levels.</strong> Full-time, part-time, or project-based — all valued differently.</li>
+        <li><strong>Equity reflects contribution.</strong> Early, deep commitment = larger ownership. Fair by design.</li>
+        <li><strong>The people in this room</strong> are the people who will be in the documentary. We're filming it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <div class="callout-title">The Core Principle</div>
+    <p>AI is making individual contributors exponentially more powerful. <strong>A team of 10 aligned, equity-holding, deeply motivated people built around AI tools can outperform a team of 100 conventional employees.</strong> We don't need 100 people. We need the right 25 — at different levels of commitment — all pulling in the same direction because they own what they're building.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="sec-tag">Section 02 · The Three Tiers</div>
+  <div class="sec-title">Where Do <em>You Sit?</em></div>
+  <p class="sec-desc">There is no wrong tier. There is only the honest tier. The tier that reflects how much of yourself you can genuinely give to this right now. <strong>The tiers are not permanent.</strong> People move. Life changes. The structure accommodates that.</p>
+
+  <div class="tier-grid">
+    <div class="tier all-in">
+      <div class="tier-num">1</div>
+      <div class="tier-label">Tier One</div>
+      <div class="tier-name">The All-Ins</div>
+      <div class="tier-tagline">This is your primary commitment. You're building this every day. Decisions go through you. You are the company in its earliest form.</div>
+      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Full-time commitment — 40–60 hrs/week</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Day-to-day decision making authority</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Vertical or function ownership</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">First access to salary as revenue grows</li>
+        <li style="padding:4px 0;">Largest equity allocation</li>
+      </ul>
+      <div class="tier-stats">
+        <div class="ts"><div class="ts-label">Time commitment</div><div class="ts-val">40–60 hrs</div></div>
+        <div class="ts"><div class="ts-label">Equity range</div><div class="ts-val">5–12%</div></div>
+        <div class="ts"><div class="ts-label">Roles in tier</div><div class="ts-val">6–8</div></div>
+        <div class="ts"><div class="ts-label">Pool total</div><div class="ts-val">~50%</div></div>
+      </div>
+    </div>
+
+    <div class="tier middles">
+      <div class="tier-num">2</div>
+      <div class="tier-label">Tier Two</div>
+      <div class="tier-name">The Middles</div>
+      <div class="tier-tagline">You have a career, a life, other commitments — but you want in. You contribute meaningfully. Your skills matter. You show up consistently but not exclusively.</div>
+      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Part-time — 15–25 hrs/week</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Specialist domain contribution</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Defined deliverables and scope</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Day rate or retainer as revenue allows</li>
+        <li style="padding:4px 0;">Meaningful equity stake</li>
+      </ul>
+      <div class="tier-stats">
+        <div class="ts"><div class="ts-label">Time commitment</div><div class="ts-val">15–25 hrs</div></div>
+        <div class="ts"><div class="ts-label">Equity range</div><div class="ts-val">1–3%</div></div>
+        <div class="ts"><div class="ts-label">Roles in tier</div><div class="ts-val">6–10</div></div>
+        <div class="ts"><div class="ts-label">Pool total</div><div class="ts-val">~15%</div></div>
+      </div>
+    </div>
+
+    <div class="tier fringe">
+      <div class="tier-num">3</div>
+      <div class="tier-label">Tier Three</div>
+      <div class="tier-name">The Fringe</div>
+      <div class="tier-tagline">Project-based. You come in for specific work — a shoot, a campaign, a design sprint. You're not full-time but you leave a mark. And you own a piece of what that mark helps build.</div>
+      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Project or task basis — 2–10 hrs/week</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Specific creative or technical output</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Day rate per engagement</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Ongoing relationship, not one-off</li>
+        <li style="padding:4px 0;">Small but real equity ownership</li>
+      </ul>
+      <div class="tier-stats">
+        <div class="ts"><div class="ts-label">Time commitment</div><div class="ts-val">2–10 hrs</div></div>
+        <div class="ts"><div class="ts-label">Equity range</div><div class="ts-val">0.25–1%</div></div>
+        <div class="ts"><div class="ts-label">Roles in tier</div><div class="ts-val">10–15</div></div>
+        <div class="ts"><div class="ts-label">Pool total</div><div class="ts-val">~5%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="sec-tag">Section 03 · Role Identification</div>
+  <div class="sec-title">The Roles We <em>Need to Fill</em></div>
+  <p class="sec-desc">Three categories: <span style="color:#e87070;font-weight:600;">Must Have</span> (we cannot operate without these), <span style="color:#e8c870;font-weight:600;">Want</span> (significantly better with these), and <span style="color:#7ac8a0;font-weight:600;">Nice to Have</span> (accelerators when we're ready).</p>
+
+  <div class="roles-section">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--a1);margin-bottom:12px;padding:8px 14px;background:rgba(232,200,112,0.06);border:1px solid rgba(232,200,112,0.15);">Tier One — The All-Ins</div>
+    <div class="roles-header"><div class="rh">Role</div><div class="rh">What They Own</div><div class="rh">Priority</div><div class="rh">Equity Guide</div><div class="rh">Tier</div></div>
+    <div class="role-row"><div class="rc role-name">Founder / CEO<div class="rc role-sub">Vision, strategy, culture</div></div><div class="rc" style="font-size:12px;color:var(--dim);">The overall direction. The pitch. The decisions nobody else will make. The person the whole team trusts to be honest when it's hard.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">10–12%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">COO / Ops Director<div class="rc role-sub">Infrastructure, compliance, finance</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Holding company operations. Legal structure. Finance. Inter-vertical coordination. The person who makes the machine run cleanly.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">7–9%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">Commercial Director<div class="rc role-sub">Growth, GTM, cross-vertical</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Revenue acquisition across all three verticals. Commercialisation strategy. Conversion optimisation. Pattern recognition across all three markets.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">7–9%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">DentalOS Vertical Lead<div class="rc role-sub">Dental industry, client relationships</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Owns the dental vertical end-to-end. Client relationships, product development, market expansion. Must have dental industry credibility.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">6–8%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">FactoryOS Vertical Lead<div class="rc role-sub">Manufacturing operations, audit</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Owns the manufacturing vertical. Audit delivery, client relationships, ops director credibility. The person in the room who has done the job.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">6–8%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">HealthOS Vertical Lead<div class="rc role-sub">Healthcare logistics, NHS</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Owns the health vertical. NHS relationships, compliance credibility, supply chain expertise. HR Director background highly valuable.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">5–7%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+    <div class="role-row"><div class="rc role-name">Head of AI & Technology<div class="rc role-sub">Platform architecture, Claude builds</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Owns the technical platform. Claude-based development, deployment, integrations. The person who turns the strategy into working software.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a1);">5–8%</div><div class="rc"><span class="tier-tag tt-a">All-In</span></div></div>
+  </div>
+
+  <div class="roles-section" style="margin-top:32px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);margin-bottom:12px;padding:8px 14px;background:rgba(122,184,240,0.06);border:1px solid rgba(122,184,240,0.15);">Tier Two — The Middles</div>
+    <div class="roles-header"><div class="rh">Role</div><div class="rh">What They Contribute</div><div class="rh">Priority</div><div class="rh">Equity Guide</div><div class="rh">Tier</div></div>
+    <div class="role-row"><div class="rc role-name">Full-Stack Developer (×2)<div class="rc role-sub">Claude-assisted builds, deployment</div></div><div class="rc" style="font-size:12px;color:var(--dim);">VA-level deployment of Claude-built apps. Testing, debugging, Vercel/GitHub. Technical hands that accelerate the Head of AI.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a2);">1.5–2.5%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+    <div class="role-row"><div class="rc role-name">Healthcare Compliance Lead<div class="rc role-sub">CQC, GDC, NHS regulatory</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Signs off compliance modules before deployment. Reviews all clinical and regulated content. Shields the business from regulatory risk.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a2);">1.5–2%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+    <div class="role-row"><div class="rc role-name">Industrial Automation Specialist<div class="rc role-sub">PLC, OPC-UA, sensor integration</div></div><div class="rc" style="font-size:12px;color:var(--dim);">The one person we genuinely need externally. Deploys the hardware layer for FactoryOS Stage 3 modules. Cannot be replaced by Claude.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a2);">2–3%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+    <div class="role-row"><div class="rc role-name">Financial Controller<div class="rc role-sub">Management accounts, FP&A</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Management accounts, client contracts, forecasting. The person who knows where every pound is and tells us before it matters.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a2);">1–1.5%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+    <div class="role-row"><div class="rc role-name">Head of Marketing & Content<div class="rc role-sub">Inbound, thought leadership</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Builds the brand authority that makes outbound sales 3x easier. LinkedIn, content, case studies, positioning. The long game.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a2);">1–2%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+    <div class="role-row"><div class="rc role-name">Business Development Manager<div class="rc role-sub">Outbound, partnerships, pipeline</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Builds and manages outbound pipeline across all three verticals. Books the calls. Warms the leads. Feeds the vertical leads.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a2);">1–1.5%</div><div class="rc"><span class="tier-tag tt-m">Middle</span></div></div>
+  </div>
+
+  <div class="roles-section" style="margin-top:32px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--a3);margin-bottom:12px;padding:8px 14px;background:rgba(122,204,168,0.06);border:1px solid rgba(122,204,168,0.15);">Tier Three — The Fringe</div>
+    <div class="roles-header"><div class="rh">Role</div><div class="rh">What They Contribute</div><div class="rh">Priority</div><div class="rh">Equity Guide</div><div class="rh">Tier</div></div>
+    <div class="role-row"><div class="rc role-name">Videographer / Director<div class="rc role-sub">Case studies, ads, documentary</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Films the founding story. Shoots the first client case studies. Produces the ads that create social proof. The visual record of everything.</div><div class="rc priority must">Must Have</div><div class="rc equity" style="color:var(--a3);">0.5–0.75%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+    <div class="role-row"><div class="rc role-name">Brand Designer<div class="rc role-sub">Visual identity, UI polish</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Owns the visual language of all three brands. The difference between looking like a startup and looking like a company worth taking seriously.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a3);">0.5%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+    <div class="role-row"><div class="rc role-name">Copywriter / Content Creator<div class="rc role-sub">Website, sales copy, email</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Writes the words that close deals. Case study narratives, website copy, sales emails, pitch decks. The voice of the brand.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a3);">0.25–0.5%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+    <div class="role-row"><div class="rc role-name">LinkedIn Growth Specialist<div class="rc role-sub">Personal brand, thought leadership</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Builds the personal brand accounts of vertical leads. Ghostwrites, manages posting, grows audiences in dental, manufacturing, healthcare circles.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a3);">0.25–0.5%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+    <div class="role-row"><div class="rc role-name">Legal Advisor<div class="rc role-sub">Contracts, IP, structure</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Client contracts, equity agreements, data processing agreements. The person who makes sure we're protected on paper.</div><div class="rc priority want">Want</div><div class="rc equity" style="color:var(--a3);">0.25–0.5%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+    <div class="role-row"><div class="rc role-name">PR / Media Relations<div class="rc role-sub">Press, awards, visibility</div></div><div class="rc" style="font-size:12px;color:var(--dim);">Gets us in the trade press for dental, manufacturing, healthcare. Award nominations. The profile that makes cold outreach warm.</div><div class="rc priority nice">Nice to Have</div><div class="rc equity" style="color:var(--a3);">0.25%</div><div class="rc"><span class="tier-tag tt-f">Fringe</span></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="sec-tag">Section 04 · Ownership Structure</div>
+  <div class="sec-title">Who Owns <em>What</em></div>
+
+  <div class="sv-label">Company equity — visualised</div>
+  <div class="share-visual">
+    <div class="sv-bar">
+      <div class="sv-seg all-in">All-Ins 50%</div>
+      <div class="sv-seg middles">Mid 15%</div>
+      <div class="sv-seg fringe">Fge 5%</div>
+      <div class="sv-seg esop">ESOP Pool 20%</div>
+      <div class="sv-seg reserve">Reserve 10%</div>
+    </div>
+    <div class="sv-legend">
+      <div class="sv-item"><div class="sv-dot all-in"></div>All-Ins (50%) — Founders & core team</div>
+      <div class="sv-item"><div class="sv-dot middles"></div>Middles (15%) — Specialist contributors</div>
+      <div class="sv-item"><div class="sv-dot fringe"></div>Fringe (5%) — Project contributors</div>
+      <div class="sv-item"><div class="sv-dot esop"></div>ESOP Pool (20%) — Future key hires</div>
+      <div class="sv-item"><div class="sv-dot reserve"></div>Strategic Reserve (10%) — Investor / acquisition optionality</div>
+    </div>
+  </div>
+
+  <div class="share-grid">
+    <div class="share-card"><div class="sc-label">All-Ins Total Pool</div><div class="sc-pool a1">50%</div><div class="sc-detail">Split across 6–8 core team members. Allocated based on role seniority and timing of commitment. Range: 5–12% per person.</div></div>
+    <div class="share-card"><div class="sc-label">Middles Total Pool</div><div class="sc-pool a2">15%</div><div class="sc-detail">Split across 6–10 specialist contributors. Range: 1–3% per person. Reflects part-time commitment and specialist value.</div></div>
+    <div class="share-card"><div class="sc-label">Fringe Total Pool</div><div class="sc-pool a3">5%</div><div class="sc-detail">Split across 10–15 project contributors. Range: 0.25–1% per person. Rewards the people who leave creative marks on the early story.</div></div>
+    <div class="share-card"><div class="sc-label">ESOP / Option Pool</div><div class="sc-pool dim">20%</div><div class="sc-detail">Reserved for future key hires as the company scales. Ensures we can attract serious talent in Years 2–5 without diluting early team.</div></div>
+    <div class="share-card"><div class="sc-label">Strategic Reserve</div><div class="sc-pool dim">10%</div><div class="sc-detail">Held back. Available for strategic investors, acquisition conversations, or incentive structures as opportunities arise.</div></div>
+    <div class="share-card"><div class="sc-label">Vesting Structure</div><div class="sc-pool" style="color:var(--amber);font-size:22px;">4yr / 1yr</div><div class="sc-detail">4-year vesting with a 1-year cliff. Standard for equity grants. Protects the company if someone leaves early. Rewards those who stay.</div></div>
+  </div>
+
+  <div class="vest-table">
+    <div class="vt-row hdr"><div class="vc hc">Scenario</div><div class="vc hc">All-In (8%)</div><div class="vc hc">Middle (2%)</div><div class="vc hc">What That Means</div></div>
+    <div class="vt-row"><div class="vc">Year 1 valuation (~£10M)</div><div class="vc" style="color:var(--a1);">£800k</div><div class="vc" style="color:var(--a2);">£200k</div><div class="vc" style="font-size:12px;color:var(--dim);">On paper. Unrealised. But real.</div></div>
+    <div class="vt-row"><div class="vc">Year 3 valuation (~£150M)</div><div class="vc" style="color:var(--a1);">£12M</div><div class="vc" style="color:var(--a2);">£3M</div><div class="vc" style="font-size:12px;color:var(--dim);">Life-changing. Still growing.</div></div>
+    <div class="vt-row"><div class="vc">Year 5 valuation (~£800M)</div><div class="vc" style="color:var(--a1);">£64M</div><div class="vc" style="color:var(--a2);">£16M</div><div class="vc" style="font-size:12px;color:var(--dim);">Generational wealth. Exits become possible.</div></div>
+    <div class="vt-row"><div class="vc">£10B valuation (Year 8–10)</div><div class="vc" style="color:var(--a1);">£800M</div><div class="vc" style="color:var(--a2);">£200M</div><div class="vc" style="font-size:12px;color:var(--dim);">The documentary moment. The thing we're filming.</div></div>
+  </div>
+
+  <div class="callout a1">
+    <div class="callout-title">The Most Important Thing About Equity</div>
+    <p>These numbers are not hypothetical motivational fodder. They are the logical outcome of the model if we execute it. <strong>The equity structure is designed to be fair, transparent, and motivating from Day 1.</strong> Nobody in this building is going to feel like they were used. Everyone who builds something here owns something here. That's not a policy. That's the point.</p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">AI Systems Co. · Team Structure</div>
+  <div class="footer-note">Three tiers · Equity-first · Built different</div>
+  <div class="footer-note">Confidential — Internal Use Only</div>
+</footer>
+</body>
+</html>

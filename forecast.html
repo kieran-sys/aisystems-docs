@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Forecast — AI Systems Co.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,700;1,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c;--bg2:#0c0f13;--bg3:#111518;--bg4:#161c22;
+  --white:#edf0f7;--dim:#4a5060;--dim2:#232830;
+  --border:rgba(255,255,255,0.07);--brt:rgba(255,255,255,0.13);
+  --teal:#15c4b0;--gold:#c4820a;--blue:#1a4fd8;--green:#1a7c3a;
+  --red:#c94535;--amber:#d48a1a;
+  --shadow:0 2px 24px rgba(0,0,0,0.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;}
+
+/* NAV */
+.topnav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Fraunces',serif;font-size:18px;font-weight:900;font-style:italic;color:var(--white);text-decoration:none;padding:18px 0;}
+.nav-back{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--white);}
+
+/* COVER */
+.cover{background:linear-gradient(135deg,#03060a 0%,#060d14 50%,#030608 100%);padding:80px 64px 72px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.cover-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.cover-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 80% 30%,rgba(26,79,216,0.08) 0%,transparent 60%);pointer-events:none;}
+.cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;}
+.cover-tag::before{content:'';width:28px;height:1px;background:var(--blue);}
+.cover h1{font-family:'Fraunces',serif;font-size:clamp(52px,8vw,100px);font-weight:900;line-height:.92;letter-spacing:-.03em;position:relative;}
+.cover h1 em{font-style:italic;color:rgba(237,240,247,0.35);}
+.cover-sub{margin-top:24px;font-size:15px;font-weight:300;color:var(--dim);max-width:620px;line-height:1.75;position:relative;}
+.cover-sub strong{color:var(--white);font-weight:500;}
+
+/* ASSUMPTIONS BANNER */
+.assumptions{background:var(--bg4);border-bottom:1px solid var(--border);padding:20px 64px;display:flex;gap:48px;flex-wrap:wrap;}
+.assum-item{display:flex;flex-direction:column;gap:3px;}
+.assum-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);}
+.assum-val{font-size:13px;font-weight:500;color:var(--white);}
+
+/* TABS */
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 64px;display:flex;overflow-x:auto;}
+.tab{padding:18px 24px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;}
+.tab:hover{color:var(--white);}
+.tab.active{color:var(--white);border-bottom-color:var(--white);}
+.tab.teal.active{color:var(--teal);border-bottom-color:var(--teal);}
+.tab.gold.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab.blue.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab.green.active{color:var(--green);border-bottom-color:var(--green);}
+
+/* PAGE */
+.page{max-width:1240px;margin:0 auto;padding:0 64px;}
+.section{padding:56px 0;}
+.section-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:32px;}
+.section-title em{font-style:italic;}
+.section-title .t{color:var(--teal);}.section-title .g{color:var(--gold);}.section-title .b{color:var(--blue);}.section-title .gr{color:var(--green);}
+
+/* VERTICAL PANELS */
+.vpanel{display:none;}
+.vpanel.active{display:block;}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2px;margin-bottom:40px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);padding:20px 22px;}
+.stat-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.stat-val{font-family:'Fraunces',serif;font-size:32px;font-weight:900;line-height:1;letter-spacing:-.02em;}
+.stat-sub{font-size:11px;color:var(--dim);margin-top:4px;}
+.t .stat-val{color:var(--teal);}.g .stat-val{color:var(--gold);}.b .stat-val{color:var(--blue);}.gr .stat-val{color:var(--green);}
+
+/* YEAR TABLE */
+.year-table{margin-bottom:40px;border:1px solid var(--border);overflow:hidden;}
+.yt-header{display:grid;background:var(--bg3);border-bottom:1px solid var(--brt);}
+.yt-header.cols6{grid-template-columns:220px repeat(5,1fr);}
+.yt-header.cols7{grid-template-columns:220px repeat(6,1fr);}
+.yth{padding:10px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);border-right:1px solid var(--border);}
+.yth:last-child{border-right:none;}
+.yt-row{display:grid;border-bottom:1px solid var(--border);transition:background .15s;}
+.yt-row.cols6{grid-template-columns:220px repeat(5,1fr);}
+.yt-row.cols7{grid-template-columns:220px repeat(6,1fr);}
+.yt-row:hover{background:rgba(255,255,255,.02);}
+.yt-row:last-child{border-bottom:none;}
+.yt-row.section-row{background:var(--bg3);}
+.ytc{padding:11px 16px;font-size:12px;color:var(--white);border-right:1px solid var(--border);display:flex;align-items:center;}
+.ytc:last-child{border-right:none;}
+.ytc.label{font-weight:500;color:var(--dim);}
+.ytc.section-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:600;}
+.ytc.highlight{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;}
+.ytc.t{color:var(--teal);}.ytc.g{color:var(--gold);}.ytc.b{color:var(--blue);}.ytc.gr{color:var(--green);}.ytc.pos{color:var(--green);}.ytc.neg{color:var(--red);}
+
+/* GROWTH BARS */
+.growth-chart{margin-bottom:40px;}
+.gc-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.gc-row{display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+.gc-year{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);min-width:40px;}
+.gc-bar-wrap{flex:1;background:var(--bg3);height:32px;position:relative;overflow:hidden;}
+.gc-bar{height:100%;display:flex;align-items:center;padding-left:12px;font-size:11px;font-weight:600;font-family:'DM Mono',monospace;white-space:nowrap;transition:width 1s ease;min-width:4px;}
+.gc-bar.teal{background:linear-gradient(90deg,rgba(21,196,176,0.6),rgba(21,196,176,0.3));}
+.gc-bar.gold{background:linear-gradient(90deg,rgba(196,130,10,0.7),rgba(196,130,10,0.3));}
+.gc-bar.blue{background:linear-gradient(90deg,rgba(26,79,216,0.7),rgba(26,79,216,0.3));}
+.gc-bar.green{background:linear-gradient(90deg,rgba(26,124,58,0.7),rgba(26,124,58,0.3));}
+.gc-val{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;min-width:80px;text-align:right;}
+.gc-val.teal{color:var(--teal);}.gc-val.gold{color:var(--gold);}.gc-val.blue{color:var(--blue);}.gc-val.green{color:var(--green);}
+
+/* CALLOUT */
+.callout{padding:18px 22px;border:1px solid var(--border);border-left:3px solid;margin-bottom:28px;background:var(--bg2);}
+.callout.t{border-left-color:var(--teal);}.callout.g{border-left-color:var(--gold);}.callout.b{border-left-color:var(--blue);}.callout.gr{border-left-color:var(--green);}
+.callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;}
+.callout.t .callout-title{color:var(--teal);}.callout.g .callout-title{color:var(--gold);}.callout.b .callout-title{color:var(--blue);}.callout.gr .callout-title{color:var(--green);}
+.callout p{font-size:13px;color:var(--dim);line-height:1.65;}.callout p strong{color:var(--white);}
+
+/* PATH TO 10B */
+.path-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px;margin-bottom:36px;}
+.path-card{background:var(--bg2);border:1px solid var(--border);padding:20px 22px;position:relative;overflow:hidden;}
+.path-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.path-card:nth-child(1)::before{background:var(--dim);}
+.path-card:nth-child(2)::before{background:var(--teal);}
+.path-card:nth-child(3)::before{background:var(--gold);}
+.path-card:nth-child(4)::before{background:var(--blue);}
+.path-card:nth-child(5)::before{background:var(--green);}
+.path-year{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.path-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:6px;}
+.path-desc{font-size:12px;color:var(--dim);line-height:1.5;}
+.path-milestone{font-size:11px;color:var(--dim);margin-top:10px;padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid var(--border);}
+
+/* MRR PROGRESSION */
+.mrr-row{display:flex;gap:2px;margin-bottom:40px;flex-wrap:wrap;}
+.mrr-box{flex:1;min-width:100px;background:var(--bg2);border:1px solid var(--border);padding:14px 16px;text-align:center;}
+.mrr-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.mrr-val{font-family:'Fraunces',serif;font-size:22px;font-weight:900;letter-spacing:-.02em;}
+.mrr-clients{font-size:11px;color:var(--dim);margin-top:4px;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;background:var(--bg2);margin-top:64px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:14px;font-weight:900;font-style:italic;color:var(--white);}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;}
+
+.divider{height:1px;background:linear-gradient(90deg,var(--brt),transparent);margin:48px 0;}
+
+@media(max-width:768px){
+  .cover,.page,footer,.tabs,.topnav,.assumptions{padding-left:20px;padding-right:20px;}
+  .yt-header.cols6,.yt-row.cols6{grid-template-columns:120px repeat(5,1fr);}
+  .ytc{padding:9px 8px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">AI Systems Co.</a>
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+</nav>
+
+<section class="cover">
+  <div class="cover-grid"></div><div class="cover-glow"></div>
+  <div class="cover-tag">Financial Forecast · VC Grade · 2025–2030</div>
+  <h1>Five-Year<br>Financial <em>Forecast</em></h1>
+  <p class="cover-sub">Conservative in assumptions. Unashamed in ambition. These projections are built on realistic client acquisition rates, verified market sizes, and defensible unit economics — not wishful thinking. <strong>The numbers hold up. The upside is real.</strong></p>
+</section>
+
+<div class="assumptions">
+  <div class="assum-item"><div class="assum-label">Model basis</div><div class="assum-val">Bottom-up, client-by-client</div></div>
+  <div class="assum-item"><div class="assum-label">Currency</div><div class="assum-val">GBP (£)</div></div>
+  <div class="assum-item"><div class="assum-label">Churn assumption</div><div class="assum-val">5% Year 1 → 2% Year 3+</div></div>
+  <div class="assum-item"><div class="assum-label">Gross margin</div><div class="assum-val">82–88% (SaaS benchmark)</div></div>
+  <div class="assum-item"><div class="assum-label">No external funding assumed</div><div class="assum-val">Fully bootstrapped model</div></div>
+  <div class="assum-item"><div class="assum-label">International expansion</div><div class="assum-val">US/AU from Year 3</div></div>
+</div>
+
+<nav class="tabs">
+  <div class="tab teal active" onclick="showPanel('dental',this)">DentalOS</div>
+  <div class="tab gold" onclick="showPanel('factory',this)">FactoryOS</div>
+  <div class="tab blue" onclick="showPanel('health',this)">HealthOS</div>
+  <div class="tab green" onclick="showPanel('overall',this)">Overall Holding Co.</div>
+</nav>
+
+<div class="page">
+
+<!-- ═══ DENTAL ═══ -->
+<div class="vpanel active" id="panel-dental">
+<div class="section">
+  <div class="section-tag">Vertical 01 · Kie & Leah</div>
+  <div class="section-title">Dental<em><span class="t">OS</span></em></div>
+
+  <div class="callout t">
+    <div class="callout-title">Market Context</div>
+    <p>UK private dental market: <strong>12,000+ practices</strong>, growing at 8% YoY as NHS-to-private conversion accelerates. Average practice revenue £500k–£2M. No dominant AI platform exists. Penetrating just <strong>10% of the UK market = 1,200 clients = £24M+ ARR.</strong> US market (200,000+ practices) represents the Year 3 upside play.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card t"><div class="stat-label">Year 1 ARR</div><div class="stat-val t">£580k</div><div class="stat-sub">55 clients by month 12</div></div>
+    <div class="stat-card t"><div class="stat-label">Year 3 ARR</div><div class="stat-val t">£6.4M</div><div class="stat-sub">380 clients + first DSOs</div></div>
+    <div class="stat-card t"><div class="stat-label">Year 5 ARR</div><div class="stat-val t">£25M</div><div class="stat-sub">1,200+ clients, DSO portfolio</div></div>
+    <div class="stat-card t"><div class="stat-label">Year 5 EBITDA</div><div class="stat-val t">84%</div><div class="stat-sub">~£21M net</div></div>
+  </div>
+
+  <div class="gc-title">Annual Recurring Revenue — 5 Year Progression</div>
+  <div class="growth-chart">
+    <div class="gc-row"><div class="gc-year">Y1</div><div class="gc-bar-wrap"><div class="gc-bar teal" style="width:2.3%">£580k</div></div><div class="gc-val teal">£580k</div></div>
+    <div class="gc-row"><div class="gc-year">Y2</div><div class="gc-bar-wrap"><div class="gc-bar teal" style="width:8%">£2M</div></div><div class="gc-val teal">£2.0M</div></div>
+    <div class="gc-row"><div class="gc-year">Y3</div><div class="gc-bar-wrap"><div class="gc-bar teal" style="width:25.5%">£6.4M</div></div><div class="gc-val teal">£6.4M</div></div>
+    <div class="gc-row"><div class="gc-year">Y4</div><div class="gc-bar-wrap"><div class="gc-bar teal" style="width:58%">£14.5M</div></div><div class="gc-val teal">£14.5M</div></div>
+    <div class="gc-row"><div class="gc-year">Y5</div><div class="gc-bar-wrap"><div class="gc-bar teal" style="width:100%">£25M</div></div><div class="gc-val teal">£25M</div></div>
+  </div>
+
+  <div class="year-table">
+    <div class="yt-header cols6"><div class="yth">Metric</div><div class="yth">Year 1</div><div class="yth">Year 2</div><div class="yth">Year 3</div><div class="yth">Year 4</div><div class="yth">Year 5</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">CLIENT METRICS</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Clients (end of year)</div><div class="ytc">55</div><div class="ytc">150</div><div class="ytc">385</div><div class="ytc">720</div><div class="ytc">1,250</div></div>
+    <div class="yt-row cols6"><div class="ytc label">DSO / Group clients</div><div class="ytc">—</div><div class="ytc">1</div><div class="ytc">4</div><div class="ytc">12</div><div class="ytc">35</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Avg MRR per single site</div><div class="ytc">£880</div><div class="ytc">£1,100</div><div class="ytc">£1,380</div><div class="ytc">£1,580</div><div class="ytc">£1,750</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Avg MRR per DSO</div><div class="ytc">—</div><div class="ytc">£3,200</div><div class="ytc">£4,800</div><div class="ytc">£6,200</div><div class="ytc">£8,500</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Monthly churn rate</div><div class="ytc">5%</div><div class="ytc">3.5%</div><div class="ytc">2.5%</div><div class="ytc">2%</div><div class="ytc">2%</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">REVENUE</div></div>
+    <div class="yt-row cols6"><div class="ytc label">MRR (end of year)</div><div class="ytc highlight t">£48.4k</div><div class="ytc highlight t">£165k</div><div class="ytc highlight t">£531k</div><div class="ytc highlight t">£1.21M</div><div class="ytc highlight t">£2.09M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Annual Revenue</div><div class="ytc highlight t">£280k</div><div class="ytc highlight t">£1.15M</div><div class="ytc highlight t">£3.8M</div><div class="ytc highlight t">£8.5M</div><div class="ytc highlight t">£16.2M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">ARR (run rate)</div><div class="ytc">£580k</div><div class="ytc">£1.98M</div><div class="ytc">£6.37M</div><div class="ytc">£14.5M</div><div class="ytc">£25.1M</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">COSTS & PROFITABILITY</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Infrastructure & APIs</div><div class="ytc">£18k</div><div class="ytc">£52k</div><div class="ytc">£160k</div><div class="ytc">£340k</div><div class="ytc">£580k</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Team costs (salaries)</div><div class="ytc">£90k</div><div class="ytc">£220k</div><div class="ytc">£480k</div><div class="ytc">£900k</div><div class="ytc">£1.6M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Sales & Marketing</div><div class="ytc">£20k</div><div class="ytc">£65k</div><div class="ytc">£180k</div><div class="ytc">£380k</div><div class="ytc">£700k</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Total Costs</div><div class="ytc">£128k</div><div class="ytc">£337k</div><div class="ytc">£820k</div><div class="ytc">£1.62M</div><div class="ytc">£2.88M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA</div><div class="ytc highlight pos">£152k</div><div class="ytc highlight pos">£813k</div><div class="ytc highlight pos">£2.98M</div><div class="ytc highlight pos">£6.88M</div><div class="ytc highlight pos">£13.3M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA Margin</div><div class="ytc pos">54%</div><div class="ytc pos">71%</div><div class="ytc pos">78%</div><div class="ytc pos">81%</div><div class="ytc pos">82%</div></div>
+  </div>
+
+  <div class="callout t">
+    <div class="callout-title">Valuation Bridge — The Path to £1B+</div>
+    <p>At Year 5 ARR of £25M and a <strong>SaaS revenue multiple of 10–15x</strong> (conservative for a sticky, high-margin, data-moat business), DentalOS alone is worth <strong>£250M–£375M.</strong> With international expansion (US market entry Year 3 at 5x UK market size) and DSO consolidation momentum, a <strong>£1B+ valuation for DentalOS within 7 years is a realistic outcome — not an aspiration.</strong> The data moat that builds from every client interaction is the multiplier that justifies premium valuations.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ FACTORY ═══ -->
+<div class="vpanel" id="panel-factory">
+<div class="section">
+  <div class="section-tag">Vertical 02 · Operations Director Background</div>
+  <div class="section-title">Factory<em><span class="g">OS</span></em></div>
+
+  <div class="callout g">
+    <div class="callout-title">Market Context</div>
+    <p>Global manufacturing market: <strong>$16 trillion.</strong> UK mid-market manufacturers (£10M–£500M revenue): 20,000+ facilities. Average annual cost savings from full AI operations integration: <strong>£500k–£3M per facility.</strong> At 10x ROI documented savings, clients pay happily. The audit-first model means revenue starts before a single platform module ships. This is the <strong>highest per-client value vertical of the three.</strong></p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card g"><div class="stat-label">Year 1 Revenue</div><div class="stat-val g">£365k</div><div class="stat-sub">Audits + first retainers</div></div>
+    <div class="stat-card g"><div class="stat-label">Year 3 ARR</div><div class="stat-val g">£5.8M</div><div class="stat-sub">25 retainer clients</div></div>
+    <div class="stat-card g"><div class="stat-label">Year 5 ARR</div><div class="stat-val g">£26M</div><div class="stat-sub">80 retainers + Stage 3</div></div>
+    <div class="stat-card g"><div class="stat-label">Avg contract value</div><div class="stat-val g">£18k</div><div class="stat-sub">Per client per month (Y5)</div></div>
+  </div>
+
+  <div class="gc-title">Annual Revenue — 5 Year Progression</div>
+  <div class="growth-chart">
+    <div class="gc-row"><div class="gc-year">Y1</div><div class="gc-bar-wrap"><div class="gc-bar gold" style="width:1.4%">£365k</div></div><div class="gc-val gold">£365k</div></div>
+    <div class="gc-row"><div class="gc-year">Y2</div><div class="gc-bar-wrap"><div class="gc-bar gold" style="width:5.4%">£1.4M</div></div><div class="gc-val gold">£1.4M</div></div>
+    <div class="gc-row"><div class="gc-year">Y3</div><div class="gc-bar-wrap"><div class="gc-bar gold" style="width:22.3%">£5.8M</div></div><div class="gc-val gold">£5.8M</div></div>
+    <div class="gc-row"><div class="gc-year">Y4</div><div class="gc-bar-wrap"><div class="gc-bar gold" style="width:53.8%">£14M</div></div><div class="gc-val gold">£14M</div></div>
+    <div class="gc-row"><div class="gc-year">Y5</div><div class="gc-bar-wrap"><div class="gc-bar gold" style="width:100%">£26M</div></div><div class="gc-val gold">£26M</div></div>
+  </div>
+
+  <div class="year-table">
+    <div class="yt-header cols6"><div class="yth">Metric</div><div class="yth">Year 1</div><div class="yth">Year 2</div><div class="yth">Year 3</div><div class="yth">Year 4</div><div class="yth">Year 5</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">CLIENT METRICS</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Paid audits conducted</div><div class="ytc">6</div><div class="ytc">14</div><div class="ytc">22</div><div class="ytc">30</div><div class="ytc">40</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Active retainer clients</div><div class="ytc">4</div><div class="ytc">12</div><div class="ytc">25</div><div class="ytc">50</div><div class="ytc">88</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Stage 3 (sensor/CV) clients</div><div class="ytc">—</div><div class="ytc">—</div><div class="ytc">2</div><div class="ytc">8</div><div class="ytc">18</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Avg retainer MRR</div><div class="ytc">£6.5k</div><div class="ytc">£8k</div><div class="ytc">£12k</div><div class="ytc">£15k</div><div class="ytc">£18k</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">REVENUE BREAKDOWN</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Audit revenue</div><div class="ytc">£21k</div><div class="ytc">£49k</div><div class="ytc">£77k</div><div class="ytc">£105k</div><div class="ytc">£140k</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Retainer MRR (end of year)</div><div class="ytc">£26k</div><div class="ytc">£96k</div><div class="ytc">£300k</div><div class="ytc">£750k</div><div class="ytc">£1.58M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Stage 3 MRR</div><div class="ytc">—</div><div class="ytc">—</div><div class="ytc">£40k</div><div class="ytc">£192k</div><div class="ytc">£486k</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Total Annual Revenue</div><div class="ytc highlight g">£365k</div><div class="ytc highlight g">£1.4M</div><div class="ytc highlight g">£4.8M</div><div class="ytc highlight g">£11.5M</div><div class="ytc highlight g">£22M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">ARR (run rate)</div><div class="ytc">£312k</div><div class="ytc">£1.15M</div><div class="ytc">£5.8M</div><div class="ytc">£14M</div><div class="ytc">£26M</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">PROFITABILITY</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Total Costs</div><div class="ytc">£190k</div><div class="ytc">£480k</div><div class="ytc">£1.1M</div><div class="ytc">£2.4M</div><div class="ytc">£4.2M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA</div><div class="ytc highlight pos">£175k</div><div class="ytc highlight pos">£920k</div><div class="ytc highlight pos">£3.7M</div><div class="ytc highlight pos">£9.1M</div><div class="ytc highlight pos">£17.8M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA Margin</div><div class="ytc pos">48%</div><div class="ytc pos">66%</div><div class="ytc pos">77%</div><div class="ytc pos">79%</div><div class="ytc pos">81%</div></div>
+  </div>
+
+  <div class="callout g">
+    <div class="callout-title">Why FactoryOS Has The Largest Upside</div>
+    <p>A single enterprise manufacturer client on a full-platform contract at £25k/month = <strong>£300k ARR from one client.</strong> At 88 retainer clients in Year 5, FactoryOS generates more ARR from fewer clients than DentalOS. The audit model means <strong>every new client relationship starts with cash revenue before any SaaS contract is signed.</strong> Si's 30-year credibility removes the cold outreach problem entirely. This vertical alone can reach <strong>£100M ARR within 8 years</strong> with international expansion.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ HEALTH ═══ -->
+<div class="vpanel" id="panel-health">
+<div class="section">
+  <div class="section-tag">Vertical 03 · Healthcare Logistics</div>
+  <div class="section-title">Health<em><span class="b">OS</span></em></div>
+
+  <div class="callout b">
+    <div class="callout-title">Market Context</div>
+    <p>UK healthcare logistics and supply chain operators: <strong>3,000+ organisations</strong> managing regulated workforces, NHS contracts, and complex supply chains. Annual agency spend across the sector: <strong>£4B+.</strong> The Contract Intelligence Engine's "find more than we cost" proposition removes all sales resistance at the door. No comparable AI platform targets this specific niche. <strong>First-mover wins the category.</strong></p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card b"><div class="stat-label">Year 1 Revenue</div><div class="stat-val b">£195k</div><div class="stat-sub">35 clients by month 12</div></div>
+    <div class="stat-card b"><div class="stat-label">Year 3 ARR</div><div class="stat-val b">£3.8M</div><div class="stat-sub">185 clients</div></div>
+    <div class="stat-card b"><div class="stat-label">Year 5 ARR</div><div class="stat-val b">£16M</div><div class="stat-sub">620 clients</div></div>
+    <div class="stat-card b"><div class="stat-label">Contract Intel ROI</div><div class="stat-val b">3–5x</div><div class="stat-sub">Year 1 fee vs value found</div></div>
+  </div>
+
+  <div class="gc-title">Annual Recurring Revenue — 5 Year Progression</div>
+  <div class="growth-chart">
+    <div class="gc-row"><div class="gc-year">Y1</div><div class="gc-bar-wrap"><div class="gc-bar blue" style="width:1.2%">£195k</div></div><div class="gc-val blue">£195k</div></div>
+    <div class="gc-row"><div class="gc-year">Y2</div><div class="gc-bar-wrap"><div class="gc-bar blue" style="width:4.9%">£780k</div></div><div class="gc-val blue">£780k</div></div>
+    <div class="gc-row"><div class="gc-year">Y3</div><div class="gc-bar-wrap"><div class="gc-bar blue" style="width:23.8%">£3.8M</div></div><div class="gc-val blue">£3.8M</div></div>
+    <div class="gc-row"><div class="gc-year">Y4</div><div class="gc-bar-wrap"><div class="gc-bar blue" style="width:57.5%">£9.2M</div></div><div class="gc-val blue">£9.2M</div></div>
+    <div class="gc-row"><div class="gc-year">Y5</div><div class="gc-bar-wrap"><div class="gc-bar blue" style="width:100%">£16M</div></div><div class="gc-val blue">£16M</div></div>
+  </div>
+
+  <div class="year-table">
+    <div class="yt-header cols6"><div class="yth">Metric</div><div class="yth">Year 1</div><div class="yth">Year 2</div><div class="yth">Year 3</div><div class="yth">Year 4</div><div class="yth">Year 5</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">CLIENT METRICS</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Active clients (end of year)</div><div class="ytc">35</div><div class="ytc">80</div><div class="ytc">185</div><div class="ytc">380</div><div class="ytc">625</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Avg modules per client</div><div class="ytc">2.1</div><div class="ytc">3.4</div><div class="ytc">5.2</div><div class="ytc">6.8</div><div class="ytc">8.1</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Avg MRR per client</div><div class="ytc">£750</div><div class="ytc">£950</div><div class="ytc">£1,380</div><div class="ytc">£1,850</div><div class="ytc">£2,150</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Contract Intel rebates found (avg)</div><div class="ytc">£28k</div><div class="ytc">£32k</div><div class="ytc">£35k</div><div class="ytc">—</div><div class="ytc">—</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">REVENUE</div></div>
+    <div class="yt-row cols6"><div class="ytc label">MRR (end of year)</div><div class="ytc highlight b">£26.3k</div><div class="ytc highlight b">£76k</div><div class="ytc highlight b">£255k</div><div class="ytc highlight b">£703k</div><div class="ytc highlight b">£1.34M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Annual Revenue</div><div class="ytc highlight b">£195k</div><div class="ytc highlight b">£565k</div><div class="ytc highlight b">£2.0M</div><div class="ytc highlight b">£5.6M</div><div class="ytc highlight b">£12.4M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">ARR (run rate)</div><div class="ytc">£316k</div><div class="ytc">£912k</div><div class="ytc">£3.06M</div><div class="ytc">£8.4M</div><div class="ytc">£16.1M</div></div>
+    <div class="yt-row cols6 section-row"><div class="ytc section-label" style="grid-column:1/-1">PROFITABILITY</div></div>
+    <div class="yt-row cols6"><div class="ytc label">Total Costs</div><div class="ytc">£110k</div><div class="ytc">£240k</div><div class="ytc">£600k</div><div class="ytc">£1.4M</div><div class="ytc">£2.6M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA</div><div class="ytc highlight pos">£85k</div><div class="ytc highlight pos">£325k</div><div class="ytc highlight pos">£1.4M</div><div class="ytc highlight pos">£4.2M</div><div class="ytc highlight pos">£9.8M</div></div>
+    <div class="yt-row cols6"><div class="ytc label">EBITDA Margin</div><div class="ytc pos">44%</div><div class="ytc pos">58%</div><div class="ytc pos">70%</div><div class="ytc pos">75%</div><div class="ytc pos">79%</div></div>
+  </div>
+
+  <div class="callout b">
+    <div class="callout-title">The Contract Intelligence Engine Changes the Maths</div>
+    <p>The flagship module's "find more than we cost" proposition means the average HealthOS client <strong>recovers £28–40k in Year 1 from missed rebates alone.</strong> Against an annual platform fee of £9k–£18k, that's a <strong>2–4x immediate financial return</strong> before any operational efficiency gains are counted. This is why HealthOS has a faster sales cycle than the other two verticals — you're not asking for budget, you're revealing existing money.</p>
+  </div>
+</div>
+</div>
+
+<!-- ═══ OVERALL ═══ -->
+<div class="vpanel" id="panel-overall">
+<div class="section">
+  <div class="section-tag">Holding Company · Consolidated View</div>
+  <div class="section-title">AI Systems Co.<br><em><span class="gr">Overall Forecast</span></em></div>
+
+  <div class="callout gr">
+    <div class="callout-title">The Compounding Advantage</div>
+    <p>Three verticals. Shared infrastructure. One AI platform architecture. The holding company structure means technology built for DentalOS gets redeployed for HealthOS. Compliance intelligence built for HealthOS informs FactoryOS. <strong>Every pound invested in AI development serves all three revenue streams simultaneously.</strong> Gross margins compound. The case for a holding structure that would command a premium acquisition multiple over three individual companies is clear.</p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card gr"><div class="stat-label">Year 1 Combined Revenue</div><div class="stat-val gr">£840k</div><div class="stat-sub">All three verticals, Year 1</div></div>
+    <div class="stat-card gr"><div class="stat-label">Year 3 Combined ARR</div><div class="stat-val gr">£15.6M</div><div class="stat-sub">Run-rate across all three</div></div>
+    <div class="stat-card gr"><div class="stat-label">Year 5 Combined ARR</div><div class="stat-val gr">£67M</div><div class="stat-sub">Pre-international at scale</div></div>
+    <div class="stat-card gr"><div class="stat-label">Year 5 EBITDA</div><div class="stat-val gr">£41M</div><div class="stat-sub">~80% blended margin</div></div>
+  </div>
+
+  <div class="gc-title">Combined Annual Revenue — 5 Year Progression</div>
+  <div class="growth-chart">
+    <div class="gc-row"><div class="gc-year">Y1</div><div class="gc-bar-wrap"><div class="gc-bar green" style="width:1.25%">£840k</div></div><div class="gc-val green">£840k</div></div>
+    <div class="gc-row"><div class="gc-year">Y2</div><div class="gc-bar-wrap"><div class="gc-bar green" style="width:4.8%">£3.1M</div></div><div class="gc-val green">£3.1M</div></div>
+    <div class="gc-row"><div class="gc-year">Y3</div><div class="gc-bar-wrap"><div class="gc-bar green" style="width:16%">£10.6M</div></div><div class="gc-val green">£10.6M</div></div>
+    <div class="gc-row"><div class="gc-year">Y4</div><div class="gc-bar-wrap"><div class="gc-bar green" style="width:38.5%">£25.6M</div></div><div class="gc-val green">£25.6M</div></div>
+    <div class="gc-row"><div class="gc-year">Y5</div><div class="gc-bar-wrap"><div class="gc-bar green" style="width:100%">£50.6M*</div></div><div class="gc-val green">£50.6M</div></div>
+  </div>
+  <p style="font-size:11px;color:var(--dim);margin-bottom:28px;">* UK-only. US/international expansion from Year 3 could add £20–40M additional ARR by Year 5 in upside scenario.</p>
+
+  <div class="year-table">
+    <div class="yt-header cols7"><div class="yth">Metric</div><div class="yth">Year 1</div><div class="yth">Year 2</div><div class="yth">Year 3</div><div class="yth">Year 4</div><div class="yth">Year 5</div><div class="yth">Y5 % of total</div></div>
+    <div class="yt-row cols7 section-row"><div class="ytc section-label" style="grid-column:1/-1">REVENUE BY VERTICAL</div></div>
+    <div class="yt-row cols7"><div class="ytc label">DentalOS</div><div class="ytc t">£280k</div><div class="ytc t">£1.15M</div><div class="ytc t">£3.8M</div><div class="ytc t">£8.5M</div><div class="ytc t">£16.2M</div><div class="ytc t">32%</div></div>
+    <div class="yt-row cols7"><div class="ytc label">FactoryOS</div><div class="ytc g">£365k</div><div class="ytc g">£1.4M</div><div class="ytc g">£4.8M</div><div class="ytc g">£11.5M</div><div class="ytc g">£22M</div><div class="ytc g">43%</div></div>
+    <div class="yt-row cols7"><div class="ytc label">HealthOS</div><div class="ytc b">£195k</div><div class="ytc b">£565k</div><div class="ytc b">£2.0M</div><div class="ytc b">£5.6M</div><div class="ytc b">£12.4M</div><div class="ytc b">25%</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Total Revenue</div><div class="ytc highlight gr">£840k</div><div class="ytc highlight gr">£3.1M</div><div class="ytc highlight gr">£10.6M</div><div class="ytc highlight gr">£25.6M</div><div class="ytc highlight gr">£50.6M</div><div class="ytc">100%</div></div>
+    <div class="yt-row cols7 section-row"><div class="ytc section-label" style="grid-column:1/-1">CONSOLIDATED P&L</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Total Costs (shared + vertical)</div><div class="ytc">£480k</div><div class="ytc">£1.25M</div><div class="ytc">£3.0M</div><div class="ytc">£6.5M</div><div class="ytc">£10.5M</div><div class="ytc">21%</div></div>
+    <div class="yt-row cols7"><div class="ytc label">EBITDA</div><div class="ytc highlight pos">£360k</div><div class="ytc highlight pos">£1.85M</div><div class="ytc highlight pos">£7.6M</div><div class="ytc highlight pos">£19.1M</div><div class="ytc highlight pos">£40.1M</div><div class="ytc pos">79%</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Combined ARR run rate</div><div class="ytc">£1.2M</div><div class="ytc">£4.05M</div><div class="ytc">£15.2M</div><div class="ytc">£37.1M</div><div class="ytc">£67.3M</div><div class="ytc">—</div></div>
+    <div class="yt-row cols7 section-row"><div class="ytc section-label" style="grid-column:1/-1">VALUATION RANGE (revenue multiple)</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Conservative (8x ARR)</div><div class="ytc">£9.6M</div><div class="ytc">£32M</div><div class="ytc">£122M</div><div class="ytc">£297M</div><div class="ytc highlight gr">£538M</div><div class="ytc">—</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Base case (12x ARR)</div><div class="ytc">£14.4M</div><div class="ytc">£49M</div><div class="ytc">£182M</div><div class="ytc">£445M</div><div class="ytc highlight gr">£808M</div><div class="ytc">—</div></div>
+    <div class="yt-row cols7"><div class="ytc label">Upside (20x ARR + intl.)</div><div class="ytc">£24M</div><div class="ytc">£81M</div><div class="ytc">£304M</div><div class="ytc">£742M</div><div class="ytc highlight gr">£1.35B+</div><div class="ytc">—</div></div>
+  </div>
+
+  <div class="section-tag" style="margin-top:48px">THE PATH TO £10 BILLION</div>
+  <div class="section-title" style="margin-bottom:28px;font-size:clamp(24px,3vw,38px)">This is <em>how</em> it happens</div>
+  <div class="path-grid">
+    <div class="path-card"><div class="path-year">Year 1–2 · Foundation</div><div class="path-val" style="color:var(--dim)">£1B<span style="font-size:14px;font-style:italic;color:var(--dim)"> path begins</span></div><div class="path-desc">Three verticals live. First clients paying. Data accumulating. Proof of concept established across all three markets.</div><div class="path-milestone">£840k → £3.1M revenue</div></div>
+    <div class="path-card"><div class="path-year">Year 3 · Momentum</div><div class="path-val" style="color:var(--teal)">£182M<span style="font-size:14px;font-style:italic;color:var(--dim)"> valuation</span></div><div class="path-desc">US expansion begins. Benchmark data creates defensible intelligence moats. First institutional interest from strategic acquirers.</div><div class="path-milestone">£10.6M revenue · US entry</div></div>
+    <div class="path-card"><div class="path-year">Year 4–5 · Scale</div><div class="path-val" style="color:var(--gold)">£1B+<span style="font-size:14px;font-style:italic;color:var(--dim)"> valuation</span></div><div class="path-desc">UK market leadership. US gaining traction. Australian expansion. DSO consolidation creates group clients worth £15k+/month each.</div><div class="path-milestone">£25–50M revenue · 3 markets</div></div>
+    <div class="path-card"><div class="path-year">Year 6–8 · Dominance</div><div class="path-val" style="color:var(--blue)">£3–5B<span style="font-size:14px;font-style:italic;color:var(--dim)"> valuation</span></div><div class="path-desc">Category defining. Network effects fully compounding. Data intelligence impossible to replicate. Acquisition or IPO optionality opens.</div><div class="path-milestone">£150M+ ARR · 5+ markets</div></div>
+    <div class="path-card"><div class="path-year">Year 8–10 · The Number</div><div class="path-val" style="color:var(--green)">£10B</div><div class="path-desc">Global platform. Proprietary AI trained on millions of data points across dental, manufacturing, and healthcare. The intelligence layer these industries cannot operate without.</div><div class="path-milestone">£400M+ ARR · Global scale</div></div>
+  </div>
+
+  <div class="callout gr">
+    <div class="callout-title">Why £10B Is Not Fantasy</div>
+    <p>Salesforce was worth £10B. ServiceNow was worth £10B. Veeva Systems — a vertical SaaS company serving just the pharma industry — is worth <strong>£35B today.</strong> What we are building is the Veeva equivalent for three industries simultaneously — starting with the data moat that makes us impossible to displace. The £10B number requires international expansion and sustained execution over 8–10 years. But <strong>the unit economics, the market sizes, and the defensibility of the model all support it.</strong> The question is not whether it's possible. The question is whether we execute.</p>
+  </div>
+</div>
+</div>
+
+</div><!-- /page -->
+
+<footer>
+  <div class="footer-brand">AI Systems Co. · Financial Forecast</div>
+  <div class="footer-note">Conservative base case · Bootstrapped model · 2025–2030</div>
+  <div class="footer-note">Confidential — Internal Use Only</div>
+</footer>
+
+<script>
+function showPanel(id, tab) {
+  document.querySelectorAll('.vpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  tab.classList.add('active');
+}
+</script>
+</body>
+</html>
