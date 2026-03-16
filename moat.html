@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#06080b;--bg2:#0a0d12;--bg3:#0e1218;--bg4:#131820;
-  --white:#edf0f7;--dim:#3a4050;--dim2:#1e2530;--dim3:#262d38;
+  --white:#edf0f7;--dim:#8a9098;--dim2:#3a4555;--dim3:#404855;
   --border:rgba(255,255,255,0.07);--brt:rgba(255,255,255,0.13);
   --teal:#15c4b0;--teal2:rgba(21,196,176,0.12);
   --gold:#c4820a;--gold2:#e8c870;--gold3:rgba(196,130,10,0.12);
@@ -35,7 +35,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .hero-tag::before{content:'';width:32px;height:1px;background:var(--brain);}
 .hero h1{font-family:'Fraunces',serif;font-size:clamp(56px,9vw,120px);font-weight:900;line-height:.88;letter-spacing:-.03em;position:relative;max-width:1000px;}
 .hero h1 em{font-style:italic;color:rgba(155,109,255,0.5);}
-.hero-sub{margin-top:28px;font-size:16px;font-weight:300;color:var(--dim);max-width:640px;line-height:1.8;position:relative;}
+.hero-sub{margin-top:28px;font-size:16px;font-weight:300;color:rgba(237,240,247,0.78);max-width:640px;line-height:1.8;position:relative;}
 .hero-sub strong{color:var(--white);font-weight:500;}
 .hero-stats{display:flex;gap:48px;margin-top:48px;position:relative;flex-wrap:wrap;}
 .hs-val{font-family:'Fraunces',serif;font-size:40px;font-weight:900;color:var(--brain);line-height:1;letter-spacing:-.03em;}
@@ -57,13 +57,13 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .tvb-col.tool .tvb-col-label{color:var(--dim);}
 .tvb-col.brain .tvb-col-label{color:var(--brain);}
 .tvb-col-title{font-family:'Fraunces',serif;font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:20px;line-height:1;}
-.tvb-col.tool .tvb-col-title{color:rgba(237,240,247,0.3);}
+.tvb-col.tool .tvb-col-title{color:rgba(237,240,247,0.70);}
 .tvb-col.brain .tvb-col-title{color:var(--white);}
 .tvb-list{list-style:none;}
 .tvb-list li{font-size:13px;padding:8px 0 8px 18px;border-bottom:1px solid rgba(255,255,255,.04);position:relative;line-height:1.55;}
 .tvb-col.tool .tvb-list li{color:var(--dim);}
 .tvb-col.tool .tvb-list li::before{content:'—';position:absolute;left:0;color:var(--dim);font-size:10px;top:10px;}
-.tvb-col.brain .tvb-list li{color:rgba(237,240,247,0.65);}
+.tvb-col.brain .tvb-list li{color:rgba(237,240,247,0.90);}
 .tvb-col.brain .tvb-list li::before{content:'→';position:absolute;left:0;color:var(--brain);font-size:10px;top:10px;}
 .tvb-list li strong{font-weight:600;color:var(--white);}
 
@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .compound-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brain);margin-bottom:12px;}
 .compound-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
 .compound-title em{font-style:italic;color:rgba(155,109,255,0.4);}
-.compound-desc{font-size:14px;color:var(--dim);max-width:680px;line-height:1.75;margin-bottom:48px;}
+.compound-desc{font-size:14px;color:rgba(237,240,247,0.78);max-width:680px;line-height:1.75;margin-bottom:48px;}
 .compound-desc strong{color:var(--white);}
 
 /* TIMELINE */
@@ -83,7 +83,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .tl-dot.filled{background:var(--brain);}
 .tl-month{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--brain);margin-bottom:6px;}
 .tl-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:-.01em;}
-.tl-body{font-size:13px;color:var(--dim);line-height:1.65;}
+.tl-body{font-size:13px;color:rgba(237,240,247,0.80);line-height:1.65;}
 .tl-body strong{color:var(--white);}
 .tl-gap{display:inline-block;margin-top:10px;padding:5px 12px;background:rgba(155,109,255,0.1);border:1px solid rgba(155,109,255,0.25);font-family:'DM Mono',monospace;font-size:10px;color:var(--brain);letter-spacing:.08em;}
 
@@ -94,7 +94,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .sec-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
 .sec-title em{font-style:italic;}
 .sec-title .t{color:var(--teal);}.sec-title .g{color:var(--gold2);}.sec-title .b{color:#7ab8f0;}
-.sec-desc{font-size:14px;color:var(--dim);max-width:700px;line-height:1.75;margin-bottom:36px;}
+.sec-desc{font-size:14px;color:rgba(237,240,247,0.78);max-width:700px;line-height:1.75;margin-bottom:36px;}
 .sec-desc strong{color:var(--white);}
 
 /* MOAT CARD */
@@ -106,7 +106,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .mc-body{padding:18px 24px;}
 .mc-row{margin-bottom:14px;}
 .mc-row-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:5px;}
-.mc-row-val{font-size:12px;color:rgba(237,240,247,0.6);line-height:1.55;}
+.mc-row-val{font-size:12px;color:rgba(237,240,247,0.85);line-height:1.55;}
 .mc-row-val strong{color:var(--white);font-weight:600;}
 .mc-moat{padding:12px 14px;border-top:1px solid var(--border);margin-top:4px;}
 .mc-moat-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px;}
@@ -155,7 +155,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .bd-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brain);margin-bottom:12px;}
 .bd-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
 .bd-title em{font-style:italic;color:rgba(155,109,255,0.4);}
-.bd-desc{font-size:14px;color:var(--dim);max-width:700px;line-height:1.75;margin-bottom:48px;}
+.bd-desc{font-size:14px;color:rgba(237,240,247,0.78);max-width:700px;line-height:1.75;margin-bottom:48px;}
 .bd-desc strong{color:var(--white);}
 
 /* BRAIN VISUAL — concentric rings */
@@ -187,7 +187,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .callout.teal .callout-title{color:var(--teal);}
 .callout.gold .callout-title{color:var(--gold2);}
 .callout.blue .callout-title{color:#7ab8f0;}
-.callout p{font-size:13px;color:var(--dim);line-height:1.65;}
+.callout p{font-size:13px;color:rgba(237,240,247,0.80);line-height:1.65;}
 .callout p strong{color:var(--white);}
 
 .divider{height:1px;background:linear-gradient(90deg,var(--brt),transparent);margin:48px 0;}
@@ -635,15 +635,15 @@ footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
       <div style="background:rgba(21,196,176,0.06);border:1px solid rgba(21,196,176,0.15);padding:20px 22px;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;">DentalOS feeds the brain</div>
-        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Patient behaviour patterns. Competitor pricing intelligence. Treatment acceptance benchmarks. Practice health scores. All flowing into the central model and enriching every dental client's experience.</div>
+        <div style="font-size:12px;color:rgba(237,240,247,0.80);line-height:1.6;">Patient behaviour patterns. Competitor pricing intelligence. Treatment acceptance benchmarks. Practice health scores. All flowing into the central model and enriching every dental client's experience.</div>
       </div>
       <div style="background:rgba(196,130,10,0.05);border:1px solid rgba(232,200,112,0.15);padding:20px 22px;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);margin-bottom:8px;">FactoryOS feeds the brain</div>
-        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Machine failure signatures. Procurement price actuals. OEE benchmarks. Demand seasonality by sector. All flowing into the central model and making every manufacturer's predictions more accurate.</div>
+        <div style="font-size:12px;color:rgba(237,240,247,0.80);line-height:1.6;">Machine failure signatures. Procurement price actuals. OEE benchmarks. Demand seasonality by sector. All flowing into the central model and making every manufacturer's predictions more accurate.</div>
       </div>
       <div style="background:rgba(26,79,216,0.05);border:1px solid rgba(122,184,240,0.15);padding:20px 22px;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7ab8f0;margin-bottom:8px;">HealthOS feeds the brain</div>
-        <div style="font-size:12px;color:var(--dim);line-height:1.6;">Contract terms and missed credits. Agency performance scores. Compliance risk patterns. NHS procurement benchmarks. All flowing in and making every healthcare operator's platform smarter from Day 1.</div>
+        <div style="font-size:12px;color:rgba(237,240,247,0.80);line-height:1.6;">Contract terms and missed credits. Agency performance scores. Compliance risk patterns. NHS procurement benchmarks. All flowing in and making every healthcare operator's platform smarter from Day 1.</div>
       </div>
     </div>
   </div>

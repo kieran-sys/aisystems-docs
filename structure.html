@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#07090c;--bg2:#0c0f13;--bg3:#111518;--bg4:#161c22;
-  --white:#edf0f7;--dim:#4a5060;--dim2:#1e2530;--dim3:#232830;
+  --white:#edf0f7;--dim:#9aa0ad;--dim2:#3a4555;--dim3:#232830;
   --border:rgba(255,255,255,0.07);--brt:rgba(255,255,255,0.12);
   --teal:#15c4b0;--gold:#c4820a;--blue:#1a4fd8;--green:#1a7c3a;
   --red:#c94535;--amber:#d48a1a;--purple:#7c3aad;
@@ -30,8 +30,8 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .cover-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--a1);margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;}
 .cover-tag::before{content:'';width:28px;height:1px;background:var(--a1);}
 .cover h1{font-family:'Fraunces',serif;font-size:clamp(52px,8vw,100px);font-weight:900;line-height:.92;letter-spacing:-.03em;position:relative;max-width:800px;}
-.cover h1 em{font-style:italic;color:rgba(237,240,247,0.35);}
-.cover-sub{margin-top:24px;font-size:15px;font-weight:300;color:var(--dim);max-width:620px;line-height:1.75;position:relative;}
+.cover h1 em{font-style:italic;color:rgba(237,240,247,0.75);}
+.cover-sub{margin-top:24px;font-size:15px;font-weight:300;color:rgba(237,240,247,0.78);max-width:620px;line-height:1.75;position:relative;}
 .cover-sub strong{color:var(--white);font-weight:500;}
 
 .page{max-width:1240px;margin:0 auto;padding:0 64px;}
@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .sec-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
 .sec-title{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,52px);font-weight:900;line-height:.95;letter-spacing:-.03em;margin-bottom:8px;}
 .sec-title em{font-style:italic;}
-.sec-desc{font-size:14px;color:var(--dim);max-width:680px;line-height:1.75;margin-bottom:36px;}
+.sec-desc{font-size:14px;color:rgba(237,240,247,0.78);max-width:680px;line-height:1.75;margin-bottom:36px;}
 .sec-desc strong{color:var(--white);}
 
 /* CALLOUT */
@@ -49,7 +49,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .callout-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;}
 .callout.a1 .callout-title{color:var(--a1);}.callout.a2 .callout-title{color:var(--a2);}.callout.a3 .callout-title{color:var(--a3);}
 .callout.amber .callout-title{color:var(--amber);}.callout.purple .callout-title{color:var(--purple);}
-.callout p{font-size:13px;color:var(--dim);line-height:1.65;}.callout p strong{color:var(--white);}
+.callout p{font-size:13px;color:rgba(237,240,247,0.80);line-height:1.65;}.callout p strong{color:var(--white);}
 
 /* THE THREE TIERS */
 .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:40px;}
@@ -64,7 +64,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .tier-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;}
 .tier.all-in .tier-label{color:var(--a1);}.tier.middles .tier-label{color:var(--a2);}.tier.fringe .tier-label{color:var(--a3);}
 .tier-name{font-family:'Fraunces',serif;font-size:30px;font-weight:900;letter-spacing:-.02em;margin-bottom:8px;line-height:1;}
-.tier-tagline{font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:18px;}
+.tier-tagline{font-size:12px;color:rgba(237,240,247,0.80);line-height:1.6;margin-bottom:18px;}
 .tier-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:16px;}
 .ts{background:rgba(255,255,255,.04);border:1px solid var(--border);padding:10px 12px;}
 .ts-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
@@ -114,7 +114,7 @@ body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;fo
 .share-card{background:var(--bg2);border:1px solid var(--border);padding:18px 20px;}
 .sc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
 .sc-pool{font-family:'Fraunces',serif;font-size:28px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;}
-.sc-detail{font-size:11px;color:var(--dim);line-height:1.5;}
+.sc-detail{font-size:11px;color:rgba(237,240,247,0.80);line-height:1.5;}
 .sc-pool.a1{color:var(--a1);}.sc-pool.a2{color:var(--a2);}.sc-pool.a3{color:var(--a3);}.sc-pool.dim{color:var(--dim);}
 
 /* VEST TABLE */
@@ -215,7 +215,7 @@ footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify
       <div class="tier-label">Tier One</div>
       <div class="tier-name">The All-Ins</div>
       <div class="tier-tagline">This is your primary commitment. You're building this every day. Decisions go through you. You are the company in its earliest form.</div>
-      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+      <ul style="list-style:none;font-size:12px;color:rgba(237,240,247,0.80);line-height:1.8;">
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Full-time commitment — 40–60 hrs/week</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Day-to-day decision making authority</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Vertical or function ownership</li>
@@ -235,7 +235,7 @@ footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify
       <div class="tier-label">Tier Two</div>
       <div class="tier-name">The Middles</div>
       <div class="tier-tagline">You have a career, a life, other commitments — but you want in. You contribute meaningfully. Your skills matter. You show up consistently but not exclusively.</div>
-      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+      <ul style="list-style:none;font-size:12px;color:rgba(237,240,247,0.80);line-height:1.8;">
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Part-time — 15–25 hrs/week</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Specialist domain contribution</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Defined deliverables and scope</li>
@@ -255,7 +255,7 @@ footer{border-top:1px solid var(--border);padding:28px 64px;display:flex;justify
       <div class="tier-label">Tier Three</div>
       <div class="tier-name">The Fringe</div>
       <div class="tier-tagline">Project-based. You come in for specific work — a shoot, a campaign, a design sprint. You're not full-time but you leave a mark. And you own a piece of what that mark helps build.</div>
-      <ul style="list-style:none;font-size:12px;color:var(--dim);line-height:1.8;">
+      <ul style="list-style:none;font-size:12px;color:rgba(237,240,247,0.80);line-height:1.8;">
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Project or task basis — 2–10 hrs/week</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Specific creative or technical output</li>
         <li style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);">Day rate per engagement</li>
